@@ -1,0 +1,183 @@
+repaso de álgebra lineal y aprendizaje
+supervisado
+instituto tecnológico de costa rica
+escuela de ingeniería en computación
+inteligencia artificial
+mariana quesada sánchez
+19 de agosto de 2024
+abstract-this paper reviews concepts of linear algebra necesario para trasladarse de un punto a otro. por ejemplo,
+relevant to artificial intelligence, including vectors, norms, el vector (4,3) puede interpretarse como la posición de un
+distances, dot product, orthogonality, and orthonormality. it
+puntoenelplanocartesiano,perotambiénpuederepresentar
+alsointroducestheprinciplesofsupervisedlearning,describing
+eldesplazamientorequeridoparapasardelorigen(0,0)hasta
+datasets as feature-label pairs and distinguishing between
+regressionandclassificationtasksthroughillustrativeexamples. dicho punto.
+y
+i. introduction
+el álgebra lineal es la base para representar datos en (4,3)
+espacios multidimensionales y para definir operaciones que 3
+permiten medir magnitudes, direcciones y similitudes. estos
+fundamentos son indispensables en algoritmos de machine
+learning, en particular dentro del aprendizaje supervisado,
+donde los datos se representan como vectores de características asociados a etiquetas.
+x
+4
+ii. álgebralineal
+a. vectores
+un vector se define como una entidad matemática car- fig.1. representacióngráficadelvector(4,3)enelplanocartesiano.
+acterizada por magnitud y dirección. en espacios de dos
+o tres dimensiones, puede visualizarse como un segmento
+b. norma o magnitud
+orientado que parte del origen y termina en un punto (x,y,z).
+en espacios de dimensión n, se representa como una tupla la norma mide longitud de un vector y se denota como
+ordenada (x , x , ..., x ). los vectores constituyen la base ∥x∥.geométricamente,puedeinterpretarsecomoladistancia
+1 2 n
+delarepresentacióndedatosenespaciosmultidimensionales desde el punto de origen hasta el punto final definido
+y permiten operaciones como la suma, la resta y la multipli- por x. de esta manera, la norma proporciona una medida
+cación por escalares. cuantitativa de la magnitud del vector, independientemente
+el desplazamiento de un vector se define como la difer- de su dirección.
+encia entre un punto final b = (b 1 ,b 2 ,...,b n ) y un para un vector x = (x 1 ,x 2 ,...,x n ), las normas más
+punto inicial a = (a 1 ,a 2 ,...,a n ). formalmente, el vector comunes son:
+desplazamiento se expresa como
+- norma l1 o manhattan:
+a⃗b =b-a=(b -a , b -a , ..., b -a ), la distancia manhattan entre dos puntos a =
+1 1 2 2 n n
+(x ,y ,z ,...,n ) y b = (x ,y ,z ,...,n ) en un
+1 1 1 1 2 2 2 2
+lo cual indica cuánto debe recorrerse en cada componente
+espacio n-dimensional se calcula mediante la fórmula:
+parapasardeaab.porejemplo,sia=(1,2)yb =(4,6),
+entonces a⃗b = (3,4), lo que representa un movimiento de
+n
+tres unidades en el eje x y cuatro en el eje y. (cid:88)
+∥x∥ = |x -y |
+1 i i
+es importante distinguir entre un vector de posición y
+i=1
+un vector de desplazamiento. un vector de posición ubica
+un punto específico en el espacio con respecto al origen, se interpreta como la distancia recorrida siguiendo los
+mientrasqueunvectordedesplazamientodescribeelcambio ejes de la cuadrícula.
+- norma l2 o euclidiana: el producto punto entre dos vectores u y v se define de
+(cid:118) dos formas equivalentes:
+(cid:117) n
+∥x∥ 2 = (cid:117) (cid:116) (cid:88) x2 i - definición algebraica:
+n
+i=1 (cid:88)
+u-v = u v
+i i
+correspondealadistanciaenlínearectaentreelorigen
+i=1
+yelpuntofinal,deacuerdoconelteoremadepitágoras.
+ej 1. sea
+   
+1 4
+x=2, y =5.
+3 6
+calculamos el producto punto:
+ 
+4
+xty = (cid:2) 1 2 3 (cid:3) 5
+6
+=1-4+2-5+3-6=4+10+18= 32
+- definición geométrica:
+fig.2. comparaciónentredistanciamanhattanyeuclidiana[1]. u-v =∥u∥∥v∥cos(θ)
+donde θ es el ángulo entre ambos vectores.
+una función es considerada una norma si cumple las
+ej 2. sea
+siguientes propiedades: (cid:20) (cid:21) (cid:20) (cid:21)
+1 3
+1) positividad: ∥x∥ ≥ 0 y ∥x∥ = 0 si y sólo si x es el u= , v = .
+2 4
+vector nulo.
+paso 1: calcular el producto punto
+2) homogeneidad:∥αx∥=|α|∥x∥paracualquierescalar
+α∈r. u-v =1-3+2-4=3+8=11
+3) desigualdad triangular: ∥x+y∥ ≤ ∥x∥+∥y∥ para
+paso 2: calcular las normas
+todos los vectores x e y. (cid:112) √ (cid:112) √
+∥u∥= 12+22 = 5, ∥v∥= 32+42 = 25=5
+c. vectores unitarios
+finalmente, usando la definición geométrica del producto
+unvectorunitarioesaquelcuyanormaesigualauno.se
+punto:
+obtiene normalizando un vector v mediante su magnitud:
+u= v √ 11
+∥v∥ 11= 5-5-cos(θ) ⇒ cos(θ)= √ ≈0.9839
+5 5
+de esta manera, u conserva la dirección de v, pero con
+longitud unitaria. θ =cos-1(0.9839)≈10.3◦
+e. vectores codireccionales
+dos vectores se consideran codireccionales cuando
+mantienen la misma dirección, aunque difieran en magnitud.
+estarelaciónsecumplesiexisteunescalarktalquev =k-u.
+en este caso, el ángulo entre ambos vectores es nulo y
+el coseno del ángulo es igual a uno. el vector unitario
+es un caso particular, ya que al ser multiplicado por un
+escalar recupera la magnitud del vector original sin alterar
+su dirección.
+sesabequesidosvectoressoncodireccionales,elángulo
+entre ellos es de 0◦. en consecuencia, el producto punto se
+fig.3. vectorunitario.[2]
+expresa como
+d. producto punto u-u=∥u∥-∥u∥-cos(0)=∥u∥2.
+el producto punto entre dos vectores es la suma de las de esta forma, la norma de un vector puede escribirse
+multiplicaciones de sus componentes, lo que produce un como
+√
+valor real. esta operación es fundamental en inteligencia ∥u∥= u-u.
+artificial, ya que un vector puede representar características
+asimismo, la distancia euclidiana puede expresarse en
+de los datos y otro vector puede representar los pesos
+términos de producto punto:
+asociados a dichas características. si un peso es cero, la
+√ (cid:112)
+característica correspondiente no contribuye al resultado. u-u= ∥u∥2 =∥u∥.
+f. ortogonalidad y ortonormalidad a. ejercicios de aprendizaje supervisado resueltos
+dosvectoressonortogonalessisuproductopuntoescero: 1) ratas: esperanza de vida vs. obesidad
+dado un conjunto de datos con dos características
+u-v =0 (esperanza de vida y obesidad) se busca modelar la
+relación entre ambas.
+además, un conjunto de vectores es ortonormal si además tipo: regresión (la salida es un valor continuo).
+de ser ortogonales, cada vector es unitario. 2) animales: identificar aves
+tomando en cuenta datos sobre animales, el peso y si
+iii. aprendizajesupervisado tiene alas, se desea determinar cuáles son pájaros.
+tipo: clasificación (se clasifica cada ejemplar como
+elaprendizajesupervisadoconsisteenentrenarunmodelo
+ave o no empleando el peso y la presencia de alas).
+a partir de un conjunto de datos donde cada ejemplo se
+3) dispositivos: tablet, laptop o teléfono
+encuentra representado por un vector de características x
+i
+con tamaño de pantalla, peso y sistema operativo, se
+y una etiqueta asociada y . las características describen
+i
+debe asignar cada dispositivo a una de varias catepropiedadescuantificablesdelfenómenoobservado,mientras
+gorías.
+que la etiqueta corresponde al valor que se desea predecir.
+tipo: clasificación.
+existen dos tareas principales dentro del aprendizaje su4) meteorología: precipitación → humedad.
+pervisado
+con cantidad de precipitación y un valor de humedad,
+la regresión busca predecir valores continuos, como el
+se desea predecir la humedad en distintas épocas del
+precio de una vivienda en función de atributos como área,
+año.
+número de habitaciones o ubicación. la fig. 4 corresponde
+tipo: regresión (humedad como variable continua).
+aunproblemaderegresiónporquebuscaajustarunafunción
+que modele la relación entre una variable independiente references
+(carat) y una variable dependiente continua (precio).
+[1] s.raniandg.sikka,"recenttechniquesofclusteringoftimeseries
+data:asurvey,"artificialintelligencereview,vol.46,no.1,pp.2744,2016.available:https://www.researchgate.net/figure/comparativebetween-euclidean-and-manhattan-distancef ig1332432569
+[2] s. pacheco, "repaso de matemática: álgebra lineal," presentación,
+institutotecnológicodecostarica,2025.
+fig.4. ejemploderegresión.[2].
+la clasificación, en cambio, asigna cada instancia a una
+categoríadiscretaapartirdesuscaracterísticas.porejemplo,
+predecir el tipo de vehículo dependiendo de cuántas llantas
+tiene y cuánto pesa.
+fig.5. ejemplodeclasificación.[2].
+en ambos casos, el objetivo es construir un modelo que
+generalice más allá de los datos de entrenamiento y que
+logre realizar predicciones confiables sobre ejemplos no
+observados.

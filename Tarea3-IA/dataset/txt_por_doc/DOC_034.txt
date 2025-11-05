@@ -1,0 +1,134 @@
+apuntes de clase #2
+luis felipe calderón pérez
+escuela de ingeniería en computación
+tecnológico de costa rica
+cartago, costa rica
+2021048663
+9-10-2025
+resumen-este documento presenta los apuntes de la decima
+semana del curso de inteligencia artificial. se realizó un repaso
+de las redes neuronales convolucionales (cnn), partiendo de las
+limitacionesdelasredesfullyconnectedylanecesidaddeextraer
+información espacial de las imágenes. se estudió el funcionamiento de la estructura de las capas convolucionales, pooling
+y fully-connected y feature map. finalmente, se discutieron los figura1. arquitecturacnnvsnn[3]
+principios para diseñar arquitecturas convolucionales eficientes,
+considerando tamaños de filtro, stride, padding y reducción de mismas estarán conectadas a pequeñas regiones de la capa
+parámetros.
+anterior, y esto reduce el tamaño de la imagen a un vector.
+index terms-cnn, capas convolucionales, transfer learning,
+en cada cara del cubo de las neuronas se tienen n filtros
+arquitecturas convolucionales.
+de tamaño acorde a las imágenes de entrada y obtenemos un
+i. breverepasodelaclaseanterior
+featuremap,queeselresultadodeaplicarelfiltroalaimagen
+i-a. redes convolucionales anterior.
+recibimosuninputdecaracterísticas,elcualtransformamos
+i-b. arquitectura de cnn
+con una serie de capas ocultas.
+requiere de 3 capas principales
+se había visto hasta el momento las redes fully connected.
+1. convolutional layer
+teníamos el problema de que aprendemos una secuencia de
+computa el filtro contra una imagen.
+píxeles, lo que nos lleva a errores si movemos los objetos de
+recibe de entrada el ancho, largo y canales.
+lugar o si aplicamos rotación a los objetos. lo correcto sería
+tiene n filtros que extraen características de las imásacar la información de la imagen para tomar una decisión.
+genes.
+también se habló del dataset de cifar-10, donde hay
+aplica una capa de activación
+imágenes con 3 canales de 32x32. y nos damos cuenta de
+tiene como parámetros (wx)n+b
+que no es escalable, ya que se tendrían 120,000 parámetros
+que ajustar únicamente en la entrada. 2. pooling layer
+por ello se buscan métodos más eficientes; entonces lle- reduce de la imagen en ancho y largo.
+gamos a las convnet, en donde las neuronas se organizan se encarga de aplicar el downsampling a lo largo del
+en 3 dimensiones: largo, ancho y profundidad (canales). las ancho y largo.
+no tiene parámetros.
+se introduce periódicamente en medio de capas convolucionales.
+lo más usual es usar max pooling.
+fórmula dimensionalidad
+- entrada wxhxd.
+- k, tamaño de kernel.
+- s, stride.
+figura3. funcionamientokernelcapadeconvolución[3]
+- d, mantiene la profundidad.
+w 2 = w- s k +1 ii-a. filtro o kernel
+3. fully-connected
+es una matriz bidimensional de números, que transforma
+esta parte clasifica, ya que calcula la probabilidad de
+una imagen en el momento en que deslice ese filtro, produpertenecer a una clase; transformando una imagen de
+ciendo una imagen como salida. para aplicar los filtros se va
+píxeles a probabilidad de pertenecer a una clase.
+a tener algo similar a un caso donde una imagen de entrada
+las cnns nos permiten resolver
+tiene mucho ruido y se le aplica un gaussian kernel (tiene
+clasificación de imágenes. una campana de gauss) y da una imagen resultante como si
+segmentación de objetos. tuvieraunblur.dependiendodelfiltrousado,obtenemosotras
+segmentación de instancias. formas como resultado e influimos en el procesamiento.
+procesamiento de imágenes.
+ii-b. local receptive fields
+ii. capadeconvolución
+una neurona esta conectada a un campo en específico del
+tiene varias características, están compuestas por varios input. esto es muy eficiente, ya que podría haber filtros que
+filtros (w), va a tener un comportamiento local, lo deslizamos extraigan líneas verticales, otros horizontales y así.
+y va a seguir extrayendo las mismas features alrededor de la
+ii-b1. campo receptivo: es un filtro de nxn, donde cada
+imagen. esto permite que los pesos se ajusten para que sirvan
+neurona estará enfocada en un solo campo receptivo.
+en una posición como en otra.
+ii-b2. stride: es la forma clásica de deslizar el filtro,
+según una cantidad de pasos que realiza el filtro sobre la
+imagen durante la convolución.
+ii-b3. padding: técnica para agregar pixeles alrededor
+del borde de la imagen, permitiendo controlar el tamaño de
+salida de la convolución. se recomienda que el padding se
+llene con 0, ya que si se usa 1 podría generar ruido o mala
+figura2. arquitecturaalexnet[2] data. y su fórmula es k-1, k = tamaño del filtro.
+2
+ii-b4. cálculo de dimensiones: papers la cantidad de convoluciones y relu se usa la fórmula
+m, cantidad de pixeles en fila/columna. de 3≥n≥0.
+k, tamaño del kernel.
+iii-a. ¿que arquitectura preferimos?
+p, tamaño del padding.
+se prefiere a las arquitecturas con convoluciones pequeñas,
+s, cantidad de pasos.
+yaquelasconvolucionesgrandesnosllevanaquelasneuronas
+m-k+2p +1= dimension resultante
+s se computen de forma lineal y que la cantidad de pesos sea
+ii-c. pesos mayor.
+si se tuviera una imagen de 224x224x3, con un tamaño
+iii-b. algunas "reglas"
+de kernel 11, stride de 4 y padding de 0, y le aplicamos la
+el tamaño de la imagen debería ser divisible por 2.
+fórmula anterior da 55. y con la arquitectura de alexnet 2
+las convoluciones deben usar campos receptivos pequeobtenemos que aprendimos 96 de profundidad.
+ños 3x3, con un stride de 1.
+ii-d. pesos compartidos para pooling layer es común max pooling de f=2, s=3.
+si ya tenemos un filtro que extrae cierta caracteristica, y s, cantidad de pasos.
+sirve para una posición; también sirve para otra posición. por
+iii-c. menciones finales
+lo que, vamos a usar el mismo filtro para toda la imagen.
+al final se mencionan arquitecturas similares a lenet para
+ii-e. transfer learning tomarencuentaparaelproyecto,talescomo,alexnet,afnet,
+semencionaqueenelpaperdealexnetdespuésdeaplicar googlenet (reduce parámetros), vgg16 y resnet.
+su arquitectura y lo referente a ella. y se dan cuenta que en nota: embedding, información distribuida en espacio veclas primeras capas hay figuras o información similar. por lo torial que retorna mi nn.
+que se introduce el término de transfer learning, que consiste
+referencias
+en pasar el peso de las primeras capas a otra red, para ahorrar
+[1] "resnet, alexnet, vggnet, inception: understanding various architiempo de entrenamiento.
+tectures of convolutional networks," cv-tricks.com, aug. 01, 2022.
+https://cv-tricks.com/cnn/understand-resnet-alexnet-vgg-inception/
+iii. arquitecturasconvolucionales
+[2] r.r.abril,"redesconvolucionales,"lamáquinaoráculo,jul.2025,
+se componen de convolutional layer, pooling layer y [online]. available: https://lamaquinaoraculo.com/deep-learning/redesneuronales-convolucionales/
+de dense layer. se deben tomar desiciones sobre nuestra
+[3] s. a. p. portuguez, "apuntes de la clase de inteligencia artificial,"
+arquitectura, por ejemplo, si la convolución reduce el input
+cartago,costarica,agosto2025,clasedel9deoctubredel2025.
+debo decidir si hago o no el pooling. y estas desiciones
+determinan el comportamiento del tamaño de la imagen, pero
+si la imagen es muy reducida, le llega poca información a
+la fully connected. se introdujó el término de stack, que es,
+input → [[conv → relu]∗n → pool?]∗m → [fc →
+relu] ∗ k → fc,m ≥ 0,k ≥ 0, y se menciona que en

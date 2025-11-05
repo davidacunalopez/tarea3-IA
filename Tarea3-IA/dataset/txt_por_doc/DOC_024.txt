@@ -1,0 +1,107 @@
+apuntes semana 7 - 18/09/2025
+1st dar'ıo espinoza aguilar
+2020109109
+computer engenieering
+darioespinoza477@estudiantec.cr
+abstract-este documento corresponde a los apuntes de la - tp: true positive
+clasedel18deseptiembrede2025,dondeserepasanlosconceptos - tn: true negative
+deme'tricasyfo'rmulasparaevaluarlosmodelos.adema's,sehace
+- fp: false positive
+un repaso del proceso de preparacio'n y procesamiento de datos
+antes de poder entrenar el modelo. - fn: false negative
+indexterms-me'tricas,datacleaning,procesamientodedatos, a partir de estos se pueden hacer varias combinaciones
+datasets para calcular ciertas me'tricas
+i. introduccio'n
+1) accuracy: clasificacio'ncorrectaentretodoslosintentos.
+se menciono' que se iba a dejar la tarea 2 la otra semana la fo'rmula es la siguiente:
+y el proyecto 1 la semana que le sigue. adema's, nos dio la
+tp +tn
+invitacio'n al evento de ingenier'ıa para lo que quiera asistir. accuracy =
+tp +tn +fp +fn
+en la parte de noticias, se menciono' que xbox gaming esu'tilcuandoloserroresporclasesonigualdeimportantes.
+esta desarrollado un ia para desarrollar juegos viejos, ma's otorga importancia igual a todas las claases.
+que un desarrollador es un porteador de juego viejos para que 2) precision: mide los errores tipo 1 (fp). tasa de predicpuedan ser jugables. ciones positivas correctas entre todas las predicciones positivas.
+el profe menciona que se lanzo' un protocolo nuevo para
+tp
+pago a trave's de agentes. el protocolo es ap2, fue lanzado precision=
+tp +fp
+por google y lo que se busca es que los pagos por medios
+electro'nicos se puedan realizar sin necesidad de intervencio'n 3) recall: mide los errores de tipo 2 (fn). tasa de
+humana. menciono la posibilidad de hacer pasant'ıa en la predicciones correctas entre todos los ejemplos positivos del
+empresa donde e'l trabaja. conjunto de datos.
+tp
+sehablodelaspro'ximasevaluacionesquevamosatener,el recall=
+tp +fn
+profesor menciono que la mayor'ıa de las tareas programadas
+4) f1-score: esta es un me'trica que contempla ambos
+yaseanproyectosotareasvanaserdemodelosclasificatorios
+errores. comu'nmente utilizada en problemas de clasificacio'n,
+ya que tiene afinidad por ellos y que se van a tener tareas de
+especialemnte cuando tenemos desequelibrio de clases.
+investigacio'n.
+2-precision-recall
+ii. repasodeme'tricas f1=
+precision+recall
+son las me'tricas asociadas a un modelo que nos indica el
+rendimiento de un modelo predictivo. la forma ma's objetiva a. roc (receiver operating characteristic)
+de evaluar y comparar un modelo. en todos los modelos que ela'reabajolacurvasiempretienequeser>0.5.sies=5
+se sacan siempre hay me'tricas o benchmarks que nos indican loquevamosateneresunrandomclasifier,esunclasificador
+que tan bueno es el modelo. aleatorio. si es cada vez mayor a 0.5 el modelo va siendo
+mejor.
+se repaso lo que es la matriz de confusio'n. que de los
+iii. respasodeprocesamientodedatos
+algoritmos de clasificacio'n tenemos 2 etiquetas se pueden ver
+como positivo y negativo, y de esas 2 etiquetas se pueden enlapra'cticapodemostenerciertosproblemasconnuestros
+tener 4 4 posibles valores que la matriz de confusio'n nos datos:
+ayuda a visualizar esos valores. en esta matriz se tienen los - incompletitud:valoresfaltantesenatributosimportantes
+target class que es la etiqueta tenemos en el dataset y el - inexactitud o ruido: errores y valores at'ıpico en las
+predicted class que es la prediccio'n de nuestro modelo. los transacciones
+cuatros combinaciones - inconsistencia:discrepanciaenloco'digodedepartamentos o categor'ıa
+a. ¿por que' los datos pueden ser inexactos? - inferir valores mediante modelos estadistico o de ml
+(regresio'n, k-nn, a'rboles de decisio'n)
+- instrumentos de recoleccio'n de datos defectuosos.
+- errores humanos o computacionales en la entrada de 2) data cleaning (noisy data):
+datos. - agrupar valores en intervalos(bins).
+- usuarios que ingresan valores falsos para campos obli- - sepuedeutilizarcondatosmuyruidosos,sereemplazael
+gatorios. valor por: la media del bin, la mediana del bin, el borde
+- conocido como datos faltantes disfrazados. ma's cercano del bin.
+- inconsistencia en convenciones de nombres, co'digos o 3) data integration (redundancy handling):
+formatos. - seajustaunafuncio'nmatema'tica(linealonolineal)para
+- tuplas duplicadas que requieren procesos de data clean- suavizar el ruido de los datos.
+ing. - aplicar te'cnicas de filtrado para suavizar fluctuaciones,
+se puede utilizar la media mo'vil (utilizar los u'ltimos 7
+b. ¿por que' los datos pueden estar incompletos?
+elementos para ir calculando la media).
+- atributos de intere's no siempre esta'n disponibles
+- noseincluyenporquenoseconsideraronimportantesen
+el momento de la entrada
+- datos relevantes no se registran por malentendidos o
+fallos del equipo
+- datos inconsistentes con otros registros pueden ser eliminados
+- historial o modificaciones de datos pasados pueden no
+haberse registrado
+- valores faltantes en atributos claves pueden necesitar ser
+inferidos
+c. ¿por que' los datos pueden ser inconsistentes?
+- diferencias en convenciones de nombres o co'digos usados para clasificar elementos
+- formatos de entrada distintos para un mismo atributo
+- conflictos entre bases de datos o sistemas que manejan
+el
+- errores al integrar datos de mu'ltiples fuentes heteroge'neas
+- actualizaciones parciales o incorrectas que dejan registros contradictorios
+d. principales tareas en el preprocesamiento de datos
+- data cleaning eliminacio'n de ruido, correccio'n de inconsistencias, tratamiento de valores faltantes
+- data integration combinacio'n de datos de mu'ltiples
+fuentes heteroge'neas en un repositorio coherente
+- data reduction reduccio'n de volumen mediante seleccio'n de atributos, reduccio'n de dimensionalidad o
+discretizacio'n
+- data transformation normalizacio'n, estandarizacio'n,
+agregacio'n, construccio'n de nuevas variables
+- data discretization transformacio'n de atributos continuos en atributos catego'ricos
+1) data cleaning (missing values):
+- ignorar tuplas con valores faltantes (riesgo si la perdida
+de datos es significtiva)
+- completar manualmente los valores (costoso y poco
+pra'ctico en grandes datasets)
+- usar un valor global constante.
+- rellenar con la media (normal), mediana o moda

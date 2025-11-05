@@ -1,0 +1,234 @@
+inteligencia artificial
+apuntes semana 5, clase #2
+luis fernando benavides villegas
+instituto tecnolo'gico de costa rica
+cartago, costa rica
+lubenavides@estudiantec.cr
+abstract-este documento recopila los apuntes de la clase del patrones sistema'ticos (por ejemplo, en forma de para'bola) en
+jueves 04 de septiembre de 2025 para el curso de inteligencia lugar de distribuirse de manera aleatoria. esto indica que el
+artificial. se repasan conceptos clave de regresio'n lineal y sus
+modelo lineal no es adecuado. para resolverlo, una opcio'n es
+limitaciones, as'ı como los problemas de overfitting y underfitting.
+aplicar feature engineering, agregando te'rminos polino'micos
+tambie'n se describen te'cnicas de subdivisio'n de datasets y
+estrategias para mejorar la capacidad de generalizacio'n de los que transformen las variables originales y permitan que la
+modelos.finalmente,seintroducelaregresio'nlog'ısticacomoun relacio'nseaproximemejoraunaformalineal.deestamanera,
+modelo de clasificacio'n binaria, explicando la funcio'n sigmoide, aunque la relacio'n real sea curva, el modelo puede ajustarse
+suderivadayelprocesodeoptimizacio'ndepara'metrosmediante
+con menor error.
+descenso del gradiente.
+2) datos sobresalientes: surgen por ruido, errores de
+indexterms-inteligenciaartificial,regresio'nlineal,regresio'n
+log'ıstica,funcio'nsigmoide,overfitting,underfitting,optimizacio'n medicio'n o datos at'ıpicos y pueden afectar el ajuste del
+modelo. una forma de tratarlos es estandarizar los residuos
+dividiendoentreladesviacio'nesta'ndar.unaveznormalizados,
+i. noticiasdelasemana se mide cua'ntas desviaciones esta'ndar se aleja cada dato. si
+un dato esta' muy lejos (ma's de 2 o 3 desviaciones esta'ndar),
+a. ingenieeer'ıa costa rica
+se considera sobresaliente. otras te'cnicas que vimos fueron el
+un evento de ingenier'ıa que organiza ieee costa rica. rangointercuart'ılico,queeselqueseusaengra'ficosdecaja
+habra' charlas de profesores distinguidos en diversas a'reas y ybigotes,ylawinsorizacio'n,dondeenvezdeeliminardatos
+participacio'n de empresas. [1] at'ıpicos se reemplazan por valores en percentiles l'ımite.
+3) colinealidad: sedacuandodosoma'spredictoresesta'n
+b. referencias falsas en ia
+altamente correlacionados entre s'ı. esto hace dif'ıcil separar
+las"alucinaciones"eninteligenciaartificialsoncuandolos el efecto de cada variable en la prediccio'n, afectando la
+modelos generan referencias aparentemente va'lidas pero que estabilidad de los coeficientes del modelo. en consecuencia,
+en realidad no existen. esto fue debatido en el grupo parma los para'metros estimados se vuelven poco confiables y muy
+del tec y se resalto' la importancia de siempre verificar las sensibles a cambios en los datos. para detectarla, se pueden
+fuentes. la responsabilidad recae en el usuario de confirmar usar medidas como el vif (variance inflation factor). una
+la veracidad de la informacio'n antes de tomarla como cierta. solucio'n comu'n es eliminar variables redundantes o aplicar
+te'cnicas de regularizacio'n.
+c. google nano banana
+b. dataset
+el nuevo modelo de google enfocado en la edicio'n de
+ima'genes que se llama nano banana. a diferencia de otros es el conjunto completo de datos disponibles para entrenar
+generadores que recrean la imagen completa desde cero, este y evaluar un modelo. normalmente se subdivide en diferentes
+modelo conserva mejor los detalles originales y el contexto. partesparapodermedirlacapacidaddegeneralizacio'nyevitar
+as'ı,aleditarunafotomantienelacoherenciaentreiteraciones. problemas como el overfitting.
+se hablo' tambie'n de posibles sesgos en los modelos, al notar
+que repeticiones en ima'genes de personas modificaban rasgos c. training set
+hacia un perfil ma's latino.
+subconjunto usado para entrenar el modelo y ajustar sus
+para'metros. es donde el algoritmo aprende los patrones preii. repasodelaclaseanterior
+sentes en los datos.
+a. potenciales problemas al aplicar una regresio'n lineal
+d. validation set
+1) no linealidad: un supuesto de la regresio'n lineal es
+que la relacio'n entre las variables predictoras y la variable re- subconjunto usado durante el entrenamiento para evaluar
+spuestaeslineal.cuandonosecumple,losresiduosmuestran el rendimiento intermedio del modelo. sirve para medir si
+lo aprendido se generaliza a datos no vistos y para ajustar
+hiperpara'metros.permitedetectarproblemasdesobreajustede
+manera temprana sin necesidad de esperar a la prueba final.
+e. te'cnicas para subdividir el dataset
+1) random sampling: consiste en dividir aleatoriamente
+los datos entre entrenamiento y prueba. es adecuado cuando
+lasclasesesta'nbalanceadas,yaquegarantizarepresentatividad
+sin introducir sesgos. el problema surge si las clases esta'n
+desbalanceadas, porque puede que un subconjunto quede con
+muy pocos o incluso sin ejemplos de alguna clase.
+fig.4. ej.deregresio'ndeunderfitfig.3. ej.deunderfitting
+2) stratified sampling: se usa cuando las clases esta'n ting
+desbalanceadas. mantiene la misma proporcio'n de clases en
+los conjuntos de entrenamiento y prueba. de esta forma, si en 3) caso ideal: el error en training es bajo y tambie'n lo
+el dataset original una clase representa el 90% y otra el 10%, es en validation. el modelo logra ajustarse a los datos sin
+esa relacio'n se conserva en las divisiones. sobreajustarsealruidoypuedegeneralizarbienaejemplosno
+3) k-fold cross-validation: el conjunto de entrenamiento vistos. representa un buen equilibrio entre sesgo y varianza.
+se divide en k partes (folds). en cada iteracio'n se usa
+k -1 folds para entrenar y el fold restante para validar. el
+proceso se repite k veces, rotando el fold de validacio'n. esto
+permite aprovechar mejor los datos disponibles y obtener una
+evaluacio'n ma's robusta del modelo.
+f. posibles escenarios de comportamiento de training y validation
+1) overfitting: el error en training es bajo pero el error
+en validation comienza a aumentar despue's de cierto punto.
+el modelo memoriza los datos de entrenamiento en lugar de
+aprenderpatronesgenerales.secapturatambie'nelruidodelos
+fig.5. ej.delcasoideal fig.6. ej.deregresio'ndelcasoideal
+datos,loqueprovocaquenopuedageneralizar.secaracteriza
+por tener alta varianza.
+4) bias-variance tradeoff: es un caso su'per raro porque
+el error en training es alto pero el error en validation es bajo.
+si sucede, puede deberse a errores de ca'lculo o valores mal
+tomados, no a un aprendizaje real del modelo.
+iii. altobias
+se presenta cuando el modelo es demasiado simple y
+no logra capturar el patro'n real de los datos, provocando
+underfitting. tanto el error en training como en validation
+son altos, ya que el modelo asume demasiado sobre la forma
+de los datos.
+fig.1. ej.deoverfitting fig.2. ej.deregresio'ndeoverfitting a. causas
+- modelo demasiado simple (ej. lineal para datos con
+una te'cnica para evitarlo es el early stopping, que consiste relaciones cuadra'ticas).
+en detener el entrenamiento en la e'poca donde el error de - no se utilizan todas las variables relevantes.
+validacio'n empieza a empeorar. - los features disponibles no son buenos predictores de la
+2) underfitting: tanto el error en training como en val- variable objetivo.
+idation son altos. el modelo no logra aprender patrones de
+b. posibles soluciones
+los datos porque es demasiado simple o incorrecto para el
+problema. se caracteriza por alto sesgo, es decir, asume una - incrementar la complejidad del modelo (por ejemplo,
+forma equivocada de los datos (por ejemplo, usar un modelo pasar de lineal a cuadra'tico o a un modelo ma's flexible).
+lineal para datos con comportamiento cuadra'tico). - incorporar ma's features o transformar los existentes.
+- sustituirorecolectarmejoresfeaturesquerepresentende
+manera adecuada el problema.
+iv. altavarianza
+se presenta cuando el modelo se ajusta demasiado a los
+datos de entrenamiento pero falla al generalizar en el conjuntodevalidacio'n.estoprovocaoverfitting,dondepequen˜as
+variaciones en los datos de entrada pueden generar malas
+predicciones.
+fig.7. regresio'nlinealvslog'ıstica
+a. causas
+b. distribucio'n de bernoulli
+- el modelo es demasiado complejo y aprende patrones
+irrelevantes o ruido. cada etiqueta y es una variable aleatoria que sigue una
+i
+- exceso de dimensionalidad: agregar muchas variables distribucio'n de bernoulli. la probabilidad de que ocurra el
+aumenta el riesgo de overfitting. evento (y =1) o no ocurra (y =0) se define como:
+- muy pocos ejemplos en el conjunto de entrenamiento,
+especialmente en problemas con clases desbalanceadas.
+p(y =k)=pk(1-p)1-k, k ∈{0,1}
+b. posibles soluciones donde:
+- reducirlacomplejidaddelmodelo(ej.usarmenoscapas - p es la probabilidad de e'xito (y =1).
+o un modelo ma's simple). - k es la etiqueta observada (0 o 1).
+- disminuir la dimensionalidad eliminando variables irrelas'ı, si k = 1, la probabilidad es p; y si k = 0, la
+evantes.
+probabilidad es 1-p.
+- obtener ma's ejemplos de entrenamiento para mejorar la
+representacio'n de todas las clases.
+vi. funcio'nsigmoide
+- aplicar te'cnicas de regularizacio'n que penalizan la complejidad del modelo, como: lafuncio'nsigmoideesunaherramientaclaveporqueintroducenolinealidadalmodeloytieneunrangodesalidaentre
+- l1 y l2 (penalizacio'n sobre los para'metros).
+0 y 1, lo cual la hace ideal para trabajar con probabilidades.
+- dropout (apagar ciertas neuronas durante el entrenamiento). se define como:
+1
+σ(x)=
+v. regresio'nlog'istica 1+e-x
+al tomar valores de entrada muy negativos, la salida se
+aunque su nombre incluya "regresio'n", la regresio'n
+acerca a 0; mientras que con valores grandes y positivos, se
+log'ıstica es un modelo de clasificacio'n, no de regresio'n.
+acerca a 1.
+se utiliza principalmente para problemas binarios, donde las
+etiquetas y toman los valores 0 o 1.
+a. diferencia con la regresio'n lineal
+- en regresio'n lineal se predicen valores continuos en los
+reales (r).
+- en regresio'n log'ıstica se predice la probabilidad de
+pertenecer a una clase u otra. el resultado final es una
+clasificacio'n: 0 o 1.
+por ejemplo, con una variable como el taman˜o de una
+calabaza:
+fig.8. gra'ficadelafuncio'nsigmoide
+- regresio'nlineal:prediceelprecioaproximadoenvalores
+reales. adema's,elargumentoxpuedesercualquiervaloroincluso
+- regresio'n log'ıstica: predice si la calabaza es naranja (1) otrafuncio'n(composicio'ndefunciones),loquedaflexibilidad
+o no lo es (0). para modelar relaciones ma's complejas.
+la idea es tomar la salida de un modelo lineal y conver- en regresio'n lineal usamos el error cuadra'tico medio
+tirla en una probabilidad. si partimos de una funcio'n lineal (mse), pero en clasificacio'n esto deja de ser u'til, porque ya
+f (x)=wx+b,alaplicarlelafuncio'nsigmoideobtenemos: no predecimos valores continuos, sino probabilidades.
+w,b
+el procedimiento general sigue siendo el mismo:
+1
+yˆ=σ(f (x))=
+w,b 1+e-(wx+b) - definimos una funcio'n de pe'rdida l apropiada para
+probabilidades.
+de esta forma: - calculamos sus derivadas respecto a w y b.
+- si yˆ<0.5, se clasifica como 0. - usamos esas derivadas en el algoritmo de descenso del
+- si yˆ≥0.5, se clasifica como 1. gradiente,iterandosobrelosdatosdeentrenamientopara
+ir actualizando los para'metros y minimizar la pe'rdida.
+esto convierte la regresio'n log'ıstica en un modelo de
+clasificacio'n binaria. queremos hacerlo as'ı porque calcular
+c. derivada de la funcio'n sigmoide
+una funcio'n lineal es simple computacionalmente, es un buen
+me'todo para mantener la relacio'n entre variables y pesos y
+1
+permite modelar problemas con mayor complejidad. σ(x)=
+1+e-x
+a. diagrama computacional de la regresio'n log'ıstica
+1′-(1+e-x)-1-(1+e-x)′
+σ′(x)=
+(1+e-x)2
+e-x
+σ′(x)=
+(1+e-x)2
+e-x+1-1
+σ′(x)=
+(1+e-x)2
+e-x+1 1
+σ′(x)= -
+(1+e-x)2 (1+e-x)2
+fig.9. diagrama
+1 1
+σ′(x)= -
+1) los inputs (features) x ingresan junto con un vector de 1+e-x (1+e-x)2
+pesos w y un bias b.
+2) secalculaelproductopuntoentreelvectorxyelvector 1 (cid:18) 1 (cid:19)
+σ′(x)= - 1w. 1+e-x 1+e-x
+3) se le aplica la funcio'n no lineal σ(z), obteniendo como
+salida una probabilidad.
+σ′(x)=σ(x)(1-σ(x))
+4) finalmente,estaprobabilidadsecomparaconunumbral
+para asignar una etiqueta de clase (0 o 1).
+d. hallar la funcio'n de pe'rdida
+en algunos textos, al valor lineal z = wx + b se le
+llama pre-activacio'n, y a la aplicacio'n de la sigmoide se le ¿mse? esto y ma's en la siguiente clase.
+llama activacio'n. la salida de la activacio'n corresponde a la
+probabilidad estimada yˆ. vii. conclusio'n
+en esta clase se reforzaron conceptos esenciales para
+b. optimizacio'n
+comprender co'mo los modelos de aprendizaje supervisado
+nuestroobjetivoesoptimizarlospara'metroswybparaque aprenden a partir de datos. se revisaron las limitaciones de
+el modelo aprenda correctamente. tenemos: la regresio'n lineal y los problemas comunes asociados al
+sesgo y la varianza, as'ı como te'cnicas para evaluar y mejorar
+1
+yˆ=σ(f w,b (x))= 1+e-(wx+b) la generalizacio'n de los modelos. adema's, se introdujo la
+regresio'n log'ıstica como un modelo de clasificacio'n, destapara ajustar los para'metros, necesitamos calcular las cando el papel de la funcio'n sigmoide y su derivada en el
+derivadas parciales de la funcio'n de pe'rdida respecto a w y proceso de optimizacio'n. estos fundamentos sientan la base
+b. sin embargo, antes de derivar, debemos definir una funcio'n para profundizar en funciones de pe'rdida espec'ıficas y en el
+de pe'rdida adecuada. entrenamiento de modelos ma's complejos en futuras sesiones.
+referencias
+[1] ieee costa rica. "ingenieeer'ıa costa rica." [en l'ınea]. disponible:
+https://r9.ieee.org/costarica/ingenieeeria
+[2] a. shervine. "hoja de referencia de aprendizaje automa'tico." stanford university. [en l'ınea]. disponible:
+https://stanford.edu/∼shervine/l/es/teaching/cs-229/
+hoja-referencia-aprendizaje-automatico-consejos-trucos

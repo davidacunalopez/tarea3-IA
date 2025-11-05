@@ -1,0 +1,196 @@
+apuntes ia clase 14/10/2025
+juan jime'nez valverde
+escuela de ingenier'ıa en computacio'n
+instituto tecnolo'gico de costa rica
+cartago, costa rica
+juand0908@estudiantec.cr
+abstract-estedocumentoresumelosconceptosclavevistosen c. stride, padding y ca'lculo de dimensiones
+laclasedeinteligenciaartificialsobreredesneuronalesconvolucionales(cnn)yautoencoders.seabordantemasfundamentales - stride: indica cua'ntos pasos da el filtro al desplazarse
+comolosfiltros,camposreceptivos,stride,paddingylascapasde sobre la imagen. un stride mayor reduce el taman˜o de la
+pooling, as'ı como las arquitecturas cla'sicas de cnn, entre ellas salida.
+lenet,alexnet,zfnet,googlenet,vgg16,resnetydensenet. - padding:agregap'ıxeles(usualmenteceros)alrededorde
+adema's, se presentan consideraciones pra'cticas para el ana'lisis
+la imagen de entrada para controlar el taman˜o de salida
+de modelos de aprendizaje profundo, como la visualizacio'n de
+activaciones, los embeddings de caracter'ısticas y la estructura y preservar dimensiones. el padding sime'trico t'ıpico se
+de los autoencoders, incluyendo sus aplicaciones en reduccio'n calcula como:
+de dimensionalidad, deteccio'n de anomal'ıas y procesamiento (k-1)
+de ima'genes. el objetivo es ofrecer una visio'n general clara y p=
+2
+concisa,u'tiltantoparaelestudioteo'ricocomoparalaaplicacio'n
+pra'ctica. donde k es el taman˜o del kernel.
+index terms-redes neuronales convolucionales, autoencoders, visualizacio'n de activaciones, embeddings, pooling, ar- el taman˜o de salida se calcula con:
+quitecturas de aprendizaje profundo
+(m-k+2p)
+dimensio'n de salida= +1
+i. introduccio'n s
+las redes neuronales convolucionales (cnn) se han condonde: m es el taman˜o de la entrada, k el taman˜o del kernel,
+vertido en un pilar fundamental de la visio'n por computadora
+p el padding aplicado y s el stride.
+moderna, ya que permiten extraer automa'ticamente caracter'ısticas jera'rquicas a partir de ima'genes. comprender sus
+d. pesos y arquitectura de alexnet
+mecanismosinternos,incluyendolosfiltros,loscamposreceptivos,elstride,elpaddingylasoperacionesdepooling,resulta
+en redes convolucionales se utilizan pesos compartidos,
+esencial para disen˜ar arquitecturas eficientes e interpretar el
+lo que reduce dra'sticamente el nu'mero de para'metros, ya que
+comportamiento de los modelos.
+el mismo conjunto de filtros se aplica en todas las posiciones
+por su parte, los autoencoders complementan el uso de las
+espaciales.enlaarquitecturadealexnet,porejemplo,seemcnn al aprender representaciones compactas de los datos sin
+plean96filtrosenlaprimeracapaconvolucional,permitiendo
+requeriretiquetas,loqueloshaceidealesparatareasdeaprenextraer mu'ltiples caracter'ısticas visuales de forma eficiente.
+dizaje no supervisado como la reduccio'n de dimensionalidad,
+la deteccio'n de anomal'ıas y la reconstruccio'n de ima'genes.
+e. pooling layer
+este documento sintetiza los principales conceptos y arquitecturas revisados en clase, sirviendo como material de despue's de las convoluciones, se aplica la capa de pooling,
+referencia para la comprensio'n y aplicacio'n pra'ctica de estos que resume la informacio'n espacial (alto y ancho) sin alterar
+modelos en inteligencia artificial. la cantidad de canales. existen dos tipos principales:
+ii. repasodelaclaseanterior - max pooling: conserva el valor ma'ximo de cada regio'n.
+a. filtros o kernels - average pooling: calcula el promedio de los valores en
+la regio'n.
+sonmatrices(porejemplo,de3×3o5×5)quesedeslizan
+sobre la imagen para aplicar convoluciones. el gaussian dada una entrada de taman˜o w ×h ×d, el pooling reduce
+kernel se utiliza para suavizar la imagen y eliminar ruido. w y h, manteniendo d.
+b. campo receptivo
+f. fully-connected layer
+es la regio'n local de la imagen a la que una neurona esta'
+conectada. por ejemplo, para una entrada de 32×32×3 y un finalmente, las caracter'ısticas extra'ıdas se transforman en
+campo receptivo de 5×5, cada neurona tendra' 5×5×3=75 un u'nico vector, conectando todas las neuronas entre s'ı. esta
+pesos. capa permite realizar la clasificacio'n final del modelo.
+g. arquitecturas convolucionales
+una red convolucional combina secuencias de convolucio'n
+→activacio'n(relu)→pooling.estepatro'nserepitevarias
+veces para extraer informacio'n progresivamente ma's abstracta
+de la imagen. generalmente, se prefieren filtros pequen˜os
+(como 3 × 3) para capturar detalles locales de forma ma's
+eficiente.
+el convolutional stack se forma al aplicar mu'ltiples capas
+de convolucio'n consecutivas. por ejemplo, en una imagen de
+5×5,unfiltro3×3puededesplazarseparagenerarunasalida
+de 3×3.
+regla pra'ctica: las dimensiones de las ima'genes deben
+ser divisibles entre 2, lo cual facilita la reduccio'n progresiva
+mediante pooling.
+h. principales arquitecturas
+1) lenet: disen˜ada por yann lecun et al. (1998), fue una
+fig.1. representacio'ndeembeddingsmediantet-sne.
+de las primeras redes convolucionales exitosas. cuenta con 5
+capas: dos convolucionales, dos de pooling y una totalmente
+conectada [1]. su estructura sirvio' de base para las redes
+profundas. los features aprendidos por las capas internas
+modernas.
+suelen ser dif'ıciles de entender por los humanos, lo que
+2) alexnet: propuesta por krizhevsky, sutskever y hinton
+complica saber que' esta' "viendo" realmente el modelo.
+(2012), marco' un hito en la visio'n por computadora. procesa
+2) visualizacio'n y ana'lisis de activaciones: una forma de
+ima'genes de 224×224 con filtros grandes (11×11, 5×5,
+entender mejor el funcionamiento interno es observar:
+3×3) y cinco capas convolucionales. popularizo' el uso de
+relu, dropout y la utilizacio'n de mu'ltiples gpus para el - visualizacio'n de activaciones: muestra que' regiones de
+la imagen activan ciertas neuronas.
+entrenamiento [2].
+3) zfnet: basada en alexnet, reduce la profundidad y - visualizacio'n de filtros: permite observar los pesos
+de los kernels. en las primeras capas, estos muestran
+taman˜o de los filtros para analizar co'mo afectan las capas
+patronesreconocibles(bordes,colores,texturas),mientras
+a la representacio'n interna. sirvio' como experimento para
+que en capas profundas se vuelven ma's abstractos.
+visualizar activaciones intermedias y optimizar arquitecturas.
+4) googlenet (inception): reduciendo los ma's de 60 mil- estosme'todosayudanadetectarsielmodeloesta' aprendiendo
+lonesdepara'metrosdealexnetaunos4millones,googlenet caracter'ısticas relevantes o solo ruido.
+introdujo los mo'dulos inception [3]. cada mo'dulo combina 3) embeddings y reduccio'n de dimensionalidad: las reconvoluciones de diferentes taman˜os (1 × 1, 3 × 3, 5 × 5) des pueden transformar ima'genes en representaciones vectorijunto con max pooling, concatenando sus resultados. al final, ales llamadas embeddings. estas representaciones condensan
+la salida (7×7×1024) se aplana y se pasa a un average la informacio'n relevante de una imagen, permitiendo separar
+pooling de 1×1×1024. clases en el espacio de caracter'ısticas. al reducir la dimen5) vgg16: caracterizada por su simplicidad, utiliza sionalidad (manteniendo las distancias relativas), podemos
+u'nicamente filtrosde 3×3 yaumenta la profundidad hasta16 visualizar las relaciones entre clases.
+capas.estaarquitecturademostro' queaumentarlaprofundidad una te'cnica comu'n para ello es t-sne, que proyecta estos
+mejora el rendimiento si se mantienen filtros pequen˜os y vectores a dos dimensiones preservando la estructura del
+consistentes. espacio original (fig. 1).
+6) resnet: introduce las conexiones residuales, que per- 4) mapasdeactivacio'n: adema'sdelasvisualizacionesde
+miten el paso de informacio'n entre capas no adyacentes. esto filtros, es posible generar mapas de activacio'n o heatmaps
+evita la degradacio'n del gradiente en redes muy profundas y que muestran que' regiones espec'ıficas de la imagen influyen
+mejora la capacidad de entrenamiento. ma's en la decisio'n del modelo. estas te'cnicas son u'tiles,
+7) densenet: conecta cada capa con todas las anteriores, por ejemplo, en aplicaciones me'dicas para resaltar fracturas
+favoreciendo la reutilizacio'n de caracter'ısticas y reduciendo o anomal'ıas en radiograf'ıas.
+la cantidad de para'metros necesarios. este enfoque mejora la
+b. autoencoders
+eficiencia y el flujo de informacio'n a lo largo de la red.
+aunqueutilizanarquitecturassimilaresalasredesconvoluiii. materiadeclase
+cionales, los autoencoders trabajan sin etiquetas expl'ıcitas,
+a. problemas en las redes neuronales convolucionales
+porloqueseconsideranme'todosnosupervisados.suobjetivo
+1) explicabilidad del modelo: uno de los principales de- es reconstruir la entrada original, aprendiendo una represaf'ıos actuales es la falta de interpretabilidad en las redes sentacio'n interna comprimida.
+iv. partesdelautoencoder
+los autoencoders se componen de tres partes principales:
+el encoder, el cuello de botella y el decoder. cada una
+cumple una funcio'n espec'ıfica en el proceso de codificacio'n
+y reconstruccio'n de los datos.
+a. encoder
+el encoder esta' formado por un conjunto de bloques convolucionales seguidos de mo'dulos de pooling. su funcio'n
+principal es extraer las caracter'ısticas ma's relevantes de la
+imagendeentradaycomprimirlainformacio'n.laexpectativa
+del encoder es aprender informacio'n importante de la entrada
+mediante un proceso de downsampling, reduciendo la dimensionalidad y conservando los rasgos esenciales.
+b. cuello de botella
+el cuello de botella constituye la parte ma's importante y
+fig.2. estructuraba'sicadeunautoencoder. pequen˜a del modelo. representa la informacio'n comprimida
+en un espacio latente, donde se encuentran codificadas las
+caracter'ısticas ma's significativas. esta capa restringe el flujo
+el proceso consta de tres partes, como se muestra en la de informacio'n proveniente del encoder al decoder, limitando
+fig. 2: la cantidad de datos que pueden ser reconstruidos.
+1) encoder: reduce la imagen a un vector compacto.
+c. decoder
+2) espacio latente: contiene la representacio'n esencial o
+el decoder esta' compuesto por una serie de convoluciones
+codificada de la entrada.
+que realizan upsampling para reconstruir la imagen original a
+3) decoder: reconstruye la imagen original a partir del
+partir del vector latente. en pytorch, esta tarea suele implevector latente.
+mentarse mediante capas convtranspose2d. el objetivo
+1) tareas comunes de un autoencoder:
+del decoder es generar una salida lo ma's fiel posible a la
+- reduccio'n de dimensionalidad: genera una repre- entrada original.
+sentacio'n ma's compacta y poderosa que pca, conserd. hiperpara'metros a considerar
+vando la informacio'n esencial.
+el desempen˜o del autoencoder depende en gran medida de
+- deteccio'n de anomal'ıas: se entrena para reconstruir
+los hiperpara'metros seleccionados, entre los que destacan:
+datos de una tarea tomando en cuenta u'nicamente ejemplos positivos o normales. por ejemplo: - taman˜o de la codificacio'n (vector latente): determina
+el nivel de compresio'n de los datos. un taman˜o menor
+- transferencias bancarias correctas.
+implica mayor compresio'n, pero puede perderse infor-
+- audio o ima'genes de alta fidelidad sin defectos.
+macio'n relevante.
+el modelo aprende la representacio'n latente de estos ca-
+- nu'mero de capas: define la profundidad del encoder
+sosy,alpresentarleejemplosano'malos,sureconstruccio'n
+y del decoder. un nu'mero mayor de capas genera un
+falla, evidenciando la anomal'ıa.
+modelo ma's complejo y con mayor capacidad de repre-
+- procesamiento de ima'genes (fig. 3): permite tareas sentacio'n, mientras que un nu'mero menor lo hace ma's
+como compresio'n, eliminacio'n de ruido o incluso super
+ra'pido pero menos preciso.
+resolucio'n, es decir, generar ima'genes de alta resolucio'n
+a partir de versiones borrosas o pequen˜as. v. conclusiones
+durante la clase se destacaron los componentes esenciales
+estos principios sientan las bases de los algoritmos generay las arquitecturas principales de las redes neuronales contivosmodernos,dondeelmodeloaprendeareconstruirocrear
+volucionales, explicando co'mo las capas, filtros y operaciones
+contenido visual de forma auto'noma.
+de pooling trabajan en conjunto para extraer informacio'n
+relevante de las ima'genes. la visualizacio'n de activaciones
+y embeddings permite comprender mejor el funcionamiento
+interno de los modelos profundos, mejorando su interpretabilidad y facilitando el diagno'stico de su desempen˜o.
+asimismo, los autoencoders se presentaron como herramientas potentes dentro del aprendizaje no supervisado, capacesdecomprimirinformacio'n,detectaranomal'ıasymejorar
+fig.3. procesamientodeima'genes la calidad de las ima'genes mediante su reconstruccio'n.
+dominar estos conceptos proporciona una base teo'rica y
+pra'cticaso'lidaparaeldisen˜o,ana'lisisyaplicacio'nefectivade
+modelos de aprendizaje profundo en distintos contextos.
+references
+[1] y.lecun,l.bottou,y.bengio,andp.haffner,"gradient-basedlearning
+appliedtodocumentrecognition,"proceedingsoftheieee,vol.86,no.
+11,pp.2278-2324,1998.
+[2] a. krizhevsky, i. sutskever, and g. hinton, "imagenet classification
+withdeepconvolutionalneuralnetworks,"advancesinneuralinformationprocessingsystems(nips),pp.1097-1105,2012.
+[3] c.szegedyetal.,"goingdeeperwithconvolutions,"proceedingsofthe
+ieeeconferenceoncomputervisionandpatternrecognition(cvpr),
+pp.1-9,2015.

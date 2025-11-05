@@ -1,0 +1,100 @@
+apuntes semana 12 - modelos de lenguaje
+extensos y sistemas avanzados
+(llms, rag y agentes inteligentes)
+fernando daniel brenes reyes
+escuela de ingeniería en computación
+instituto tecnológico de costa rica
+cartago, costa rica
+21 de octubre
+2020097446@estudiantec.cr
+resumen-el presente documento contiene un repaso y am- ii-b. embeddings y espacios vectoriales
+pliación de los conceptos fundamentales de los modelos de
+lenguaje extensos (llms), su representación del conocimiento una vez tokenizados, los ids numéricos se convierten en
+mediante la tokenización y los embeddings en espacios vec- embeddings, que son representaciones numéricas densas en
+toriales. se detalla la evolución del llm tradicional hacia
+un espacio continuo de alta dimensión.
+arquitecturas avanzadas como retrieval-augmented generation
+(rag), que resuelve las limitaciones de conocimiento estático, y captura semántica: los embeddings capturan el siglosagentesinteligentes,queintegranmemoria,planificaciónyla
+nificado y las relaciones contextuales entre palabras u
+capacidad de ejecutar acciones autónomas, reflejando el estado
+oraciones completas.
+del arte en la inteligencia artificial contextual y adaptable.
+indexterms-llm,rag,agentesinteligentes,tokenización, proximidad: las palabras con significados similares se
+embeddings, aprendizaje contextual. ubican próximas en el espacio vectorial.
+operaciones: este espacio permite realizar operacioi. introducción nes semánticas, como analogías (por ejemplo, rey -
+los modelos de lenguaje extensos (llms) se han hombre+mujer ≈reina).
+consolidado como la base de los sistemas modernos de inte- para medir la similitud entre dos vectores a y b en rn, la
+ligencia artificial generativa (iag). estos modelos no solo similitud del coseno es la métrica más utilizada:
+generan texto, sino que también permiten la comprensión y el
+razonamientosobretexto,códigoyotrainformacióncompleja. a-b
+sim(a,b)= (1)
+aunque son potentes, los llms poseen un conocimiento ||a||||b||
+limitado a sus datos de entrenamiento (estático) y pueden
+incurrir en alucinaciones. para superar estas barreras, se han
+desarrollado enfoques como retrieval-augmented generation
+(rag) y los agentes inteligentes.
+ii. fundamentosdellmsyrepresentación
+ii-a. tokenización: de la palabra al número
+para que los llms puedan computar con el lenguaje,
+el texto de entrada debe convertirse en una representación
+numérica. el proceso de tokenización transforma palabras,
+signos o símbolos en unidades mínimas llamadas tokens,
+asignando a cada una un id numérico único.
+existen múltiples estrategias de tokenización, cada una
+optimizada para un objetivo distinto:
+por palabra: ofrece simplicidad.
+porcarácter:permitemanejarsímbolosopalabrasfuera
+del vocabulario (oov).
+subpalabra (bpe, wordpiece): logra un equilibrio
+óptimoentreeltamañodelvocabularioylapreservación figura1. representacióntridimensionaldetokens(realeza).
+del contexto.
+ii-c. capacidades emergentes
+el entrenamiento masivo de los llms les confiere capacidades avanzadas que emergen sin haber sido entrenados
+directamente para ellas:
+razonamiento y planificación.
+aprendizajeenelprompt(in-contextlearning):adaptan el comportamiento a partir de ejemplos dados en la
+entrada.
+multitarea: realizan traducción, clasificación y codificación sin reentrenamiento.
+iii. retrieval-augmentedgeneration(rag)
+rag es un paradigma que conecta un llm con un mó- figura3. agenteinteligente.
+dulo de recuperación (retriever) para inyectar conocimiento
+externo, actualizado y verificable durante la generación de
+respuestas. iv. dellmaagenteinteligente
+los agentes inteligentes basados en llms superan la
+iii-a. proceso y flujo de rag
+pasividaddelossistemasrag.estosagentespuedenrazonar,
+1. preparación (chunking): los documentos se dividen planificar y actuar de manera autónoma, interactuando con
+en fragmentos (chunks), que suelen contener entre 200 el mundo real mediante herramientas externas.
+y 500 tokens, a menudo con overlap para preservar el
+iv-a. componentes clave del agente
+contexto.
+2. indexación: cada chunk se convierte en un embedding 1. memoria: permite mantener coherencia y contexto a lo
+y se almacena en una base de datos vectorial (por largo del tiempo.
+ejemplo, faiss, qdrant, pinecone). corto plazo: ventana de contexto del modelo.
+3. consulta y recuperación: la pregunta del usuario se largo plazo: bases de datos externas, incluyendo
+transforma en un embedding, se calcula la similitud sistemas rag para la recuperación contextual.
+con los vectores indexados y se seleccionan los top-k 2. planificación:permitedescomponerproblemascomplechunks más cercanos semánticamente. jos en pasos y razonar sobre ellos.
+4. aumento y generación: los chunks recuperados se
+chains of thought (cot): razonamiento secuenintegran en una plantilla estructurada (prompt) como
+cial.
+contexto adicional, asegurando que la respuesta del
+trees of thought (tot):exploracióndemúltiples
+llm sea precisa y fundamentada.
+caminos de razonamiento antes de decidir.
+iii-b. ventajas y limitaciones 3. acción: capacidad de ejecutar tareas concretas mediante herramientas externas (apis, buscadores, sistemas
+rag ofrece la reducción de alucinaciones, la actuarag). por ejemplo, un agente puede acceder a un
+lización continua del conocimiento y la aplicabilidad en
+sistemaderecursoshumanospararesponder:"¿cuántos
+dominios especializados. no obstante, los sistemas rag sidías de vacaciones me quedan?".
+guen siendo pasivos; su función se limita a complementar la
+respuesta del llm con datos recuperados. iv-b. escalamiento responsable
+la implementación de agentes requiere evaluar cuándo es
+necesarialacomplejidaddeunsistemamultiagente.escrucial
+garantizar la seguridad, privacidad y el uso ético de los
+datos, diseñando los agentes bajo principios de transparencia
+y responsabilidad.
+referencias
+[1] pacheco portuguez, s. (2025). presentación del curso de inteligencia
+artificial.institutotecnológicodecostarica.
+figura2. diagramadelflujodeunsistemarag,desdelaindexaciónhasta
+lageneracióndelarespuesta.

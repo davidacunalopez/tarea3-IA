@@ -1,0 +1,260 @@
+inteligencia artificial
+apuntes del 28 de agosto de 2025 - semana 4
+juan diego jiménez valverde - 2019199111
+juand0908@estudiantec.cr
+abstract-estos apuntes resumen la clase del 28 de agosto de b. regresión lineal
+2025, en la que se analizaron noticias recientes sobre modelos
+concepto básico
+de lenguaje y sus impactos socioeconómicos, así como conceptos
+matemáticos clave para algoritmos de aprendizaje supervisado. - busca construir un modelo estadístico lineal.
+se cubrieron temas como knn, regresión lineal, funciones de - la relación entre variables debe representarse como una
+pérdida,derivadas,descensodelgradienteysusvariantes,epochs recta.
+ybatches,yladiferenciaentremseymae.elresumenenfatiza
+larelaciónentreteoríayprácticaenlaoptimizacióndemodelos - si no es lineal, cae en otra categoría de modelos.
+predictivos. variables
+index terms-modelos de lenguaje, aprendizaje supervisado,
+- variable dependiente (y): valor que queremos predecir.
+knn, regresión lineal, mse, descenso del gradiente, optimización, epochs, batches. - variable independiente (x): valor usado para explicar/predicir.
+i. introducción - x: vector d-dimensional (características o features).
+la clase del 28 de agosto de 2025 se centró primero en - w: vector d-dimensional (pendientes/pesos).
+discutircómolosavancesenmodelosdelenguaje,desdesmall - b: número real (intersección con el eje y).
+language models hasta llms, están afectando el empleo modelo
+y la economía, especialmente en ocupaciones susceptibles f w,b (x)=w-x+b
+de automatización. luego, se abordaron los fundamentos
+- f(x): predicción del modelo.
+matemáticos que sustentan algoritmos de aprendizaje super-
+- w-x: producto punto → asegura que el resultado sea un
+visado, incluyendo knn y regresión lineal, así como las
+escalar.
+herramientas necesarias para evaluar y optimizar modelos,
+- interpretación: combinación lineal de características.
+como funciones de pérdida, derivadas, descenso del gradiente
+parámetros del modelo
+y sus variantes (batch, stochastic y mini-batch), epochs y
+batches, y la comparación entre mse y mae. lo que sigue - f: vector de variables independientes.
+son mis apuntes y reflexiones personales sobre estos temas, - w: pendientes.
+explicando cómo los entendí y cómo se aplican en la práctica - b: intersección con el eje y.
+de la modelación predictiva. - modelo parametrizado por w y b.
+- objetivo: encontrar valores óptimos de w y b que permiii. noticiasdeldía
+tan predicciones más acertadas.
+se mencionaron dos trabajos importantes: primero, un - óptimo ̸= perfecto, siempre existe error.
+artículo que argumenta que small language models (slms) - restricción: solo se pueden modificar w y b, el x es fijo
+pueden ser más prácticos que llms en muchos despliegues (sample).
+por costo y adaptabilidad; y segundo, un estudio que muestra función de pérdida
+efectos tempranos de la ia generativa en el empleo, espe-
+- midequétanbienomalestáfuncionandoelmodelo(qué
+cialmente perjudicando a jóvenes en ocupaciones altamente
+tan lejos están las predicciones de los valores reales).
+automatizables. estas observaciones nos ayudaron a contextuplot residual
+alizarporquélaeficienciacomputacionalylainterpretabilidad
+son temas relevantes hoy. [1], [2] - un residual es la diferencia entre el valor real y la
+predicción.
+iii. repaso:conceptosclave - el plot residual muestra gráficamente esas diferencias
+a. knn - k nearest neighbor para analizar la calidad del ajuste.
+knn es un algoritmo lazy (perezoso): no aprende un
+c. función de costo: error cuadrático medio (mse)
+modelo global, simplemente guarda los datos y en tiempo de
+definición
+consulta busca los k vecinos más cercanos.
+k: es el hiperparámetro a seleccionar. 1 (cid:88) n
+l= (f (x )-y )2
+ventajas: sencillo, interpretable, sin entrenamiento costoso. n w,b i i
+desventajas: costoso en memoria y consulta; sensible a la i=1
+escala de las features. conceptos clave
+- lossfunction:(f w,b (x i )-y i )2 midelapenalidadoerror importancia del α (learning rate)
+de cada ejemplo individual. - el tamaño del paso α debe ser pequeño (ejemplo: 0.1)
+- error cuadrático: penaliza más los errores grandes. para no sobrepasar el mínimo.
+- cost function: promedio de la loss function en todo el - al acercarnos al mínimo, los saltos se reducen porque el
+dataset;esunamedidaglobaldeldesempeñodelmodelo. gradiente disminuye.
+- objetivo: minimizar l ajustando los parámetros w y b. - un α muy grande puede provocar oscilaciones o incluso
+interpretación alejarse del mínimo.
+- l pequeño → mejor modelo. - un α demasiado pequeño ralentiza la convergencia.
+- l grande → peor modelo. nota
+- reducir l implica mejorar la capacidad predictiva del - el learning rate (α) es un hiperparámetro que debe
+modelo. seleccionarse cuidadosamente.
+funciones convexas vs. no convexas
+- convexa: garantiza un único mínimo global.
+- no convexa: pueden aparecer mínimos locales y globales.
+d. repaso de derivadas
+reglas básicas
+- f(x)=k ⇒ f′(x)=0
+ejemplo: f(x)=2 ⇒ f′(x)=0
+fig.1. impactodellearningrateengradientdescent
+- f(x)=x ⇒ f′(x)=1
+- f(x)=kx ⇒ f′(x)=k f. ¿por qué usar mse y no mae?
+ejemplo: f(x)=2x ⇒ f′(x)=2 el mean squared error (mse) es más utilizado que el
+potencias mean absolute error (mae) en optimización con descenso
+- f(x)=xn ⇒ f′(x)=nxn-1 del gradiente porque:
+ejemplo: f(x)=x2 ⇒ f′(x)=2x - la función mse es suave (diferenciable en todos sus
+suma puntos), lo que permite calcular derivadas de forma
+- f(x)=u(x)+v(x) ⇒ f′(x)=u′(x)+v′(x) sencilla y aplicar métodos basados en gradiente.
+ejemplo: u(x) = 2x, v(x) = 3x ⇒ f(x) = - en contraste, la función mae no es diferenciable en
+5x, f′(x)=5 0 (presenta una esquina), lo que complica el uso de
+derivadas directas y hace más difícil la optimización con
+producto
+gradiente puro.
+- f(x)=u(x)v(x) ⇒ f′(x)=u′(x)v(x)+u(x)v′(x) - gracias a su naturaleza cuadrática, el mse penaliza más
+constante sumada fuertemente los errores grandes, favoreciendo un ajuste
+- f(x)=u(x)+z ⇒ f′(x)=u′(x) más preciso en esos casos.
+ejemplo: f(x)=2x+5 ⇒ f′(x)=2 error cuadrático medio (mse):
+derivadas parciales n
+- sea f(x,y)=2x+3y mse = n 1 (cid:88) (f w,b (x i )-y i )2
+i=1
+∂f ∂f
+=2, =3
+∂x ∂y
+e. descenso del gradiente
+concepto básico
+- la cantidad de pasos se calcula como: pendiente × α
+(learning rate).
+- ejemplo: si x=1, el gradiente es dy =2x=2.
+dx
+- para acercarnos al mínimo, nos movemos en la dirección
+del gradiente negativo con un paso de tamaño α.
+regla de actualización
+fig.2. mse
+x =x -α-(2x)
+nuevo antiguo
+error absoluto medio (mae):
+- donde 2x es el gradiente.
+n
+- el proceso se repite hasta que el gradiente sea 0 (punto mae = 1 (cid:88) |f (x )-y |
+de mínimo). n w,b i i
+i=1
+∂
+(wx +b-y )=0+1-0=1.
+∂b i i
+sustituyendo (forma idéntica a la de tu imagen, antes de
+simplificar):
+∂ℓ i =2 (cid:0) (wx +b)-y (cid:1) -1.
+∂b i i
+forma final por muestra:
+fig.3. mae ∂ ∂ ℓ b i =2 (cid:0) (wx i +b)-y i (cid:1) .
+iv. materialdeclase sumando y normalizando para el mse completo:
+a. derivadasdelafuncióndepérdida(mse)-notacióncon
+n n
+∂/∂ ∂l = 1 (cid:88)∂ℓ i = 2 (cid:88)(cid:0) (wx +b)-y (cid:1) .
+∂b n ∂b n i i
+recordemos la función: i=1 i=1
+n
+1 (cid:88)(cid:0) (cid:1)2 nota:
+l= (wx +b)-y .
+n i i - observaquelasexpresionespormuestracoincidenconlo
+i=1
+que aparece en tu imagen: para w aparece el factor extra
+derivada por muestra (desglose) - respecto a w: para la
+x (porque (wx )′=x ), y para b queda solo 2((wx +
+contribución de la muestra i: i i i i
+b)-y ) (porque la derivada de b es 1).
+i
+ℓ i =
+(cid:0)
+(wx i +b)-y i
+(cid:1)2
+. - estas son las cantidades que se usan en la regla de
+actualización por descenso de gradiente:
+aplicando la regla de la cadena con derivadas parciales:
+∂l ∂l
+∂ℓ i =2 (cid:0) (wx +b)-y (cid:1) - ∂ (cid:0) wx +b-y (cid:1) . w ←w-α ∂w , b←b-α ∂b .
+∂w i i ∂w i i
+b. epochs, batches y tipos de descenso por gradiente
+desglose término a término en la parte interior:
+epoch:
+∂ ∂ ∂ ∂
+∂w (wx i +b-y i )= ∂w (wx i )+ ∂w (b)- ∂w (y i ), - una epoch es una iteración completa sobre todo el
+conjunto de entrenamiento.
+∂ ∂ ∂
+(wx )=x , (b)=0, (y )=0, - es un hiperparámetro (p. ej. epochs = 5).
+∂w i i ∂w ∂w i - ejemplo: si hay 10000 samples y ejecutamos 5 epochs,
+∂ recorremos los 10000 samples 5 veces en total.
+(wx +b-y )=x .
+∂w i i i - podemos aplicar el descenso del gradiente al finalizar un
+sustituyendo: epoch (actualizaciones por epoch) o antes (por batches).
+batch:
+∂ℓ i =2 (cid:0) (wx +b)-y (cid:1) x .
+∂w i i i - un batch es un subconjunto del conjunto de entrenamiento usado para calcular la gradiente y actualizar
+sumando sobre las muestras y normalizando:
+parámetros.
+∂l = 1 (cid:88) n ∂ℓ i = 2 (cid:88) n (cid:0) (wx +b)-y (cid:1) x . - e ne je c m es p it l a o n : 1 1 0 00 b 0 at 0 ch s e a s m p p a l r e a s c y om b p a l t e c t h ar s 1 ize epo = ch 1 . 000 ⇒ se
+∂w n ∂w n i i i
+i=1 i=1 - no se espera a procesar todo el dataset: cada partición
+(batch) sirve para calcular la gradiente y actualizar los
+derivada por muestra (desglose) - respecto a b: para la
+parámetros.
+contribución de la muestra i:
+- cada vez que procesamos un batch actualizamos los
+(cid:0) (cid:1)2
+ℓ = (wx +b)-y . parámetros (o acumulamos gradientes según la estratei i i
+gia).
+regla de la cadena (forma no simplificada):
+tipos de descenso por gradiente:
+∂ℓ i =2 (cid:0) (wx +b)-y (cid:1) - ∂ (cid:0) wx +b-y (cid:1) . a) batch gradient descent (vanilla):
+∂b i i ∂b i i
+- calcula la gradiente usando todo el dataset: ∇l =
+desglose término a término en la parte interior: 1 (cid:80)n ....
+n i=1
+∂ ∂ ∂ ∂ - actualización cuando se ha procesado el conjunto com-
+(wx +b-y )= (wx )+ (b)- (y ),
+∂b i i ∂b i ∂b ∂b i pleto.
+∂ ∂ ∂ - ventajas: gradiente estable, pasos consistentes.
+∂b (wx i )=0, ∂b (b)=1, ∂b (y i )=0, - desventajas:
+- requiere tener todo el dataset en memoria. - ayuda a evitar mínimos locales y aporta robustez en
+- en datasets grandes, las actualizaciones son lentas la optimización.
+(cada paso es costoso). - desventajas:
+- gradiente muy estable puede ocultar señales útiles
+- introduce un hiperparámetro adicional: batch size.
+y hacer que el proceso converja a parámetros no
+- hay que elegir el tamaño del batch cuidadosamente
+deseados según la topología (según el problema).
+(trade-off entre estabilidad y velocidad).
+fig.4. batchgradientdescent
+fig.6. mini-batchgradientdescent
+b) stochastic gradient descent (sgd):
+v. comentariosprácticosytareas
+- actualizalosparámetrosporcadasampledeltrainingset se mencionó que se asignará una tarea práctica: imple-
+(o mezcla aleatoria de samples).
+mentar (solo con numpy) un pipeline de regresión lineal que
+- ventajas: detecta rápidamente si el algoritmo puede con- incluya:
+verger; útil para datasets muy grandes.
+1) exploración visual del dataset.
+- desventajas:
+2) ingeniería simple de features (transformaciones no lin-
+- señales de gradiente ruidosas (alto ruido en las
+eales cuando aplique).
+actualizaciones).
+3) implementación de mse y pasos de descenso (batch /
+- muchas actualizaciones (computacionalmente cosmini-batch).
+toso si no se optimiza).
+esoayudaaentenderporquéalgunasfuncionesnosonsmooth
+- la trayectoria del parámetro es muy oscilatoria:
+y cómo afecta a las derivadas y la optimización.
+∂l
+w ←w-α
+∂w
+vi. conclusión
+en esta clase se consolidó la comprensión de conceptos
+ejecutado por muestra puede producir movimientos
+fundamentales para implementar algoritmos de aprendizaje
+muy erráticos.
+supervisado de manera eficiente y correcta. se destacó la
+relevancia de elegir adecuadamente funciones de pérdida,
+hiperparámetroscomoellearningrateylaestrategiadeactualización de gradientes, así como la importancia de comprender
+la teoría detrás de knn y regresión lineal. asimismo, los
+apuntes reflejan la relación entre teoría y práctica, preparando
+al estudiante para aplicar estos conceptos en tareas concretas
+y proyectos de programación.
+references
+[1] belcaketal.,"smalllanguagemodelsarethefutureofagenticai",
+nvidiaresearch,2025.https://arxiv.org/abs/2506.02153
+fig.5. stochasticgradientdescent
+[2] e.brynjolfsson,a.chandar,yz.chen,"canariesinthecoalmine?six
+facts about the recent employment effects of artificial intelligence",
+c) mini-batch gradient descent: stanford digital economy lab, 2025. https://digitaleconomy.stanford.
+edu/publications/canaries-in-the-coal-mine/
+- combina ambas estrategias: se calcula la gradiente sobre
+batches de tamaño intermedio.
+- ventajas:
+- reduce el ruido respecto a sgd (más estable) y es
+más eficiente que batch gd.
+- mejora la explotación de hardware (vectorización,
+gpus).

@@ -1,0 +1,258 @@
+apuntes de clase
+inteligencia artificial - semana 2 - 12 de agosto
+priscilla jime'nez salgado
+escuela de ingenier'ıa en computacio'n, tecnolo'gico de costa rica
+cartago, costa rica - 2021022576@estudiantec.cr
+abstract-el presente documento recopila los - medicina:usodemodelosdemachine learning
+apuntes de la segunda semana del curso de in- para analizar ima'genes me'dicas, como escaneos
+teligencia artificial. se introducen conceptos de cerebrales, y detectar patrones o anomal'ıas que
+machine learning y deep learning, los principales ayudeneneldiagno'stico.
+tipos de aprendizaje, el rol de la calidad de los
+datos y el ciclo completo de desarrollo, validacio'n
+y despliegue de modelos.
+i. introduccio'nalainteligenciaartificial
+se hace un repaso de los fundamentos de la
+fig. 1. ana'lisis de ima'genes me'dicas con algoritmos de aprendizaje auinteligencia artificial (ia), sus caracter'ısticas de toma'tico
+autonom'ıa y adaptabilidad, y su capacidad para
+-
+agricultura:ana'lisisdedatossobreclima,tipo
+resolver problemas complejos. se destacan ejemplos
+deplanta,composicio'nyhumedaddelsuelopara
+pra'cticos y analog'ıas para comprender el comporoptimizar que' cultivar, cua'ndo sembrar, cua'ndo
+tamiento de sistemas inteligentes.
+regaryque' fertilizantesusar.
+a. definicio'n de la inteligencia artificial
+la inteligencia artificial (ia) es, en pocas palabras, un conjunto de tecnolog'ıas capaces de realizar tareas que requieren inteligencia humana,
+como ver, escuchar, aprender y adaptarse. su objetivo es resolver problemas complejos de forma
+eficaz y generar valor.
+b. ¿que' significaserauto'nomoyadaptativoenesta
+a'rea?
+fig.2. aplicacio'ndedatosparaperfeccionarlaspra'cticasdecultivo
+en ia, un sistema puede considerarse inteligente
+cuando combina dos capacidades clave: la au-
+-
+videojuegos:enlaimagensemuestraunejemtonom'ıaparaactuarsininstruccionesconstantesyla plo donde la ia analiza el entorno de un videoadaptabilidad para modificar su comportamiento en juegotipoplataformas,identificandoobsta'culos,
+respuestaacambiosdelentornoodelascondiciones enemigos y recompensas, para decidir que' acque se presenten. ciones ejecutar mediante diferentes entradas y
+salidasdeunmodeloderedneuronal.
+c. usos de la inteligencia artificial
+la inteligencia artificialtiene aplicaciones en una
+gran variedad de a'reas. algunos ejemplos destacados son:
+en resumen, se le entrega u'nicamente la entrada y
+su etiqueta, y el modelo debe inferir o aproximar el
+resultadoconlamayorprecisio'nposible.
+en este contexto, se cuenta con dos perspectivas:
+cienciaeingenier'ıa.
+machine learning: ciencia
+- generar conocimiento: se refiere a investigar y desarrollar nuevas ideas para mejorar
+el aprendizaje automa'tico. esto puede incluir
+crear modelos desde cero, encontrar formas ma's
+fig.3. iaidentificandoaccioneso'ptimasenunentornodeplataformas
+eficientes de optimizar funciones o aprovechar
+datossinetiquetarparaentrenarsistemas.
+d. modelos deterministas y estoca'sticos
+en inteligencia artificial y machine learning, un - me'tricas: se emplean me'tricas para determinar
+modelo puede clasificarse segu'n co'mo responde a que' modelo ofrece un mejor desempen˜o, evalunaentrada: uando su rendimiento en funcio'n del problema
+espec'ıficoquesebuscaresolver.
+-
+determinista:paraunaentradaespec'ıfica,siempredevuelvelamismasalida.ejemplo:determinarsihayluzded'ıaalas12p.m. - data scientist: se encarga de trabajar con los
+datos desde su recoleccio'n hasta su preparacio'n
+final, aplicando te'cnicas de ana'lisis y manipu-
+- estoca'stico: para una entrada espec'ıfica, puede
+lacio'nparaconvertirloseninformacio'ncomprendevolver diferentes salidas de un conjunto de
+sibleyaplicable.
+posibilidades, incorporando aleatoriedad. ejemplo:predecirelclimaexactoalas12p.m.
+- research scientist: centra su labor en investigar y proponer nuevos modelos, algoritmos y
+enfoques teo'ricos que impulsen el avance del
+ii. machinelearning
+machine learning. esto incluye experimentar
+conaprendizajenosupervisado.
+el concepto de machine learning consiste en
+disen˜ar ma'quinas capaces de realizar tareas sin estar
+programadasdeformaexpl'ıcita,extrayendolalo'gica
+directamentedelosdatos.
+por ejemplo, no se le indicara' a la computadora
+que' es un perro ni las reglas que lo definen (cola, fig.4. descripcio'ngeneraldelusodemachinelearningenlaciencia.
+ojos, raza, etc.); en su lugar, se le proporcionara' una
+imagen y retroalimentacio'n para que aprenda por s'ı en esta misma l'ınea, google publico' un art'ıculo
+misma. as'ı, si se dispone de ima'genes etiquetadas titulado towards an ai co-scientist, en el que
+como x e y, el modelo recibe cada imagen junto presenta una inteligencia artificial capaz de generar
+consuetiquetaydebe,demaneraimpl'ıcita,aprender hipo'tesiscient'ıficasapartirdelana'lisisdedatos.esta
+a distinguir entre ambas, sin que se le explique el tecnolog'ıa se probo' en el a'mbito me'dico y permitio'
+procedimiento. obteneravancessignificativosenesaa'rea.
+machine learning: ingenier'ıa ahorabien,consideremoselsiguientegra'fico:
+en la etapa de puesta en produccio'n de un
+modelo, lo primero que se debe considerar es la
+necesidad de refactorizar el co'digo, ya que sera'
+necesario seguir monitoreando el modelo e, incluso,
+volveraentrenarlopasadociertotiempo.estoimplica
+modificar su estructura para que pueda ofrecer la
+misma funcionalidad, pero de manera ma's eficiente.
+porejemplo,sisedisponedeunmodelomuypesado,
+es fundamental transformar el modelo para que
+puedaserservidoaunclientedeformapra'ctica.
+para lograrlo, existen diversas herramientas u'tiles.
+una de ellas es onnx, que permite tomar un
+modelo desarrollado en un framework espec'ıfico
+y optimizarlo, generando una versio'n ma's ligera y
+compacta. tambie'n pueden aplicarse te'cnicas como
+fig.6. s'ıntesisdelmachinelearningenelcampodelaingenier'ıa.
+elmodel distillation,dondeunmodeloma'spequen˜o
+aprendeaimitarelcomportamientodeunodemayor
+taman˜o, logrando realizar las mismas tareas con elprocesocomienzaconlarecoleccio'n de datos.
+a partir de ellos, se genera un conjunto estructurado
+menor peso. otra estrategia es la que reduce la
+cantidad de bits en los para'metros del modelo. estos
+(dataset) que se dividira' en dos partes: una para
+para'metros,normalmenteenpuntoflotante,seajustan el entrenamiento y otra para las pruebas. esta
+informacio'nsealmacenaparasuusoposterior.
+para mejorarel rendimiento, reduciendo eltaman˜o y
+acelerandosuejecucio'n. en la fase de entrenamiento, el modelo aprende
+a partir del conjunto de datos de entrenamiento,
+en el a'mbito del mlops, el objetivo es gestionar
+ajustando sus para'metros segu'n el feno'meno que se
+elmodelodeformama'sdetallada.unconceptoclave
+desea modelar. durante esta etapa tambie'n se define
+es el data shift, que ocurre cuando el modelo fue
+que' tipo de modelo utilizar, justificando la eleccio'n
+entrenado con una distribucio'n de datos espec'ıfica,
+enfuncio'ndelasnecesidadesdelproblema.
+pero con el tiempo los patrones cambian, afectando
+suprecisio'n.poreso,unadelasresponsabilidadesdel luego se pasa a la validacio'n, donde se utilizan
+equipodemlopsesmonitorearelcomportamiento datos que el modelo no ha visto antes para evaluar
+del modelo y, si detectan un cambio en los datos, su rendimiento en condiciones similares a las de
+volver a entrenarlo. este monitoreo continuo no solo produccio'n. esto permite identificar que' modelo
+incluye el rendimiento del modelo, sino tambie'n la obtiene los mejores resultados segu'n los criterios de
+calidad y actualidad de los datos, la infraestructura evaluacio'nestablecidos.
+de despliegue y la trazabilidad de las versiones
+el modelo seleccionado se guarda en un repositoutilizadas.
+rio o almacenamiento de modelos, desde el cual
+se prepara para su implementacio'n en el entorno
+elegido.
+poru'ltimo,sellevaacaboeldespliegueoservicio
+de predicciones, donde el modelo ya entrenado y
+fig.5. descripcio'ngeneraldelusodemachinelearningenlaingenier'ıa. validadocomienzaaprocesardatosrealesyagenerar
+resultados. todo este flujo puede representarse me- continuacio'n.
+diante un diagrama que describe cada paso, desde la
+- supervisado: el modelo aprende a partir de
+obtencio'n inicial de los datos hasta la puesta en
+datos que incluyen etiquetas, las cuales sirven
+marcha del sistema en produccio'n.
+como referencia durante el entrenamiento. un
+ejemplocomu'neslaclasificacio'ndeima'genes.
+iii. jerarqu'ıadeconceptosenia
+- no supervisado:elmodelotrabajacondatossin
+etiquetas y se encarga de encontrar patrones en
+los datos ocultos. un ejemplo claro de esto son
+losclusters.
+- semi-supervisado: combina datos etiquetados
+y no etiquetados, u'til cuando el proceso de
+etiquetadoescostosoodif'ıcilderealizar.
+- auto-supervisado: el propio dato de entrada
+sirve como etiqueta. se emplea en autoencoders
+y modelos de representacio'n, principalmente
+fig.7. relacio'nentreia,machinelearningydeeplearning
+para reducir el taman˜o de vectores o extraer
+-
+machinelearning:utilizadatosparaqueunsis- caracter'ısticasrelevantes.
+temapuedaentrenarseymejorarsurendimiento.
+- aprendizaje por refuerzo:elmodelo,llamado
+para lograrlo, emplea me'todos como algoritmos
+agente, aprende mediante un sistema de recomestad'ısticos, regresio'n lineal, regresio'n log'ıstica
+pensas, mejorando su desempen˜o a trave's de la
+o a'rboles de decisio'n. ma's alla' de la te'cnica
+interaccio'nconunentorno.
+usada, su base siempre es la misma: aprender
+apartirdelosdatosdisponibles. - few-shot learning: el modelo necesita solo
+unospocosejemplosparaaprenderarealizaruna
+- deep learning: es una especialidad dentro del tareaespec'ıfica.
+machine learning que utiliza redes neuronales
+profundas,formadasporvariascapasconectadas. - one-shot learning: basta con mostrarle una
+u'nica vez co'mo realizar la tarea para que el
+esteenfoqueesmuyefectivopararesolvertareas
+modelopuedareproducirla.
+complejas, aunque requiere grandes volu'menes
+dedatosparafuncionarcorrectamente. - zero-shot learning: el modelo es capaz de
+realizar tareas sin haber sido entrenado previaenresumen,lasdiferenciasesquelainteligencia
+menteparaellasdeformaespec'ıfica.
+artificialeselconceptoma'samplio,queengloba
+todo lo relacionado con lograr que una ma'quina v. pipelinedemachinelearning
+actu'edeforma"inteligente".elmachinelearnel desarrollo de un modelo de machine learning
+ing agrupa algoritmos que aprenden con datos,
+pasaporvariasetapasclave:
+y el deep learning es una te'cnica dentro de
+este que esta' disen˜ada para trabajar con canti1) data adquisition: este es muy importante
+dades masivas de informacio'n y resolver tareas
+ya que se necesitan obtener datos de calidad y
+espec'ıficascongranprecisio'n.
+representativos, evitando errores como valores
+iv. tiposdeaprendizajeenmachinelearning faltantesyduplicados.
+sehizounrepasodelaclaseanterioryseretomaron 2) data preparation:paraestaetapasetieneque
+los dema's tipos de aprendizaje y se describen a preparar los datos que se tienen para tener un
+dataset de calidad, ya sea, eliminando datos raciones hasta encontrar la que produce el mejor
+duplicados o se descartan datos que no tienen rendimientodelmodelo.
+utilidad.
+vii. paradigmasderesolucio'ndeproblemasen
+3) feature engineering: esta fase consiste en machinelearning
+crear nuevas variables u'tiles a partir de los
+datos que se encuentran disponibles o eliminar 1) agrupamiento: busca patrones o relaciones
+aquellas que no aporten informacio'n relevante, ocultas en los datos para formar grupos, u'til
+especialmenteenelcasodedatostabulares. para descubrir conexiones que no se hab'ıan
+considerado.
+4) modelo selection: elegir el modelo ma's adecuadosegu'nelproblemayrecursosdisponibles,
+puedeirdesdeopcionessimplescomoregresio'n
+log'ıstica hasta redes neuronales profundas para
+casoscomplejos.
+5) model training: esta fase de entrenamiento
+delprocesodelmodelo,sedividenlosdatosen
+training set y validation set y se ajustan hiperpara'metrosconme'todoscomogridsearch.
+6) model deployment: en este proceso de deployment se implementa el modelo en profig.8. ejemplodelprocesodeagrupamiento
+duccio'n y se supervisa para poder garantizar
+usubuenrendimiento.
+2) prediccio'n y clasificacio'n:
+vi. hiperpara'metrosypara'metros
+es importante diferenciar entre para'metros e - prediccio'n: estima un valor nume'rico
+hiperpara'metros: basa'ndoseenpatronesdelosdatos.
+-
+clasificacio'n:asignadatosaunacategor'ıa
+- para'metros: son los valores internos que un segu'nsuscaracter'ısticas.
+modelo aprende automa'ticamente a partir de los
+datosduranteelentrenamiento.estosvaloresson
+los que el modelo ajusta para minimizar el error
+ymejorarsucapacidaddeprediccio'n.
+- hiperpara'metros: son valores definidos manualmente antes de iniciar el entrenamiento, y
+controlan el comportamiento del algoritmo. un
+ejemplo es el batch size (por ejemplo, 32 muestras por iteracio'n). estos no se aprenden del
+conjunto de datos, sino que se configuran para
+guiarelprocesodeentrenamiento.
+el ajuste de hiperpara'metros requiere un proceso fig.9. ejemplodelprocesodeprediccio'nyclasificacio'n
+de experimentacio'n, probando distintas configu3) optimizacio'n: encuentra la mejor solucio'n viii. notaimportante
+entremuchasposibles.
+- enunciado tarea moral mencionar un aporte
+-
+local:lamejorenuna'reaconcreta. decadaunodeellos:
+- global: la mejor en todo el espacio de -yannlecun
+bu'squeda. -yoshuabengio
+-samaltman
+-geoffreyhinton
+-timnitgebru
+-iangoodfellow
+incluya un resumen del funcionamiento de las
+siguientesherramientas/conceptos:
+-onnx
+-mlflow
+-vertex
+-langchain
+-huggingface
+-ollama
+-chain-of-thought
+fecha de entrega: 19 de agosto, pero esta es
+moral.
+ix. aspectosadministrativos
+la pro'xima seccio'n corresponde a a'lgebra linfig.10. ejemplodelprocesodeoptimizacio'n
+eal, la cual es fundamental para los temas que se
+abordara'nma'sadelante.
+4) bu'squeda: encuentra el camino ma's eficiente
+hacia una solucio'n, representando la mejor la pro'xima semana la modalidad sera' virtual.
+opcio'ncomoelcaminodemenorcosto. hasta el martes 26 de agosto las clases sera'n
+presencialesyesemarteshabra' quiz acumulativo.
+fig.11. ejemplodelprocesodebu'squeda

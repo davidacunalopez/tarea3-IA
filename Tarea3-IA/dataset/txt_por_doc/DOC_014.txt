@@ -1,0 +1,196 @@
+repaso de derivadas, regresio'n lineal y
+sesgo-varianza en aprendizaje supervisado
+ian murillo campos
+instituto tecnolo'gico de costa rica
+escuela de ingenier'ıa en computacio'n
+inteligencia artificial gr 2
+abstract-this paper reviews key elements of supervised posterior a esto se aplica el algoritmo del decenso
+learning.itintroducestheuseofpartialderivativesandgradient del gradiente, el cual permite optimizar la posicio'n redescent to optimize the mean squared error function. it also
+specto a w y b representado por la siguiente fo'rmula:
+examines issues in linear regression such as nonlinearity and
+outliers,describingstatisticalmethodstoaddressthem.finally,it
+outlinesdatasetpartitioningintotraining,validation,andtesting
+sets,andexplainsthebias-variancetradeoffasatooltoevaluate
+model generalization.
+i. introduction
+el aprendizaje supervisado entrena modelos predictivos a
+partir de ejemplos con etiquetas. las derivadas parciales
+permiten calcular la influencia de cada para'metro sobre la b. vocabulario
+funcio'n de pe'rdida y se aplican en el descenso de gradiente.
+- epoch:todaslasiteracionesquehacemossobretodoslos
+en la regresio'n lineal, los problemas comunes incluyen la
+samples.esunhiperparametroquemidetodoelrecorrido
+no linealidad de la relacio'n entre variables y la presencia de
+de inicio a fin de todo mi set de entrenamiento
+outliers, que pueden corregirse con te'cnicas estad'ısticas.
+- batch: tomar ciertos subconjuntos del epoch. funciona
+la divisio'n de datos en entrenamiento, validacio'n y prueba
+para la optimizacio'n de las pruebas.
+permitemedirlacapacidaddegeneralizacio'ndelmodelo.este
+ana'lisisserelacionaconelsesgoylavarianza,cuyoequilibrio iii. potencialesproblemasalrealizarregresio'n
+evita tanto el sobreajuste como el subajuste. lineal
+entrelospotencialesproblemasquenospodemosencontrar
+ii. repasodederivadas
+esta'n la no linealidad de la relacio'n respuesta predictor, los
+a. funcio'n de pe'rdida (mse)
+datos sobresalientes y la colinealidad.
+deesteu'ltimonosevaahablarenlaclase,quedacomotema
+de investigacio'n personal.
+a. no linealidad de la relacio'n respuesta predictor
+uno de los principales supuestos de la regresio'n lineal es
+se busca optimizar esta funcio'n con valores que aumentan
+que existe una relacio'n lineal entre las variables predictoras y
+l, siendo l una parabola. dicho de otro modo, se busca
+la variable respuesta.
+encontrar la pendiente de algu'n punto de la parabola en el
+1) ¿que' ocurre si la verdadera relacio'n no es lineal?:
+que nos ubiquemos y buscamos descender sobre la funcio'n
+para llegar a su punto m'ınimo. - el modelo lineal no podra' captar adecuadamente la
+relacio'n.
+se busca calcular cuanto influye el valor w sobre el valor l,
+calculando sus derivadas parciales. - se obtendra'n errores sistema'ticos en los residuos,
+definidos como:
+esto deja como resultado lo siguiente:
+∂l 1 (cid:88) n (cid:0) (cid:1) e i =y i -yˆ i
+= 2 (wx +b)-y -x
+∂w n i i i
+donde
+i=1
+y
+tambien se tiene que realizar el procedimiento derivando con i
+base en el bias, dando el siguiente resultado: es el valor real y
+yˆ
+n i
+∂l 1 (cid:88) (cid:0) (cid:1)
+= 2 (wx +b)-y
+∂b n i i es la prediccio'n del modelo.
+i=1
+esta'n ma's alejados, provocando que el modelo busque hacer
+un "trade off" entre los datos. esto no esta' bien ya que el
+modelo quedar'ıa sesgado por los outliers y no se utilizar'ıan
+correctamente los datos que si quiero buscar predecir.
+estos datos en su mayoria son ocasionados por errores de
+captura, y la forma de corregirlos puede ser eliminarlos
+directamente del dataset.
+otras te'cnicas pueden ser:
+- standardized residuals: escalar el residuo crufo por una
+desviacio'n esta'ndar global de los errores.
+donde:
+fig.1. ejemplodegra'ficaderegresio'nlineal.
+- e =y -yˆ es el residuo crudo
+i i i
+- n=nu'mero de observaciones
+enlafigura1sevealaizquierdaunplotresidualquemuestra
+- p=nu'mero de para'metros estimados en el modelo (incluye el intercepto)
+la fiderencia entre los puntos que tenia que predecir y cuanto
+la razo'n de utilizar una desviacio'n estandar es que
+se alejan entre si, el modelo de plot residual ma's correcto es
+teniendotodoestandarizado,sepuedesaberqueaciertas
+el que este' ma's cercano al cero.
+desviaciones estandar de la media se encuentra un poren la figura de la derecha es el arreglo a los datos, utilizando
+centajedelosdatos.conestosepuededefinirunumbral
+te'cnicas para que una funcio'n cuadratica como la de la
+donde los datos son sobresalientes.
+izquierda se comporte ma's como una funcio'n lineal.
+- regla del rango intercuart'ılico: utilizar directamente los
+la forma de solucinarlo es extender el modelo lineal incorpodatos en lugar del modelo, tomamos el rango intercuanrando transformaciones po'linomicas del predictor, con eso:
+tilico que existe entre todos los datos, por definicio'n se
+- aunque la relacio'n es no lineal en los datos, el modelo ve de la siguiente forma:
+sigue siendo lineal en los para'metros.
+- se puede resolver con regresio'n lineal esta'ndar. iqr=q 3 -q 1
+b. outliers la regla para detectar los outliers es la siguiente:
+son datos que se salen de la distribucio'n que se trata de (cid:2) (cid:3)
+q -1.5-iqr, q +1.5-iqr
+predecir. 1 3
+al tratar de entrenar el modelo de ia, este se va a centrar
+- valores <q -1.5-iqr ⇒ outliers inferiores.
+1
+- valores >q +1.5-iqr ⇒ outliers superiores.
+3
+en la figura 3 se puede ver de forma gra'fica la regla del
+rango intercuart'ılico.
+nota: el 1.5 * iqr es aproximadamente equivalente a
+fig.3. ejemplodeoutlier.
+2-2.7 desviaciones esta'ndar de la media (depende de la
+forma de la distribucio'n).
+- winsorizacio'n: te'cnica que reemplaza los valores extremos por percentiles l'ımite, en lugar de eliminarlos.
+fig.2. ejemplodeoutlier.
+el procedimiento es el siguiente:
+tanto en los modelos cercanos a la linea como a los que - elegir percentiles de corte (ej. 5% y 95%).
+- valores menores al percentil 5 se reemplazan por el midiendo el rendimiento del modelo real'ısticamente simuvalor del percentil 5. lando datos que nunca ha vistohaciendo posible la com-
+- valores mayores al percentil 95 se reemplazan por paracio'n.
+el valor del percentil 95.
+1) caso overfitting: una solucio'n es dividir ptra parte de
+dentro de sus ventajas se encuentra que: los datos en datos de validacio'n, que se ejecuten como tests
+- conserva el taman˜o de la muestra. cada cierto tiempo durante la etapa de entrenamiento y que
+- reduce la influencia de valores extremos. esos datos aseguren que no se da un overfitting.
+iv. sesgoyvarianza
+a. dataset
+losdatossedividenentredatosdeentrenamientoypruebas,
+como se ve en la figura 4, los datos de entrenamiento son con
+los que se optimiza el modelo de ia, mientras que los de
+pruebas son para verificacio'n, una divisio'n de 80% y 20% es
+lo ma's comu'n.
+d. validation set
+son un conjunto de datos que sirven para valorar la capacidad de generalizacio'nde mi modelo a datos nunca vistos,
+este set de datos brinda resultados con los que puedo tomar
+fig.4. ejemplodedataset. decisiones sobre el proceso de entrenamiento y es un set
+esencial para el ajuste de hiperpara'metros.
+b. training set
+se utiliza para ajustar el modelo ajustando los para'metros
+e. te'cnicas para subdividir el dataset
+de acuerdo a las muestras disponibles.
+el modelo identifica patrones basado en estos datos, ya que
+1) random sampling: se divide aleatoriamente el dataset,
+estos deber'ıan representar la diversidad de escenarios que se
+es u'til para datos con clases balanceados ya que no se agrega
+esperaencontrar.deestaformapermitira' almodeloentrenado
+ningu'n sesgo al momento de hacer la divisio'n.
+predecirdatosnuncavistosantesyencontrarpatronesentrelas
+los datos imbalanceados pueden producir validation o testing
+entradasysalidas.porlotanto,sirveparaestablecerrelaciones
+sets con menos datos o ninguno, de las clases menos repreentre las variables y los pesos o para'metros del modelo.
+sentadas.
+este debe ser duficientemente grande para que sea significa2) stratifiedsampling: seutilizaparadatosimbalanceados
+tivo, pero sin causar overfitting. el overfitting ocurre cuando
+ya que asegura una representacio'n de todas las clases en cada
+los datos son muy especializados y adaptados al conjunto de
+split.
+entrenamiento por lo que el modelo se vuelve incapaz de
+mantiene la misma distribucio'n de datos para cada clase en
+generalizar adecuadamente.
+cada subconjunto, lo que da un modelo ma's robusto.
+c. testing set
+3) k-fold cross-validation: se divide el subconjunto en k
+se utiliza para evaluar el modelo con ejemplos que no se partes y el modelo se entrena con k-1 partes ya que una se
+utilizaron en el entrenamiento. reserva para validacio'n.
+debe ser independiente del set de entrenamiento. secontinuaesteprocesorotandolossubconjuntosusadospara
+simula la aplicacio'n de un examen a nuestro modelo y con el el entrenamiento y validacio'n. permite tomar el promedio del
+se calculan me'tricas como : accuracy, loss, etc... rendimiento del modelo y es u'til cuando tenemos pocos datos
+el objetivo de este set es crear un modelo que generalice y deseamos validar nuestro modelo. se puede ver de forma
+adecuadamente todos los escenarios. ma's gra'fica en la siguiente imagen:
+f. posibles escenarios
+dentro de los posibles escenarios de estos me'todos se
+encueentran:
+- bajo error en training, bajo error en testing. otro escenario es el siguiente:
+- escenario ideal. - alto error en training, alto error en testing.
+- modelo evita el ruido existente en los datos. - underfitting.
+- puede generalizar correctamente. - el modelo no esta' aprendiendo nada de los datos.
+- modelo muy simple.
+visualmente se puede ver de la siguiente forma:
+- alto sesgo
+visualmente se ve de la siguiente forma:
+otro escenario es cuando se tiene lo siguiente:
+- bajo error en training, alto error en testing. para solucionar este u'ltimo caso se utiliza un bias-variance
+- overfitting. tradeoff.
+- no es capaz de generalizar.
+v. bias-variancetradeoff
+- alta varianza.
+se busca un modelo que tenga baja varianza y
+visualmente se ve de la siguiente forma: bajo sesgo, para eso se editan valores en las pruebas,
+visualmente se ve un arreglo de la siguiente forma:
+references
+[1] s. pacheco, "repaso de matema'tica: a'lgebra lineal," presentacio'n,
+institutotecnolo'gicodecostarica,2025.
+[2] s.pacheco,"sesgoyvarianza,"presentacio'n,institutotecnolo'gicode
+costarica,2025.

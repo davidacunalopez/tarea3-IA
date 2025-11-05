@@ -1,0 +1,111 @@
+apuntes ia clase 7/10
+gianmarco oporta pe'rez
+ingenier'ıa en computacio'n
+instituto tecnolo'gico de costa rica
+san jose', costa rica
+gooporta@estudiantec.cr
+abstract-el presente documento recopila los apuntes de la mu'ltiples agentes que colaboran o compiten entre s'ı
+clase del 7 de octubre, correspondientes al curso de inteligencia y con su entorno para alcanzar objetivos comunes o
+artificial. se abordan los lineamientos del proyecto 1, centrado
+individuales.
+en redes neuronales convolucionales aplicadas al reconocimiento
+de voz mediante espectrogramas, as'ı como los fundamentos
+teo'ricos de las redes convolucionales y su aplicacio'n en tareas
+ii. descripcio'ndelproyecto
+de clasificacio'n y segmentacio'n de ima'genes.
+el primer proyecto tiene como objetivo aplicar redes neuindex terms-inteligencia artificial, redes neuronales conronales convolucionales (cnn) en la tarea de reconocimiento
+volucionales, clasificacio'n de audio, pytorch, espectrogramas
+de voz a partir de espectrogramas. su propo'sito es desarrollar
+un modelo de clasificacio'n multiclase capaz de identificar
+i. resultadosdelquiz5 distintos tipos de sonidos, tales como vocalizaciones humanas
+se realizo' el quiz 5 durante el inicio de la sesio'n, la cual y animales, instrumentos musicales o ruidos ambientales.
+contiene las siguientes preguntas: para lograrlo, se utiliza un conjunto de datos pu'blico orientado a la clasificacio'n de audio, en el cual cada muestra
+- pregunta:describaque' esunaredtotalmenteconectada.
+corresponde a una grabacio'n corta etiquetada con su clase
+r/ es una red neuronal en la cual cada neurona esta'
+correspondiente.antesdelentrenamiento,lassen˜alesacu'sticas
+conectada con todas las neuronas de la capa siguiente,
+son transformadas en representaciones visuales denominadas
+de principio a fin.
+espectrogramas, las cuales se emplean como entrada a las
+- pregunta: mencione tres funciones de activacio'n no
+redes convolucionales.
+lineales.
+r/ relu, sigmoide y tanh. elproyectorequierelaconstruccio'nmanualdedosmodelos
+- pregunta: describa los cuatro componentes principales empleando pytorch sin librer'ıas de alto nivel:
+de un agente llm. - modelo a: variante cla'sica de lenet-5 adaptada al
+r/ reconocimiento de audio mediante espectrogramas.
+- perfil:definelaidentidadopersonalidaddelagente, - modelo b: arquitectura alternativa fundamentada en
+determinando su tono, estilo de comunicacio'n y literatura acade'mica o en un disen˜o propio justificado
+comportamiento general. teo'ricamente.
+- memoria: permite conservar informacio'n relevante se deben generar dos versiones del conjunto de datos: una
+de interacciones anteriores o resultados previos, fa- con los audios transformados a ima'genes (base) y otra con
+cilitando la continuidad y el contexto en tareas versionesaumentadasmediantete'cnicasdedataaugmentation
+extensas. orientadasaldominiodelaudio.esteprocesobuscaincremen-
+- herramientas:correspondenarecursosofunciones tar la robustez del modelo y su capacidad de generalizacio'n.
+externas que el agente puede invocar para realizar durante la fase de entrenamiento se construyen cuoperacionesespec'ıficasoaccederainformacio'nadi- atro combinaciones principales: modelo a/base, modelo
+cional. a/aumentado,modelob/baseymodelob/aumentado.cada
+- planificacio'n o razonamiento: consiste en la ca- modelo se entrena con diferentes hiperpara'metros, evaluando
+pacidad del agente para interpretar las instrucciones sudesempen˜oconme'tricascomoprecisio'n,pe'rdida,f1-score
+del usuario, elaborar estrategias y seleccionar la y matriz de confusio'n. la herramienta weights & biases se
+accio'n ma's apropiada segu'n el objetivo planteado. utiliza para monitorear y visualizar los resultados durante el
+- pregunta:describaladiferenciaentresistemasdeagente entrenamiento.
+u'nico y sistemas multiagentes. finalmente, los modelos seleccionados se comparan para
+r/ un agente u'nico percibe su entorno, toma decisiones determinar el de mejor rendimiento general. el informe debe
+y ejecuta acciones de manera independiente, mientras presentarse en formato ieee, acompan˜ado del co'digo fuente
+que los sistemas multiagentes esta'n conformados por y el cuaderno en jupyter notebook.
+iii. aspectospra'cticosdelproyecto
+el desarrollo debe realizarse en pytorch, construyendo
+manualmente cada capa de la red. es necesario registrar
+todas las me'tricas relevantes utilizadas en clases anteriores,
+incluyendo la pe'rdida, precisio'n y f1-score. dado que los
+espectrogramas generados pueden ser pesados, se recomienda
+reducir su resolucio'n a 224 p'ıxeles por lado.
+la fecha tentativa de entrega fue establecida para el jueves
+30deoctubre.seesperaquelosmodelosimplementadossean
+fig.1. redesconvolucionales
+completamente reproducibles y que incluyan mecanismos de
+control de aleatoriedad y registro de resultados.
+c. aplicaciones comunes
+iv. fundamentosderedesneuronales
+convolucionales lasredesconvolucionalesseaplicanampliamenteendiversas tareas de visio'n artificial, entre las que destacan:
+las redes neuronales convolucionales (cnn, por sus siglas
+en ingle's) representan una evolucio'n de las redes neuronales - clasificacio'n de ima'genes.
+tradicionales orientadas al procesamiento de datos estruc- - segmentacio'n de objetos.
+turados espacialmente, como ima'genes o espectrogramas. a - segmentacio'n de instancias.
+diferencia de las redes completamente conectadas, las cnn - procesamiento general de ima'genes.
+aprendenpatronesespacialesyjera'rquicosdemaneraeficiente. estas arquitecturas han demostrado una gran eficacia en
+hasta este punto del curso, se ha trabajado con redes problemas de reconocimiento visual, deteccio'n de patrones y
+que reciben un vector de caracter'ısticas como entrada, lo procesamiento de sen˜ales en el dominio de la visio'n.
+transforman mediante capas ocultas y producen una salida.
+references
+sin embargo, este enfoque no considera la estructura espacial
+de los datos, lo cual puede generar errores al mover, rotar o [1] s.pacheco,"convolutionalneuralnetworks"presentacio'n,
+escalar los objetos dentro de una imagen.
+a. ejemplo: dataset cifar-10
+el conjunto de datos cifar-10 se utiliza frecuentemente
+para experimentacio'n en visio'n por computadora. contiene
+ima'genes a color de taman˜o 32×32×3, representando diez
+clases diferentes.
+aunquecadaimagenesrelativamentepequen˜a,unaversio'n
+de mayor resolucio'n, por ejemplo 200×200×3, aumentar'ıa
+dra'sticamente el nu'mero de para'metros de entrada, lo que
+dificultar'ıa la escalabilidad del modelo.
+b. estructura de una red convolucional
+en una red convolucional, las neuronas se organizan en
+tres dimensiones: ancho, alto y profundidad. cada neurona
+esta' conectada u'nicamente a una pequen˜a regio'n de la capa
+anterior, en lugar de estar completamente conectada, lo cual
+reduce la complejidad y mejora la eficiencia computacional.
+las capas principales que componen una cnn son:
+- capa convolucional: calcula las salidas de las neuronas
+conectadas a regiones locales de la capa anterior.
+- capa de agrupamiento (pooling): reduce el taman˜o
+espacial de las representaciones, manteniendo las caracter'ısticas ma's relevantes.
+- capa completamente conectada (fully connected):
+transforma la representacio'n final en probabilidades de
+pertenencia a una clase espec'ıfica.
+a medida que las ima'genes avanzan a trave's de las capas
+convolucionales y de agrupamiento, se reduce su taman˜o
+espacial, pero aumenta la abstraccio'n de las caracter'ısticas
+aprendidas.

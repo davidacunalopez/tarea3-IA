@@ -1,0 +1,105 @@
+apuntes de la clase del 23 de octubre de 2025
+cursodeinteligenciaartificial
+nelson rojas obando
+estudiante ingeniería en computación
+nelson.rojas@estudiantec.cr
+resumen-este informe presenta una síntesis de los temas iii-a. ejemplo contextual
+abordadosenlasesióndel23deoctubredelcursodeinteligencia
+un modelo como llama 2 posee más de 70 mil millones
+artificial, centrada en el cierre del aprendizaje supervisado y
+la introducción al proceso de quantization como técnica de deparámetros,loqueequivaleaaproximadamente28gbsolo
+optimización de modelos de aprendizaje profundo. para almacenarlos en disco. cargar ese modelo en memoria
+index terms-inteligencia artificial, quantization sería inviable sin una gpu especializada, por lo que la
+quantization se convierte en una alternativa para reducir el
+i. introducción tamaño y mantener la funcionalidad.
+durante la clase se abordaron temas de actualidad relaiv. representaciónnumérica
+cionados con la evolución de los modelos de lenguaje y su
+impacto en el futuro del internet. con esta sesión concluye iv-a. números enteros
+la sección del curso dedicada al aprendizaje supervisado. a los computadores representan los números utilizando separtir de este punto, los contenidos se centran en métodos de cuencias de bits. con n bits se pueden representar 2n valores
+aprendizajenosupervisado,esdecir,aquellosquenodependen distintos.
+de etiquetas o resultados predeterminados para evaluar la por ejemplo, con 3 bits se pueden representar los números
+calidad del aprendizaje del modelo. del 0 al 7.
+el formato más común para representar números enteros
+ii. aspectosadministrativos
+con signo en cpus es el complemento a dos, donde:
+semencionólaintegracióndeherramientascomochatgpt el bit más significativo indica el signo (0 = positivo, 1 =
+atlas para chrome, que reflejan cómo las empresas están negativo). los demás bits representan el valor absoluto.
+orientando sus estrategias hacia la adopción de modelos de
+lenguaje extensos (llms) como núcleo de sus servicios 4.2. números de punto flotante
+digitales. los números de punto flotante se utilizan para representar
+asimismo, se compartieron noticias institucionales sobre valores reales que no pueden expresarse de manera exacta
+la rama ieee del tecnológico de costa rica, que organiza con enteros. en la norma ieee 754, un número flotante se
+reunionesperiódicasentredistintasuniversidades.elpropósito representa mediante tres componentes principales: el signo, el
+principal es identificar fuentes de financiamiento para eventos exponente y la mantissa (también conocida como fracción o
+tecnológicos, especialmente aquellos destinados a llevar co- significando).
+nocimiento a zonas rurales o con menor acceso. también se
+anunciólarealizacióndeuntallerdeteambuildingeldomingo parte descripción bitstípicos(float32)
+signo(s) indicasielnúmeroespositivoonegativo 1
+9 de noviembre, con un costo de $20, que incluye almuerzo
+exponente(e) determinalaescalaorangodelnúmero 8
+y transporte. mantissa(m) definelaprecisiónopartefraccionaria 23
+cuadroi
+iii. temaprincipal:quantization estructuradelformatoieee754de32bits.
+quantization es una técnica de optimización de modelos de
+aprendizaje profundo que busca reducir el tamaño y el con- el valor real que representa el número en punto flotante se
+sumo de recursos computacionales de un modelo sin compro- calcula mediante la siguiente ecuación:
+meter significativamente su precisión. la idea es convertir los
+parámetros del modelo (usualmente almacenados en formato x=(-1)s×(1+m)×2(e-127)
+de punto flotante de 32 bits, float32) a representaciones de
+menor precisión, como int8, int4 o incluso int1, dependiendo donde:
+del nivel de compresión deseado. s es el bit de signo.
+esto permite ejecutar modelos de gran tamaño en hardware m es la fracción o mantissa normalizada.
+con recursos limitados (por ejemplo, dispositivos móviles o e es el exponente con un sesgo de 127 (en el caso de
+microcontroladores). float32).
+este formato permite representar números muy grandes o ix. conclusiones
+muy pequeños, aunque implica un mayor uso de memoria y
+el estudio del quantization permite comprender cómo los
+recursos computacionales en comparación con representaciomodelos de inteligencia artificial pueden adaptarse a las limines de menor precisión.
+taciones del hardware sin comprometer significativamente su
+desempeño.estatécnicarepresentaunpuntodeconexiónentre
+v. quantizationderedesneuronales
+el desarrollo teórico de los algoritmos y su aplicación real en
+en redes neuronales, las matrices de pesos y sesgos están
+sistemas de producción, donde los recursos computacionales,
+representadascomoflotantes.elprocesodequantizationbusca
+laenergíayeltiempodeinferenciasonfactoresdeterminantes.
+convertir esos valores a enteros para reducir memoria y
+acelerar la inferencia.
+v-a. etapas del proceso
+quantize: los valores en punto flotante se transforman
+a enteros.
+inferencia el modelo realiza sus cálculos con aritmética
+entera.
+dequantize los resultados se transforman nuevamente a
+flotantes para la siguiente capa.
+el desafío está en mantener la precisión del modelo. los
+hardware modernos (gpu, tpu, cpu vectoriales) incluyen
+soporte para operaciones de baja precisión (por ejemplo, int8)
+para facilitar este proceso.
+vi. tiposdequantization
+vi-a. quantization simétrica
+usa un rango centrado en cero:
+vi-b. quantization asimétrica
+utiliza un rango desplazado [α,β]:
+vii. estrategiasyvariantes
+vii-a. dynamic quantization
+laescalayelrangosecalculanentiempodeinferencia.se
+aplican factores estadísticos derivados del conjunto de datos
+de prueba ("calibration set").
+vii-b. post-training quantization (ptq)
+después del entrenamiento, se insertan observadores (observers) en el modelo para analizar las salidas de cada capa
+y determinar los mejores parámetros de escala y punto cero.
+este proceso no requiere reentrenamiento y es rápido, aunque
+puede perder algo de precisión.
+vii-c. quantization-aware training (qat)
+simula la quantization durante el entrenamiento. el modelo
+aprendeacompensarloserroresintroducidosporlareducción
+deprecisión,porloquemantieneunrendimientosuperiortras
+el proceso.
+viii. ventajasdelquantization
+menor consumo de memoria: los modelos comprimidos
+se cargan más rápido.
+menor tiempo de inferencia: cálculos más simples.
+menor consumo energético: ideal para dispositivos embebidos o móviles.
+portabilidad: permite ejecutar modelos complejos en
+hardware limitado.

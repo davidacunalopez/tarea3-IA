@@ -1,0 +1,192 @@
+apuntes semana 11 clase #2
+eder vega suazo
+escuela de ingenier'ıa en computacio'n
+instituto tecnolo'gico de costa rica
+ic-6200 - inteligencia artificial gr2
+resumen-este documento condensa la segunda leccio'n de la el profesor destaco' adema's las aplicaciones pra'cticas resemana11centradaenautoencodersysuaplicacio'naima'genesy visadas: la reduccio'n de dimensionalidad como alternativa a
+texto.seexplicanlaestructuraencoder-espaciolatente-decoder,
+me'todos tradicionales, la deteccio'n de anomal'ıas mediante
+variantes pra'cticas (denoising, vae, under/overcomplete) y arel ana'lisis del error de reconstruccio'n, y la restauracio'n de
+quitecturas relacionadas (u-net, skip-connections). se discuten
+tareas y aplicaciones: reduccio'n de dimensionalidad, deteccio'n ima'genes afectadas por ruido o baja resolucio'n. finalmente,
+de anomal'ıas, super-resolucio'n y segmentacio'n, adema's de la serepaso' elconceptodeespaciolatentecontinuo,introducido
+transicio'n a representaciones de texto (tokenizacio'n y embed- en los autoencoders variacionales (vae), el cual permite gedings)ymodelosdelenguaje.elapunteincluyerecomendaciones
+nerar nuevas muestras mediante la interpolacio'n entre puntos
+experimentales y criterios de evaluacio'n pra'cticos orientados a
+del espacio latente, estableciendo as'ı la base para los modelos
+la implementacio'n de proyectos y a la replicacio'n de resultados.
+generativos que se profundizar'ıan en la sesio'n actual.
+index terms-autoencoder, vae, denoising, reduccio'n de
+iii. apuntesdeclase
+dimensionalidad,tokenizacio'n,embeddings,u-net,deteccio'nde
+anomal'ıas. iii-a. organizacio'n y avisos
+las revisiones del proyecto sera'n presenciales, el proi. introduccio'n fesor aviso' a los apuntadores faltantes que lo tomen en
+cuenta ya que una semana se debera' de apartar para la
+este documento sintetiza los conceptos trabajados en la
+revisio'n del proyecto.
+sesio'n sobre arquitecturas basadas en redes convolucionales
+pro'ximamentehabra' dosentregablesprincipales:unejeraplicadas a autoencoders y la extensio'n hacia representaciocicio pra'ctico con autoencoders (ima'genes) y una tarea
+nes para texto. el documento ofrece una gu'ıa pra'ctica con
+ma's compleja sobre texto y agentes, esta puede que
+definiciones, fo'rmulas y recomendaciones operativas para la
+valga ma's porcentaje. ya que esta implica planificar
+implementacio'n de experimentos en ima'genes y texto. se suexperimentos y validaciones con tiempo para revisiones
+giere acompan˜ar este documento con las figuras referenciadas
+en laboratorio.
+parafacilitarlacomprensio'ndearquitecturasyvisualizaciones
+nota: zoom limita la validez de los enlaces; el profesor
+de espacios latentes.
+genero' un link que ya esta' en el grupo de telegram para
+las lecciones y la duracio'n t'ıpica de la sesio'n es ∼40
+ii. repasodelaclase
+min, cuando acabe hay que ingresar nuevamente en el
+la sesio'n inicio' con un repaso de los temas vistos ante- mismo link.
+riormente, en los que se introdujeron los fundamentos de los
+iii-b. autoencoders: idea y componentes
+autoencoders y su relacio'n con las redes convolucionales. se
+recordo' que estas arquitecturas son una aplicacio'n directa de un autoencoder aprende una funcio'n f : x (cid:55)→ xˆ donde xˆ
+las cnn en un contexto no supervisado, donde el objetivo intenta aproximarse a x. internamente:
+principalesreconstruirlaentradaoriginalapartirdeunarepre- encoder: transforma x en z =g (x).
+θ
+sentacio'n comprimida. el profesor enfatizo' que, a diferencia espacio latente: z es un vector de baja dimensio'n que
+de los modelos de clasificacio'n, los autoencoders no utilizan condensa caracter'ısticas relevantes.
+etiquetas externas, sino que aprenden de los propios datos, decoder: reconstruye xˆ=h (z).
+ϕ
+permitiendo capturar patrones y regularidades internas. en ima'genes el encoder usa convoluciones y pooling para
+durante el repaso, se analizo' la estructura general de un reducir resolucio'n y aumentar canales. el decoder usa operaautoencoder compuesta por un encoder, un espacio latente cionesdeupsamplingoconvolucio'ntranspuestapararecuperar
+y un decoder. el encoder transforma la entrada en una la forma espacial. ver figura 1 para un esquema general de
+representacio'ndemenordimensionalidadqueconcentralain- encoder/decoder.
+formacio'nesencial;eldecoder,asuvez,reconstruyelaimagen
+iii-c. entrenamiento y funciones de pe'rdida
+a partir de esa representacio'n. este proceso de codificacio'n
+y decodificacio'n se comparo' con una forma de "compresio'n el objetivo del entrenamiento es reducir la diferencia entre
+aprendida"dondeelmodelodecideque' informacio'nconservar laentradaoriginalylareconstruccio'nqueproduceelmodelo.
+y cua'l descartar. los elementos que generan las sen˜ales evaluadas por la
+laeleccio'nentrecomparacio'np'ıxelap'ıxelyunape'rdida
+paradatosbinariosdependedelrangoylainterpretacio'n
+de los p'ıxeles.
+cuando la calidad visual importa, adema's de la pe'rdida
+de entrenamiento suele evaluarse la reconstruccio'n con
+me'tricas perceptuales (p. ej. ssim) para complementar
+la evaluacio'n nume'rica.
+iii-d. variantes y su propo'sito
+iii-d0a. denoising: entrenar con x y objetivo
+ruidosa
+x limpio. el modelo aprende a eliminar ruido espec'ıfico (ej.
+salt-and-pepper).
+figura 1: esquema general de encoder, espacio latente y
+iii-d0b. under-/overcomplete: latente ma's pequen˜o
+decoder.
+obligaacomprimir;latentemayorpuedememorizarenexceso.
+iii-d0c. vae: permite muestrear y hacer interpolacio'n
+en un espacio continuo u'til para generacio'n. la combinacio'n
+funcio'n de pe'rdida son el encoder -que produce el vector
+de reconstruccio'n y kl genera latentes con estructura eslatente o, en variantes probabil'ısticas, los para'metros de una
+tad'ıstica. ver figura 2 para ilustracio'n de muestreo y espacio
+distribucio'n- y el decoder -que genera la reconstruccio'n xˆ
+latente continuo.
+a partir de ese latente.
+iii-c0a. pe'rdidadereconstruccio'n.: eslamedidaprincipal que compara la entrada y la salida del autoencoder.
+su funcio'n es indicar cua'nto error comete el modelo al
+reconstruir.segu'neltipodedatosysunormalizacio'nseelige
+la forma pra'ctica de esta pe'rdida:
+para ima'genes normalizadas en [0,1] es comu'n usar una
+pe'rdida basada en la comparacio'n p'ıxel a p'ıxel (mencionada en clase como la opcio'n directa). el profesor
+comparo' esta te'cnica con el enfoque que usa'bamos en
+regresio'n para penalizar diferencias entre valores.
+para ima'genes con valores binarios o interpretadas como probabilidades se emplea una pe'rdida adecuada a
+ese caso (la alternativa binaria que se menciono' en la
+presentacio'n).
+lo que se obtiene con esta pe'rdida es un indicador directo
+de calidad de reconstruccio'n. en aplicaciones como deteccio'n
+de anomal'ıas se usa ese error (o una me'trica derivada) para
+decidir si una muestra es at'ıpica.
+iii-c0b. regularizacio'n en vae (pe'rdida adicional).:
+en la variante variacional el encoder no entrega un vector
+deterministasinopara'metrosdeunadistribucio'nenelespacio
+latente. adema's de la pe'rdida de reconstruccio'n, se incorpora
+figura 2: representacio'n del muestreo en vae
+unte'rminoqueobligaaqueladistribucio'nlatentesigaunareferencia(elprofesorlodescribio' comoforzarunadistribucio'n
+continua,porejemplo,normal).esete'rminoderegularizacio'n:
+iii-e. aplicaciones pra'cticas
+proviene directamente de los para'metros que calcula el
+encoder (media y dispersio'n en la clase). iii-e0a. reduccio'n de dimensionalidad: guardar z en
+su propo'sito es estructurar el espacio latente para que una base de datos vectorial. comparar vectores con similitud
+sea continuo y muestreable, permitiendo interpolacio'n y de coseno:
+generacio'n controlada. u-v
+sim(u,v)= .
+∥u∥∥v∥
+iii-c0c. notas pra'cticas (mencionadas en clase).:
+normalizar los p'ıxeles al rango adecuado facilita la usos: bu'squeda por similitud, indexacio'n y como entrada
+eleccio'n de la pe'rdida. comprimida para clasificadores simples (knn).
+iii-e0b. deteccio'n de anomal'ıas (ejemplo bancario):
+entrenarcontransaccionesva'lidas.paraunatransaccio'nnueva
+x: calcular err = l (x,xˆ). si el error err es mayor a un
+rec
+umbral, lo marca como posible fraude. seleccio'n del umbral
+τ medianterocovalidacio'nmanual.importanteevaluartasa
+de falsos positivos y costo operativo.
+iii-e0c. denoise y super-resolution: para superresolution el objetivo puede ser una imagen de alta resolucio'n
+x y la entrada x . arquitecturas con skip-connections
+hr lr
+(u-net style) mejoran la preservacio'n de detalles. se
+recomienda usar una figura comparativa de entrada/resultado
+en el informe experimental (ver figura 3).
+figura 3: ejemplo sugerido: comparacio'n entrada ruidosa /
+salida reconstruida / referencia.
+figura5:ejemplodevisualizacio'nt-snedevectoreslatentes.
+nota: aplicaciones forenses (p. ej. mejora de ca'maras) un
+compan˜ero plantea las consideraciones legales sobre manipulacio'n de evidencia. iii-g. transicio'n a nlp: tokenizacio'n y embeddings
+iii-e0d. segmentacio'n (u-net): u-net concatena mapas de caracter'ısticas del encoder en el decoder. esto restaura iii-g0a. tokenizacio'n: estrategias: palabra completa,
+informacio'n espacial perdida por pooling y mejora mapeo de subword (bpe), cara'cter, bytes. subword reduce oov y
+ma'scarasparasegmentacio'ndeobjetos.(sesugiereincluiruna controla longitud de secuencia. ver figura 6 para un esquema
+figura de arquitectura u-net y un ejemplo de ma'scara en la de tokenizacio'n subword.
+entrega.) iii-g0b. embeddings: cadatokensemapeaaunvector
+e∈rd mediantelacapaembedding.pararepresentarfrases
+se puede usar promedio de embeddings o agregadores ma's
+complejos.
+iii-g0c. modelosdelenguaje: evolucio'n:rnn/lstm
+→ transformers con self-attention. la self-attention permite
+capturar dependencias largas y producir embeddings contextuales;esosembeddingssirvenpararecuperacio'n,clasificacio'n
+y agentes.
+figura 4: representacio'n de u-net
+iii-f. espacios latentes: visualizacio'n y utilidad (ampliado)
+visualizarz cont-sne/umapfacilitaverseparabilidadpor
+clases. cuando los clusters son n'ıtidos un clasificador simple
+sobre z funcionara' bien. en vae la continuidad del espacio
+figura 6: esquema ilustrativo de tokenizacio'n subword y
+permite interpolar entre muestras y generar ima'genes plausimapeo a ids.
+bles no vistas. ver figura 5 para un ejemplo de visualizacio'n
+t-sne.
+iii-h. recomendaciones operativas para la tarea
+probar al menos dos configuraciones: (1) denoising autoencoder, (2) vae con latente de prueba (p. ej. 32, 64)
+dependiendo de la gpu.
+guardar checkpoints y curvas de pe'rdida. evaluar mse
+y ssim.
+para anomal'ıas, definir umbral con validacio'n y reportar
+precisio'n/recall.
+paratexto,experimentartokenizacio'nsubwordyentrenar
+un embedding ba'sico antes de usar modelos preentrenados.
+iv. conclusiones
+los autoencoders representan una herramienta fundamental
+dentro del aprendizaje profundo no supervisado, al permitir
+que un modelo aprenda representaciones compactas de los
+datos sin depender de etiquetas externas. durante la sesio'n
+sedestaco' co'molaarquitecturaencoder-decoderconstituyela
+baseparamu'ltiplesaplicaciones,desdelareduccio'ndedimensionalidad hasta la generacio'n y reconstruccio'n de ima'genes.
+lacomprensio'ndelespaciolatenteresultaesencial,yaqueen
+e'l se concentra la informacio'n ma's relevante de las entradas
+y se posibilita la deteccio'n de patrones, la identificacio'n de
+anomal'ıas o la generacio'n de nuevos ejemplos a partir de
+distribuciones continuas como en los vae.
+asimismo, se vio la importancia de seleccionar correctamente las funciones de pe'rdida y de interpretar el error
+de reconstruccio'n segu'n el contexto de aplicacio'n. en tareas
+visuales, arquitecturas como u-net o las variantes con skipconnections ampl'ıan el potencial del modelo, mientras que
+en procesamiento de texto la nocio'n de codificacio'n latente se
+trasladaalosembeddingsyalatokenizacio'ncomopasospreviosalosmodelosdelenguaje.enconjunto,losautoencoders
+ofrecen una base conceptual y pra'ctica para desarrollar soluciones que integren visio'n e informacio'n textual, avanzando
+hacia sistemas ma's auto'nomos e interpretativos.
+referencias
+[1] stevenpachecop,"autoencoder"2025.
+[2] stevenpachecop,"ragsyagentesusandollms"2025.
+[3] compan˜erosd.clase,"11 semana ai 20251014 (1,2,3).,"2025.

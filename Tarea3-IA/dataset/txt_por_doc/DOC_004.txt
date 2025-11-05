@@ -1,0 +1,197 @@
+notas de clase
+inteligenciaartificial-12deagosto-semana2
+luis alfredo gonza'lez sa'nchez
+escuela de ingenier'ıa en computadores
+instituto tecnolo'gico de costa rica
+cartago, costa rica
+2021024482 gonzal3z.luis@estudiantec.cr
+abstract-this document provides a concise summary of the c. la jerarqu'ıa de conceptos en ia
+key concepts and examples covered in week two of the artificial
+intelligence course. it begins with an overview of general ai observe la figura 1.
+concepts, followed by an explanation of the types and main
+approaches of machine learning. the document also explores
+various problem-solving paradigms and concludes with a brief
+review of the essential components of the machine learning
+pipeline. this summary aims to enhance understanding and
+reinforce the material presented in class.
+index terms-ai, machine learning, pipeline.
+i. introduction
+el presente documento busca brindar un breve resumen a
+los conceptos y ejemplos vistos en la clase de la semana 2
+del curso de inteligencia artificial , comenzando por un breve
+recorrido a determinados conceptos generales de la ia, luego
+se procedera' a explicar los tipos de aprendizaje en machine fig.1. jerarquiadeconceptosia
+learning, sus principales enfoques , algunos paradigmas de
+resolucio'n de problemas y por u'ltimo un breve repaso a los
+conceptos del pipeline de machine learning.
+d. ¿que' es machine learning ?
+ii. conceptosgenerales
+consiste en generar ma'quinas o programas a partir de
+se presentara' un breve repaso a conceptos vistos en clase. algoritmos que sean capaces de resolver un problema a partir
+deinferencias.enestecontextosebuscaque,apartirdedatos
+a. definicio'n de modelos
+deentrada(yenocasionesconsusresultados)dondeelsistema
+- modelo determinista : es aquel modelo que, bajo una sea capaz de resolver problemas en base a los datos que ya
+misma entrada se produce los mismos resultados. no inposeesinqueseleexpliquecomoresolverlo.considerandolo
+corpora aleatoriedad, por lo que los resultados obtenidos
+anterior , se describe a continuacio'n los tipos de aprendizaje
+se vuelven predecibles , por ejemplo, bajo caracter'ısticas
+en machine learning.
+me'dicas se puede determinar una enfermedad asociada.
+- modelo estoca'stico : es aquel modelo en que , bajo una
+entradadeterminadalassalidassondiferentesdebidoaun iii. tiposdeaprendizaje
+conjuntodeposiblesresultadosasociadosadichaentrada
+a. aprendizaje supervisado
+, existe control respecto al grado de aleatoriedad, por
+ejemplo, consultar el clima a la misma hora todos los
+tipodeaprendizajequeinvolucraunconjuntodedatoscon
+d'ıas.
+caracter'ısticas y una respectiva etiqueta, esa etiqueta asocia
+b. definicio'n de para'metros dichas caracter'ısticas con un valor. la etiqueta supervisa y
+corrigelasaproximacionesdadasporlafuncio'nplanteadapara
+- para'metros : son los datos que se le configuran al
+obtener mejores resultados, una forma de visualizarlo es de la
+modelo, permiten controlar el comportamiento de sus
+siguiente manera :
+algoritmos
+- hiperpara'metros : son todos los valores que el mod- x={x i ,y i }
+elo aprende a partir de los datos de entrenamiento,
+le permiten al modelo identificar errores y ajustar sus donde x representa mi caracteristica, xi representa la etiqueta
+algoritmos. y yi, representa el resultado "supervisado" por la etiqueta.
+b. aprendizaje no supervisado f. otros tipos de aprendizaje
+este tipo de aprendizaje es aquel que se entrena con datos se detallan a continuacio'n algunos tipos de aprendizaje
+sin etiquetas, es decir, sin informacio'n previa que le permita adicionales
+determina cua'l es el "resultado correcto".a diferencia del - fev-shot : me'todo en el cual el modelo aprende a
+aprendizaje supervisado, donde las etiquetas sirven como una partir de breves ejemplos. una posible aplicacio'n es con
+"supervisio'n" o gu'ıa para corregir y entrenar el modelo, en respecto a los llms ,si el llms no sabe como realizar
+el aprendizaje no supervisado no hay una referencia expl'ıcita latarea,selebrindaejemplosyapartirdeesosejemplos
+paraevaluarocorregir.unejemplomencionadoenlaclase,son es capaz de resolver la tarea.
+los algoritmos de clu'ster , donde analiza en base a sus - one shot:me'todosimilaralanterior,soloquereducela
+caracter'ısticas si pertenece a un grupo u otro, sin hacer uso candidaddeejemplosa1,yapartirdeeseu'nicoejemplo
+de etiquetas. logra resolver.
+c. aprendizaje semi-supervisado - zero shot : en este me'todo el sistema resuelve en base a
+lo que "sabe" , no existen ejemplos del que pueda tomar
+en palabras sencillas es una combinacio'n de los me'todos
+para aprender.
+deaprendizajeanteriores,enestetipodealgoritmo,seutilizan
+tanto datos etiquetados como datos no etiquetados para entre- iv. enfoquesdelmachinelearning
+nar el modelo, es decir no siempre va a existir una etiqueta
+existen dos principales enfoques, ciencia e ingenieria:
+asociada a las caracter'ısticas, es principalmente u'til cuando
+se posee etiquetas en solo en una parte de los datos para a. machine learning: ciencia
+entrenar,yendatosdondelasetiquetassondif'ıcilesdeobtener
+- se genera conocimiento : es la parte acade'mica que se
+,aprovechalainformacio'ndedatossinetiquetasparamejorar
+dedica a investigar y desarrollar nuevas ideas respecto a
+el rendimiento del modelo.
+aprendizaje automa'tico, incluye la elaboracio'n de modd. aprendizaje auto-supervisado elos desde cero y optimizar funciones, por lo general,
+esta' en manos de investigadores con un fuerte trasfondo
+para este tipo de aprendizaje, el modelo no depende de
+matema'tico que les permite conocer a gran detalle los
+datos con etiquetas "pre- insertadas" para el entrenamiento,
+procesos que suceden durante el desarrollo de dichos
+en lugar de eso, genera automa'ticamente etiquetas o sen˜ales
+modelos o algoritmos.
+de supervisio'n a partir de los propios datos. un ejemplo visto
+en clase es el uso en modelos de lenguaje, donde el sistema - me'tricas : a partir de los datos recolectados, los data
+scientist generan me'tricas que permiten evaluar el depredice a partir de palabras previas cual es la palabra que
+sempen˜o del modelo o algoritmo.
+sigue a dicha palabra, puede visualizarse la palabra previa
+comodato,peroalavezcomounamismaetiquetaparapoder - data scientist : son las personas encargadas de realizar
+larecoleccio'nylapreparacio'ndelosdatos,detalmanera
+definir la palabra siguiente.
+queseanaplicablesparaelentrenamientodelosmodelos
+e. aprendizaje por refuerzo
+u algoritmos.
+el aprendizaje por refuerzo consiste en un aprendizaje con - research scientist : a diferencia de los data scientist ,
+"premiacio'n",existeunagenteydichoagenteaprendeatomar losresearchscientistseencargandeinvestigaryproponer
+decisionesatrave'sdelainteraccio'nconunentorno,buscando proponer nuevos modelos, algoritmos o modelos.
+maximizarunarecompensa,sepuedenpenalizarporacciones
+b. machine learning: ingenieria
+que llevaran a un resultadoinsatisfactorio.ejemplo, observe la
+figura 2. en el videojuego representado, se puede entrenar al - puesta en produccio'n del modelo : es necesario la
+continua monitorizacio'n del modelo antes de la puesta a
+produccio'n y pasado un tiempo, se busca realizar correcciones, monitorizar si los resultados o salidas mantienen
+unadistribucio'nnormalprobabil'ısticaycomoelprogreso
+deentrenamientoluegodelapuestaenproduccio'nmueve
+dichadistribucio'n,esdecir,darseguimientoalassalidas.
+- transformar el modelo :hace referencia a todas las
+estrategias y cambios requeridos para adaptar el modelo
+segu'n los requerimientos especificados , por ejemplo,
+si se dispone de un modelo en python, cua'les son las
+estrategias para adaptarlo en otras plataformas como c++
+fig.2. videojuegodeejemplo
+o mo'vil , una de dichas estrate'gias es la reduccion del
+personaje (agente) para que cruce al otro lado basa'ndose en peso del modelo.
+si el salto se realiza correctamente (accio'n) se recompensa, y - onnx:esunaherramientaquefacilitalaportabilidadde
+si la accio'n es insatisfactoria (caer al vac'ıo y perder una vida) modelos entre plataformas y dispositivos, optimizando y
+se castiga por dicha accio'n. reduciendo el taman˜o del modelo.
+- mlops : los equipos de mlops tiene la finalidad de
+monitorear y gestionar el modelo de manera detallada
+,tanto con los datos como la calidad de los mismos,
+por ejemplo, en el seguimiento que se da en puesta
+en produccio'n estan encargados de monitorear el comportamiento del modelo, en casos donde suceda algun
+cambio en los datos, deben de entrenarlo nuevamente.
+v. paradigmasderesolucio'ndeproblemas
+se detallan a continuacio'n ciertos paradigmas o estrategias
+para resolver problemas en el a'mbito de la inteligencia artififig.4. ejemplodegra'ficaparavisualizarproblemasdeprediccio'n
+cial:
+a. problemas de bu'squeda
+d. problemas de agrupamiento
+: son todos aquellos algoritmos que permiten encontrar la
+para los problemas de agrupamiento no existen etiquetas
+mejor solucio'n, representada por el camino ma's barato o la
+con las cuales entrenar, se busca encontrar pertenencia a un
+ruta ma's corta, se detallan algoritmos como dijkstra , dfs,
+grupodadassimilitudesacaracter'ısticas,lassolucionesaestos
+bfs.
+problemas permite encontrar relaciones a preguntas que quiza'
+no se ten'ıan previamente.
+fig.3. ejemplodealgoritmosdebu'squeda
+b. problemas de optimizacio'n
+son todas aquellas soluciones que pretenden encontrar la fig.5. ejemplodeproblemasdeagrupamiento
+solucio'nma'soptimadentrodeungrupodesoluciones.existen
+2 tipos:
+vi. pipelinedelmachinelearning
+- solucio'n local : es aquella seleccionada dentro de un
+grupo o a'rea especifica, un ejemplo es el visto en clase - data adquisition :una de las partes ma's importantes
+respecto a bares, el mejor bar cercano al tec de cartago del piplene de machine learning, es todo el proceso de
+es la nave, pero esto es por que en el a'rea cercana al tec recoleccio'ndedatosrelevantesdelproblemaaresolver,
+es la mejor o la u'nica opcion. se deben de resolver preguntas como ¿cua'l es la calidad
+- solucio'nlocal :serefierealamejorsolucio'nencontrada de los datos que estoy tomando? ¿de do'nde los saco?
+entre todas las posibles soluciones, tomando el ejemplo ¿es mi fuente libre de sesgo?.
+del bar, si se evalu'a a nivel provincia , probablemente se - data preparation : la etapa de la preparacio'n de
+encuentre un mejor bar que la nave. los datos, considerando que el computador trabaja con
+nu'meros, se debe de resolver las pregunta ¿co'mo voy
+c. problemas de prediccio'n y clasificacio'n
+a representar los datos a mi algoritmo o modelo? , por
+en los problemas de prediccio'n , existe una serie de datos ejemplo, si los datos son ima'genes, le asigno valores
+respecto a un evento, comportamiento, entre otros y se desea puestoquelosalgoritmossonmatema'ticos.enestaetapa
+encontrar patrones para realizar una prediccio'n ,generalmente tambie'n se realizan otras labores como la revisio'n de
+se representa con una funcio'n, que podra' generar una esti- datos duplicados y la bu'squeda de datos faltantes, por
+macio'ndelarelacio'ndelosdatosconsussalidas,unejemplo ejemplo en un set de datos, con algu'n dato faltante,
+es el visto en clase , donde en base al motor del veh'ıculo , se elimino dicho set o calculo la mediana y la introduzco
+obtienen datos respecto al consumo de gasolina y se genera como el dato faltante.
+una funcio'n la cual sera' capaz de predecir cua'l es el consumo - freature engineering : los freatures son los atributos
+de gasolina de otro veh'ıculo. estos datos son cuantificables o que proporcionan informacio'n u'til de los datos, en esta
+nume'ricos. etapa se pueden generar nuevos freatures a partir de los
+existentes,seleccionarsololosrelevantesparalasolucio'n
+o eliminar freatures que generen algun sesgo.
+- modelselection:eslaetapadeseleccio'ndelmodeloma's
+adecuadoparacubrirlademandaderecursosyrequisitos
+que genera el problema. entra un concepto importante
+para la seleccio'n del modelo, la explicabilidad, si tengo
+quedar explicacio'ndel porque' de los resultadosgeneradosconstantemente,quiza' lamejorsolucio'nnoesutilizar
+ia, si no , podr'ıa escoger un algoritmo que brinde una
+solucio'n ma's elegante, un ejemplo es para un sistema de
+un banco que detecta si un usuario es elegible para un
+pre'stamo, entrenar una ia que determine esto puede no
+ser la mejor manera , si no , un algoritmo que con datos
+del usuario pueda determinar si es posible o no darle el
+pre'stamo.
+- modeltraining:eslafasedeentrenamientodelmodelo,
+los datos son divididos en datos de entrenamiento y
+datos de validacio'n, en esta parte los algoritmos realizan
+optimizaciones en base a los datos de entrenamiento.
+- model deployment: en esta etapa el modelo se manda
+a produccio'n en donde se debe de supervisar para garantizar un correcto funcionamiento.

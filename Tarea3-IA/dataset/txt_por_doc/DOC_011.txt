@@ -1,0 +1,145 @@
+apuntes de clase
+luis felipe calderón pérez
+escuela de ingeniería en computación
+tecnológico de costa rica
+cartago, costa rica
+2021048663
+26-08-2025
+resumen-este documento presenta los apuntes de la cuarta one-shot: basta con mostrarle una única vez como
+semana del curso de inteligencia artificial. primeramente se dan realizarlatareaparaqueelmódelopuedareproducirla.
+lasrespuestasdelprimerquiz.serepasalatareadeclasificación,
+3. si u y v son dos vectores colineales con magnitudes 5
+elalgoritmodelosk-nearestneighbors.seintroduceeltemade
+y 6 respectivamente.¿desarrolle cuál es el resultado del
+laregresiónlíneal,funcióndepérdida,mínimoslocales,mínimos
+globales, el descendo del gradiente. además, se repasaron las producto punto entre u y v?
+derivadas y se terminó con la pregunta de porque escoger mse respuesta:
+y no mae.
+indexterms-ia,derivadas,descensodelgradiente,regresión u-v =∥u∥-∥v∥-cos(θ)
+lineal
+u-v = 5- 6-cos(0)
+i. preguntasyrespuestasdelprimerquiz ∴u-v =30
+1. anote y describa las tres propiedades de la norma 4. ¿quién propone las redes generativas adversarias?.
+respuesta: respuesta: ian goodfellow
+positividad: ∥x∥≥0 y ∥x∥=0 si y solo si x=0.
+ii. clase
+homogeneidad:∥αx∥=|α|-∥x∥paracualquierescalar
+ii-a. clasificación
+α.
+desigualdad triangular: ∥x+y∥≤∥x∥+∥y∥. ii-a1. k-nearest neighbors: algoritmo en donde un conjunto de datos etiquetados recibe un nuevo dato. a ese nuevo
+2. describa los tipos de aprendizaje supervised, unsupervidato se le calcula la distancia con sus datos vecinos, una
+sed y one-shot learning.
+vez se encuentra a los vecinos más cercanos, se realiza una
+respuesta:
+votación,paradeterminaraquecategoriaotipopertenece.en
+supervised: el modelo aprende a partir de datos que
+este algoritmo el hiperparámetro es el k.
+incluyen etiquetas, las cuales sirven como referencia
+durante el entrenamiento. 1. ventajas
+unsupervised: : el modelo trabaja con datos sin eti- no requiere fase de entrenamiento.
+quetas y se encarga de encontrar patrones en los datos fácil de implementar.
+ocultos. flexible: regresión y clasificación.
+2. desventajas donde w y x son vectores, y su producto punto genera
+poco eficiente. un escalar; b es un escalar. los valores de w y b afectan
+las features irrelevantes distorcionan las distancias directamentelosresultados,porloquedebemosencontrar
+entre los datos. los valores óptimos de ambos para obtener un modelo
+puede ser costoso a nivel computacional. óptimo.
+dependiendo del k usado, cambia la clasificación del nota: se van a trabajar desde modelos simples de regredato ingresado. sión líneal, hasta multiple linear.
+nota: se requiere normalización o estandarización en caso de
+figura1. regresiónlínealsimple
+que se dispare o haya gran diferencia en las distancia entre
+los datos.
+ii-b. regresión líneal
+es un algoritmo usado para encontrar un modelo en el conjunto de los números reales, para predecir valores contiguos.
+1. existen 2 tipos de variables:
+variables independientes, representan los features que
+introducimos en el modelo. figura2. multiplelinear
+variables dependientes, representan las etiquetas o el
+objetivo que deseamos predecir.
+cuadroi
+relaciónhorasdeestudioconnotas
+horas de estudio (x) nota (y)
+1 50
+2 55
+3 65
+4 70
+5 75
+enelejemploanteriorlaregresiónlínealquecorresponde
+es:
+y =5x+45
+en donde 5x representa la inclinación de la función y 45
+ii-c. función de pérdida
+el intercept o en donde corta el eje y.
+lafuncióndepérdidamideelerrorcometidoporelmodelo
+el modelo debe cumplir con la siguiente función:
+en cada muestra (sample). una de sus caracteristicas es el
+f (x)=w-x+b errorcuadrático,quepenalizademaneramásfuerteloserrores
+w,b
+grandes.lafuncióndepérdidadeunamuestrasedenotacomo ii-e. descenso del gradiente
+l i =(f w,b (x i )-y i )2. se propone una analogía sobre que se esta en una montaña
+para evaluar el desempeño del modelo en todo el conjunto muy elevada, se tiene los ojos vendados y la meta es bajar
+de datos, se calcula la función de costo (cost function), que con la menor cantidad de esfuerzo y los más rápido posible.
+es el promedio de la función de pérdida sobre todas las n y la solución es desde el punto inicial, calcular el lado que
+muestras: tiene más pendiente, dar un paso y repetir ese mismo proceso
+hasta llegar a un punto mínimo de altura.
+n
+1 (cid:88)(cid:0) (cid:1)2
+l= f (x )-y , (1) matemáticamente, esto se formaliza mediante la regla de
+n w,b i i
+i=1
+actualización:
+dondef (x )eslaprediccióndelmodeloparalamuestra
+w,b i
+i, y i es el valor real, y n es el número total de muestras. x nuevo =x antiguo -α∇f(x t ),
+si logramos minimizar l, reducimos la discrepancia entre
+donde α es la tasa de aprendizaje (learning rate) y ∇f(x )
+t
+lasprediccionesdelmodeloylosvaloresreales,obteniendoasí
+representa el gradiente de la función en el punto x .
+antiguo
+unmejorajuste.otraformademejorarelmodeloesajustando
+el valor de α es crítico: un valor demasiado grande puede
+los valores de w y b, evitando el underfitting, o modificando
+provocar que el algoritmo oscile y no converja, mientras que
+el conjunto de datos (dataset).
+un valor demasiado pequeño ocasiona una convergencia muy
+lenta.paramitigarestosproblemas,sesuelenemplearestrateii-d. función convexa vs no convexa
+gias como la búsqueda de una tasa de aprendizaje óptima o el
+al realizar regresiones lineales, como parte de la fórmula earlystopping,quedetieneelentrenamientocuandolafunción
+está elevada al cuadrado, sabemos que es posible encontrar de pérdida deja de mejorar significativamente o alcanza un
+una solución óptima (mínimo local). sería ideal siempre que valor aceptable.
+la función sea convexa, porque a diferencia de la no convexa nota: los términos derivada, pendiente y gradiente son
+es fácil identificar un mínimo global. equivalentes.
+d
+derivadadeunaconstante: [c]=0
+dx
+d
+derivadadeunavariable: [x]=1
+figura3. funciónconvexavsnoconvexa. dx
+d
+derivadadeconstanteporvariable: [c-x]=c
+dx
+d
+regladelapotencia: [xn]=nxn-1
+dx
+d
+derivadadeunasuma: [f(x)+g(x)]=f′(x)+g′(x)
+dx
+d
+regladelproducto: [f(x)g(x)]=f′(x)g(x)+f(x)g′(x)
+dx
+∂f
+derivadasparciales:
+∂xi
+=derivadadefrespectoaxi
+∂f ∂f
+ejemplodeparciales:f(x,y)=x2y+3xy2, =2xy+3y2, =x2+6xy
+∂x ∂y
+pregunta final
+se concluye la clase con la siguiente pregunta, ¿porque
+escoger mse y no mae?
+respuesta: mae no es derivable en 0 y nos lleva a errores
+de cálculo
+referencias
+[1] s. a. p. portuguez, "apuntes de la clase de inteligencia artificial,"
+cartago,costarica,agosto2025,clasedel26deagostode2025.

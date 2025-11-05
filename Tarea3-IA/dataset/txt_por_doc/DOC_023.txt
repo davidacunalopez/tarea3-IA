@@ -1,0 +1,208 @@
+apuntes de la clase semana 7 2025
+curso de inteligencia artificial
+rafael vargas solis
+apuntes del 16 de setiembre de 2025
+resumen-este documento presenta un resumen de los temas deestamanera,sedisminuyesuinfluenciaenlavarianza
+clave abordados en la clase de inteligencia artificial del 16 del modelo y se mejora la distribucio'n de los datos.
+de setiembre de 2025. comienza describiendo las diferencias
+- winsorizacio'n (recorte): sustituir los valores at'ıpicos
+fundamentalesentrelaregresio'nlinealylaregresio'nlog'ıstica,as'ı
+por valores ma's cercanos dentro de un rango definido,
+comolaste'cnicascomunesparaelmanejodevaloresat'ıpicosylas
+estrategiasparaenfrentarelsesgoylavarianzaenlosmodelosde usualmente basado en percentiles (por ejemplo, 1% y
+aprendizajeautoma'tico.posteriormente,sediscutenlasme'tricas 99%). esta te'cnica conserva la estructura general de los
+de evaluacio'n tanto para clasificacio'n como para regresio'n, in- datos y evita que los valores extremos distorsionen los
+cluyendolamatrizdeconfusio'n,precisio'n,exhaustividad(recall),
+resultados.
+f1-score, curva roc y el a'rea bajo la curva (auc), apoyadas
+en ejemplos pra'cticos. finalmente, el documento resalta los
+3. mencione dos te'cnicas para evitar un alto sesgo y dos
+problemas ma's frecuentes en la calidad de los datos -como
+la incompletitud, la inexactitud y la inconsistencia- y enfatiza para evitar alta varianza.
+la importancia de las tareas de preprocesamiento, tales como en el aprendizaje automa'tico, es fundamental lograr un
+limpieza,integracio'n,reduccio'n,transformacio'nydiscretizacio'n, equilibrio entre sesgo y varianza para obtener modelos con
+para garantizar el desarrollo de modelos predictivos robustos y
+buena capacidad de generalizacio'n. a continuacio'n, se deconfiables.
+scriben algunas te'cnicas para abordar ambos problemas:
+index terms-inteligencia artificial, aprendizaje automa'tico,
+regresio'n, valores at'ıpicos, sesgo, varianza, me'tricas de eval- para reducir sesgo (underfitting):
+uacio'n, matriz de confusio'n, roc, auc, preprocesamiento de - incrementar la complejidad del modelo: utilizar moddatos
+elos ma's sofisticados, como polinomiales en lugar de
+lineales,redesneuronalesma'sprofundasoalgoritmosno
+i. preguntasdelquiz
+lineales, permite capturar relaciones ma's complejas entre
+1. ¿cua'l es la diferencia entre regresio'n lineal y re- las variables.
+gresio'n log'ıstica? - incorporar nuevas variables o caracter'ısticas: mela regresio'n lineal se utiliza para predecir variables con- diante te'cnicas de feature engineering, se pueden intinuas, ajustando una recta que minimiza el error cuadra'tico cluir atributos relevantes que enriquezcan la informacio'n
+medio. por ejemplo, estimar el precio de una vivienda segu'n disponible, mejorando as'ı la capacidad predictiva del
+su taman˜o. modelo.
+en cambio, la regresio'n log'ıstica se aplica a problemas para reducir varianza (overfitting):
+de clasificacio'n, donde la variable dependiente es catego'rica - aplicar regularizacio'n: me'todos como l1 (lasso) y
+(binaria en la mayor'ıa de casos). utiliza la funcio'n sigmoide
+l2 (ridge) an˜aden penalizaciones a los coeficientes del
+paramapearlosvaloresdeentradaenprobabilidadesentre0y
+modelo,limitandosumagnitudyevitandoqueelmodelo
+1. ejemplo: predecir si un estudiante aprobara' o no un curso.
+se ajuste excesivamente a los datos de entrenamiento.
+- aumentar los datos o usar te'cnicas de ensamble:
+2. describa tres te'cnicas para el tratamiento de datos
+incrementar el taman˜o del conjunto de entrenamiento o
+sobresalientes (outliers).
+aplicarme'todoscomobaggingyrandomforestmejorala
+los outliers o valores at'ıpicos son observaciones que se
+estabilidad del modelo y reduce la sensibilidad al ruido
+alejan significativamente del patro'n general de los datos y
+de los datos.
+puedenafectarlaprecisio'ndelosmodelospredictivos.existen
+diversas estrategias para tratarlos, entre las cuales destacan:
+4. ¿cua'l es la derivada de la funcio'n sigmoide σ(x) =
+- eliminacio'n: consiste en remover los outliers identifi- 1 ?
+1+e-x
+cados cuando se determina que son producto de errores la funcio'n sigmoide se define como:
+de medicio'n, registros defectuosos o inconsistencias en
+1
+la recoleccio'n de datos. esta te'cnica debe aplicarse con σ(x)= (1)
+cautela para no eliminar informacio'n valiosa. 1+e-x
+- transformacio'n de variables: aplicar funciones su derivada es:
+matema'ticas como logaritmos, ra'ıces cuadradas o escalados que reduzcan la magnitud de los valores extremos. σ′(x)=σ(x)(1-σ(x)) (2)
+ii. me'tricas a. accuracy
+son medidas que se utilizan para indicar el rendimiento
+tp +tn
+de un modelo predictivo. constituyen la forma ma's objetiva accuracy = (3)
+tp +tn +fp +fn
+de evaluar y comparar modelos de aprendizaje automa'tico,
+permitiendo determinar que' tan bien se ajustan a los datos de mide la proporcio'n de predicciones correctas. es u'til en datos
+entrenamiento y, sobre todo, que' tan bien generalizan a datos balanceados, pero engan˜osa en clases desbalanceadas.
+no vistos.
+b. precisio'n
+asimismo, se emplean benchmarks, que son conjuntos de
+datos o pruebas estandarizadas utilizadas en la comunidad
+tp
+cient'ıfica para comparar de manera justa el desempen˜o de
+precision= (4)
+distintos modelos. el uso de benchmarks permite establecer tp +fp
+un esta'ndar de referencia que facilita la reproducibilidad y la indicaque' proporcio'ndeprediccionespositivasfueroncorreccomparacio'n entre diferentes enfoques. tas. relevante cuando los falsos positivos son costosos.
+en general, las me'tricas pueden dividirse en:
+c. recall (sensibilidad)
+- me'tricasdeclasificacio'n:accuracy,precision,recall,f1score, roc y auc.
+tp
+- me'tricas de regresio'n: error cuadra'tico medio (mse), recall= (5)
+error absoluto medio (mae) o coeficiente de determi- tp +fn
+nacio'n (r2). mide la capacidad del modelo para identificar correctamente
+los positivos. importante en contextos donde los falsos negaiii. matrizdeconfusio'n tivos son cr'ıticos.
+lamatrizdeconfusio'norganizalosresultadosdeunmodelo
+d. f1-score
+declasificacio'nenfuncio'ndelasprediccionesrealizadasylas
+clases reales. se definen cuatro componentes:
+2-precision-recall
+- true positive (tp):positivoscorrectamenteclasificados. f1= precision+recall (6)
+- false positive (fp): negativos clasificados incorrectaes la media armo'nica entre precisio'n y recall, usada en casos
+mente como positivos (error tipo i).
+de desbalance de clases.
+- true negative (tn): negativos correctamente clasificados.
+v. casodeestudio
+- false negative (fn): positivos clasificados incorrectamente como negativos (error tipo ii). se evaluo' un modelo de deteccio'n de ca'ncer con 1000
+pacientes.
+en problemas multiclase, la matriz puede extenderse a
+n ×n. un clasificador ideal concentra todos los valores en - clase positiva: 30 pacientes con ca'ncer.
+la diagonal principal. - clase negativa: 970 pacientes sin ca'ncer.
+matriz de confusio'n:
+ca'ncer no ca'ncer
+ca'ncer 25 (tp) 20 (fp)
+no ca'ncer 5 (fn) 950 (tn)
+resultados:
+- accuracy: 25+950 =97.5%
+1000
+- recall: 25 =83.3%
+25+5
+- precisio'n: 25 =55%
+25+20
+- f1-score: 2-0.55-0.833 ≈66.2%
+0.55+0.833
+a pesar del alto valor de accuracy, las me'tricas muestran
+limitaciones en la deteccio'n de la clase positiva.
+vi. me'tricasavanzadas
+fig.1. ejemplodematrizdeconfusio'nenclasificacio'nbinaria.
+a. curva roc
+la curva roc (receiver operating characteristic) muesiv. me'tricascla'sicas
+tra el desempen˜o de un clasificador binario para distintos
+a partir de la matriz de confusio'n se derivan las me'tricas umbrales. representa la tasa de verdaderos positivos (tpr)
+ma's utilizadas: frente a la tasa de falsos positivos (fpr).
+- inconsistencias en convenciones de nombres, co'digos o
+formatos.
+- registros duplicados que requieren procesos de data
+cleaning.
+c. causas de incompletitud
+- atributos de intere's no siempre disponibles o considerados irrelevantes en el momento de captura.
+- fallos te'cnicos o malentendidos durante la recoleccio'n.
+- eliminacio'n de registros por inconsistencias.
+- ausencia de historial o modificaciones no registradas.
+- valores faltantes en atributos clave que deben ser inferidos.
+d. causas de inconsistencias
+- diferencias en convenciones de nombres o co'digos.
+- formatos de entrada distintos para un mismo atributo.
+- conflictos entre bases de datos heteroge'neas.
+fig.2. ejemplodecurvarocyca'lculodeauc.
+- errores en la integracio'n de fuentes mu'ltiples.
+- actualizaciones parciales que dejan registros contradicb. a'rea bajo la curva (auc) torios.
+el auc mide el a'rea bajo la curva roc:
+e. principales tareas en el preprocesamiento
+- auc = 0.5: clasificador aleatorio.
+- auc cercano a 1: modelo con gran poder de discrimi- - data cleaning: eliminacio'n de ruido, correccio'n de inconsistencias y tratamiento de valores faltantes.
+nacio'n.
+- data integration: combinacio'n de datos provenientes de
+vii. procesamientodedatos mu'ltiples fuentes heteroge'neas en un repositorio unificado.
+a. problemas encontrados en la calidad de datos
+- data reduction: reduccio'n de volumen mediante seen escenarios reales, los datos suelen presentar problemas leccio'n de atributos, reduccio'n de dimensionalidad o
+que afectan directamente la efectividad de los algoritmos de discretizacio'n.
+miner'ıa y aprendizaje automa'tico. los principales son: - data transformation: normalizacio'n, estandarizacio'n,
+- incompletitud:valoresfaltantesenatributosimportantes. agregacio'n y construccio'n de nuevas variables.
+ejemplo: si un producto estaba en oferta y no se registro' - data discretization: transformacio'n de atributos continla variable. uos en categor'ıas o intervalos.
+- inexactitud o ruido: errores de medicio'n, valores
+at'ıpicos o entradas ano'malas en transacciones. f. data cleaning: tratamiento de valores faltantes y ruido
+- inconsistencia: discrepancias en nombres, co'digos 1) valores faltantes:
+o formatos. ejemplo: fechas almacenadas como
+- ignorar tuplas con valores faltantes (riesgoso si se pierde
+dd/mm/aaaa en una base de datos y como
+mucha informacio'n).
+mm-dd-yyyy en otra.
+- completar manualmente (costoso en grandes datasets).
+uncasoilustrativoeslarecoleccio'ndedatosme'dicos:enla
+- usar un valor global constante (ej. "desconocido").
+medicio'n de presio'n sangu'ınea, un valor faltante no implica - rellenar con la media, mediana o moda, tambie'n por
+que el registro deba eliminarse, ya que otras caracter'ısticas clase.
+(edad, peso, historial cl'ınico) s'ı aportan informacio'n valiosa. - inferir valores mediante modelos estad'ısticos o de ml
+esto demuestra que los datasets requieren preprocesamiento (regresio'n, k-nn, a'rboles de decisio'n).
+antes de aplicar te'cnicas de miner'ıa o aprendizaje.
+2) binning: binning agrupa valores en intervalos (bins) y
+b. causas de datos defectuosos reemplaza cada valor por:
+- instrumentos de recoleccio'n defectuosos. - la media del bin.
+- errores humanos o computacionales en la entrada de - la mediana del bin.
+datos. - el borde ma's cercano del bin.
+- valoresfalsosencamposobligatorios(ejemplo:fechapor ejemplo: salarios ruidosos [2950, 3000, 3020, 8000]. el bin
+defecto"1deenero"paraocultarcumplean˜os),conocidos (2900-3100) se reemplaza por la media (2990), mientras que
+como datos faltantes disfrazados. 8000 queda como posible outlier.
+3) suavizado de ruido:
+- ajustar una funcio'n matema'tica (lineal o no lineal) para
+suavizar fluctuaciones. ejemplo: regresio'n lineal en ventas mensuales.
+- aplicar te'cnicas de filtrado como la media mo'vil:
+6
+1(cid:88)
+ma (t)= x
+7 7 t-i
+i=0
+donde x es el valor en el d'ıa t. esto genera una curva
+t
+suavizada que refleja la tendencia real.
+g. data integration: manejo de redundancia
+la misma informacio'n puede estar registrada varias veces
+o con diferencias. ejemplo: un cliente como "juan pe'rez"
+en una base de datos y "j. a. pe'rez" en otra. se aplican
+pruebas estad'ısticas como la chi-cuadrado (χ2) para detectar
+redundancia o asociaciones entre variables catego'ricas:
+h :p(a ∩b )=p(a )p(b )
+0 i j i j
+siχ2 ≤χ2 ,seaceptalahipo'tesisdeindependencia.
+calculado α,df
+references
+[1] a.burkov,thehundred-pagemachinelearningbook.andriyburkov,
+2019.[online].available:https://themlbook.com/

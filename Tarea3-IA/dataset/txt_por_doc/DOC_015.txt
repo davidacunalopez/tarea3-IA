@@ -1,0 +1,154 @@
+apuntes semana 5 clase #1s
+eder vega suazo
+escuela de ingenier'ıa en computacio'n
+instituto tecnolo'gico de costa rica
+ic-6200 - inteligencia artificial gr2
+resumen-este documento es un resumen de la clase de ii. desaf'iosenmodeladopredictivo
+inteligencia artificial correspondiente a la semana 5, enfocando
+en los fundamentos del aprendizaje supervisado. se abordan ii-a. relaciones no lineales entre variables
+temas clave como la optimizacio'n de modelos mediante ca'lculo
+la regresio'n lineal presume una relacio'n lineal entre prediferencial y el algoritmo de descenso de gradiente aplicado a la
+dictoresyvariablerespuesta.cuandoestasuposicio'nseviola,
+funcio'ndeerrorcuadra'ticomedio.adema's,seexaminandesaf'ıos
+comunes en el modelado predictivo, incluyendo el manejo de el modelo resulta inadecuado y muestra patrones sistema'ticos
+relaciones no lineales entre variables y la deteccio'n de valores en los residuos:
+at'ıpicos.tambiendiscutenestrategiasparalaevaluacio'ndemoe =y -yˆ
+delos mediante particio'n de datasets y se analiza el compromiso i i i
+entre sesgo y varianza, crucial para desarrollar modelos con
+la solucio'n implica transformar las variables predictoras
+capacidad de generalizacio'n efectiva.
+mediante expansio'n polinomial o otras transformaciones que
+i. optimizacio'nmedianteca'lculodiferencial
+permitancapturarrelacionesnolinealesmanteniendolalineai-a. funcio'n de error cuadra'tico medio lidad en los para'metros.
+en problemas de regresio'n, la funcio'n de costo ma's comu'n
+esta' dada por:
+n
+l= 1 (cid:88) (f (x )-y )2, i=1,...,n
+n w,b i i
+i=1
+donde h (x ) representa la prediccio'n del modelo para la
+θ i
+instancia i-e'sima.
+el proceso de optimizacio'n busca minimizar esta funcio'n
+mediante el ca'lculo de gradientes:
+n
+∂l 1 (cid:88)
+= 2((wx +b)-y )-x figura 1: ejemplo de relacio'n no lineal y su ajuste mediante
+∂w n i i i transformacio'n polinomial.
+i=1
+n
+∂l 1 (cid:88)
+= 2((wx +b)-y )
+∂b n i i ii-b. manejo de valores at'ıpicos
+i=1
+i-b. algoritmo de descenso de gradiente las observaciones extremas pueden distorsionar significativamentelosmodelosderegresio'n.existenmu'ltiplesenfoques
+la actualizacio'n de para'metros se realiza de forma iterativa
+para su identificacio'n y tratamiento:
+mediante:
+w(t+1) =w(t)-α ∂l ii-b1. identificacio'n de valores at'ıpicos:
+b(t+1) =b(t)-α
+∂
+∂
+w
+l
+(t) r
+de
+e
+s
+s
+v
+id
+ia
+u
+c
+o
+io'
+s
+n
+e
+e
+s
+s
+t
+t
+a
+a'
+n
+nd
+d
+a
+a
+r
+ri
+d
+z
+e
+ad
+lo
+o
+s
+s:
+re
+z
+s i idu
+=
+os. σ
+ei
+e
+donde σ
+e
+es la
+∂b(t) rango intercuart'ılico: valores fuera de [q - 1,5 -
+1
+donde α representa la tasa de aprendizaje que controla la iqr,q +1,5-iqr] se consideran at'ıpicos.
+3
+magnitud de cada actualizacio'n. ii-b2. te'cnicas de tratamiento:
+i-c. terminolog'ıa fundamental eliminacio'n:removerobservacionesidentificadascomo
+e'poca(epoch):ciclocompletodepresentacio'ndetodos at'ıpicas.
+los ejemplos de entrenamiento al modelo. winsorizacio'n: reemplazar valores extremos por perlote (batch): subconjunto de ejemplos utilizados para centiles espec'ıficos (ej. percentil 5 y 95).
+calcular una actualizacio'n de para'metros. transformaciones: aplicar funciones como logaritmo
+tasa de aprendizaje: hyperpara'metro que determina la o ra'ız cuadrada para reducir la influencia de valores
+velocidad de convergencia del algoritmo. extremos.
+cuadro ii: caracter'ısticas de modelos con sesgo o varianza
+elevados
+me'trica altosesgo altavarianza
+errorentrenamiento alto bajo
+errorvalidacio'n alto alto
+comportamiento subajuste sobreajuste
+soluciones modelos ma's comple- regularizacio'n, ma's
+jos datos
+figura2:efectodevaloresat'ıpicosenunmodeloderegresio'n
+iv. sesgoyvarianza
+lineal.
+iv-a. diagno'stico de problemas comunes
+iv-b. estrategias de mejora
+iii. evaluacio'nyvalidacio'ndemodelos para alto sesgo: aumentar la complejidad del modelo,
+agregar caracter'ısticas adicionales o reducir regularizaiii-a. particio'n de datasets cio'n.
+para alta varianza: aumentar datos de entrenamiento,
+la divisio'n adecuada de los datos es crucial para evaluar la aplicar te'cnicas de regularizacio'n o reducir la complejicapacidad de generalizacio'n: dad del modelo.
+compromiso o'ptimo: seleccionar la complejidad del
+cuadro i: propo'sitos de los diferentes subconjuntos de datos modelo que minimice el error de generalizacio'n.
+subconjunto propo'sito
+entrenamiento ajuste de para'metros del modelo mediante optimizacio'n
+validacio'n seleccio'n de hyperpara'metros y monitorizacio'n del
+sobreajuste
+prueba evaluacio'n final del rendimiento con datos nunca
+vistos
+iii-b. te'cnicas de muestreo
+1. muestreoaleatorio:divisio'nrandomizadaquepreserva
+la distribucio'n original de los datos.
+2. muestreo estratificado: mantiene la proporcio'n de clasesencadaparticio'n,crucialparadatosdesbalanceados.
+3. validacio'n cruzada: divide los datos en k particiones
+y realiza k iteraciones de entrenamiento/validacio'n.
+figura 4: relacio'n entre complejidad del modelo y error de
+generalizacio'n.
+v. conclusiones
+la efectividad de los modelos de aprendizaje supervisado
+dependecr'ıticamentedelaadecuadaoptimizacio'ndepara'metros, el manejo de relaciones complejas entre variables, la
+identificacio'n y tratamiento de valores at'ıpicos, y la evaluacio'n rigurosa mediante te'cnicas de validacio'n apropiadas. el
+entendimiento del compromiso entre sesgo y varianza permite
+desarrollar modelos que generalizan efectivamente a nuevos
+datos, balanceando complejidad y capacidad predictiva.
+figura 3: esquema de validacio'n cruzada con k =5 particioreferencias
+nes. [1] apuntes de la clase de inteligencia artificial, profesor s. pacheco,
+institutotecnolo'gicodecostarica,2025.

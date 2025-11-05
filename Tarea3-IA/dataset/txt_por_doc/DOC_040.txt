@@ -1,0 +1,138 @@
+apuntes semana 12
+apuntes del 10 de octubre de 2025
+andrey uren˜a bermu'dez - 2022017442
+inteligencia artificial
+escuela de computacio'n, instituto tecnolo'gico de costa rica
+correo: andurena@estudiantec.cr
+abstract-estos apuntes corresponden a la semana 12 del
+curso de inteligencia artificial, impartido por el profesor steven
+pacheco portugue's en el instituto tecnolo'gico de costa rica.
+se abordan los temas relacionados con los modelos de lenguaje
+de gran escala (llm), la tokenizacio'n, embeddings, y la introduccio'nalparadigmaderetrieval-augmentedgeneration(rag)
+y agentes inteligentes. adema's, se presentan los anuncios del
+curso y el cronograma restante del semestre.
+i. introduccio'n
+durante esta sesio'n, se revisaron aspectos fundamentales
+de los modelos de lenguaje modernos y su relacio'n con las figura1. ejemplodeunmodeloderedneuronalpreentrenado.
+arquitecturas de inteligencia artificial actuales. tambie'n se
+analizaron conceptos claves para comprender co'mo los llm
+procesantexto,transformaninformacio'nenvectores,yaplican
+- semana 17: semana colcho'n (sin actividades prote'cnicas de recuperacio'n de conocimiento externo mediante
+gramadas).
+rag. finalmente, se discutieron las implicaciones e'ticas y el
+- semana 18:
+uso responsable de estos sistemas.
+∗ martes 2 de diciembre: examen i.
+ii. anunciosdelcurso ∗ jueves 4 de diciembre: entrega del proyecto ii.
+- seasigno' latarea04sobreagentes,confechadeentrega
+el 6 de noviembre. la revisio'n sera' presencial y consiste
+en la creacio'n de un agente funcional.
+- se presento' el cronograma para el cierre del semestre,
+iii. repasodeconceptos
+organizado por semanas:
+- semana 13:
+a. modelos de lenguaje de gran escala (llm)
+∗ martes 28 de octubre: quiz 6 y tema quantization - unsupervised.
+losllmsehanconvertidoenlabasedelossistemasmod-
+∗ jueves30deoctubre:temaunsupervised-pca
+ernos de inteligencia artificial. permiten generar, comprender
+y entrega del proyecto i.
+y razonar sobre texto, co'digo, ima'genes y audio.
+- semana 14:
+cada entrada (input) es representada mediante valores
+∗ martes 4 de noviembre: revisio'n presencial del
+nume'ricos en punto flotante que describen caracter'ısticas. el
+proyecto i.
+tratamiento var'ıa segu'n si la entrada corresponde a texto,
+∗ jueves 6 de noviembre: revisio'n presencial del
+nu'meros o s'ımbolos.
+proyecto i y entrega de la tarea 04: agentes.
+- semana 15:
+∗ martes 11 de noviembre: clase virtual sobre
+unsupervised - pca, asignacio'n del proyecto ii b. tokenizacio'n
+y la tarea 05: autoencoder - quantization.
+∗ jueves 13 de noviembre: revisio'n virtual de la la tokenizacio'n convierte las palabras, signos o s'ımbolos
+tarea de agentes. en representaciones nume'ricas llamadas tokens. estos tokens
+- semana 16: permiten al modelo procesar texto de manera eficiente.
+∗ martes 18 de noviembre: tema riesgos de la existen varios tipos de tokenizacio'n, resumidos en la
+inteligencia artificial. tabla i.
+tablai iv. materianueva:retrieval-augmented
+tiposcomunesdetokenizacio'nysusprincipalesventajas. generation(rag)
+ventaja princi- un sistema rag conecta un llm con un mo'dulo
+tipo ejemplo
+pal de recuperacio'n de informacio'n (retriever) para incorporar
+palabra "losmedios" simplificada conocimiento externo relevante durante la generacio'n de recara'cter "l","o","s" sinoovs
+spuestas.
+subpalabra(bpe, equilibra vocab-
+"super"+"vivencia"
+wordpiece) ulario/contexto
+soportacualquier a. chunks
+byte-level bytesutf-8
+s'ımbolo
+espacioenblanco "hola","mundo" ra'pidoysimple el texto se divide en fragmentos denominados chunks, que
+suelen contener entre 200 y 500 tokens. cada fragmento se
+transforma en un vector mediante un modelo de embeddings,
+tras la tokenizacio'n, los tokens se representan como veccapturando su significado sema'ntico.
+tores en un espacio continuo. esto permite medir similitud
+sema'ntica entre palabras.
+b. consulta o recuperacio'n
+c. me'tricas de similitud
+dada una consulta, el sistema convierte la pregunta en
+las me'tricas ma's utilizadas incluyen: un embedding y calcula la similitud con los embeddings
+indexados, devolviendo los ma's cercanos sema'nticamente.
+- distancia euclidiana: mide que' tan separados esta'n dos
+puntos en el espacio vectorial.
+c. aumento y generacio'n
+- similitud del coseno:
+a-b los fragmentos recuperados se integran en el prompt envisim(a,b)= ado al llm, proporcionando contexto adicional que gu'ıa la
+||a||||b||
+respuesta hacia informacio'n verificada y relevante.
+evalu'a el a'ngulo entre los vectores; un a'ngulo menor
+implica mayor similitud. d. ventajas principales
+- reduccio'n de alucinaciones.
+tablaii - actualizacio'n continua del conocimiento.
+t e r j a e n m s p f l o o r s m i a m n pl e i n fic to a k d e o n d s e c t o o n k i e d n e i n z t a i c f i i o c 'n a : d l o a r s es pa n l u a m b e' r r a i s co se s. - eficiencia de costos en entrenamiento.
+- aplicabilidad en dominios especializados.
+palabra token idnume'rico - asistentes empresariales enriquecidos.
+los los 105 - soporte a la investigacio'n y atencio'n al cliente.
+llm llm 2124
+aprenden aprenden 893 v. llmtradicionalvsagenteinteligente
+patrones patrones 5749
+un llm tradicional puede ofrecer informacio'n general,
+pero carece de personalizacio'n y accio'n. por ejemplo, si se le
+d. embeddings
+consulta"¿cua'ntosd'ıasdevacacionesmequedan?",nopodra'
+losembeddingssonrepresentacionesnume'ricasdensasque
+responder con precisio'n al no tener acceso a datos personales.
+asignan a cada token un vector en un espacio continuo de
+en cambio, un agente inteligente integra:
+alta dimensio'n. capturan significado sema'ntico y relaciones
+contextualesentrepalabrasuoracionescompletas,permitiendo - memoria: recuerda preferencias y contextos previos.
+comparaciones ma's profundas entre ideas o documentos. - herramientas: accede a apis externas (clima, vuelos,
+calendario).
+e. capacidades de los llm - planificacio'n: organiza y ejecuta tareas en funcio'n de
+objetivos.
+debido a su entrenamiento a gran escala y arquitecturas
+- accio'n: transforma planes en resultados concretos.
+basadas en transformers, los llm presentan capacidades
+este paradigma refleja la evolucio'n hacia sistemas que
+emergentes:
+razonan y actu'an, ma's alla' de solo responder texto.
+- comprensio'n contextual.
+- generacio'n coherente de texto. vi. escalamientoresponsable
+- razonamiento y planificacio'n ba'sica.
+- aprendizaje en el prompt (in-context learning). es fundamental evaluar cua'ndo realmente se requiere es-
+- multitarea sin reentrenamiento. calar de un modelo llm a un sistema de agentes o mul-
+- conocimiento esta'tico derivado de los datos de entre- tiagentes. esto implica garantizar seguridad, privacidad y el
+namiento. uso e'tico de los datos. los agentes deben ser disen˜ados bajo
+- costos computacionales elevados. principios de transparencia y responsabilidad.
+vii. conclusio'n
+los temas revisados durante esta semana refuerzan la comprensio'ndeco'molosmodelosdelenguajemodernosprocesan
+informacio'n y co'mo se esta'n extendiendo hacia arquitecturas
+ma's complejas y u'tiles, como los sistemas rag y los agentes
+inteligentes. estas herramientas representan un paso clave
+hacia una inteligencia artificial ma's contextual, adaptable y
+responsable.
+referencia
+pacheco portuguez, s. (2025). presentacio'n del curso de
+inteligencia artificial. instituto tecnolo'gico de costa rica.

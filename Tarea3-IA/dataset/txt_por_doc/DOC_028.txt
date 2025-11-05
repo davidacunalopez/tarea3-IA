@@ -1,0 +1,65 @@
+apuntes semana 8, clase
+gerardo alberto gómez brenes - 2022089271
+resumen-resumen compacto y organizado de la clase. in- v. one-hot,softmaxydecisión
+cluye: motivación breve, pautas para la entrega, conceptos clave
+de redes neuronales y las fórmulas que el profesor mencionó o lasetiquetasmulti-claseserepresentancomovectoresoneutilizó como referencia. hot.paraobtenerunadistribucióndeprobabilidadsobreclases
+se usa softmax:
+i. motivaciónynotasgenerales
+se compartió un ejemplo de robótica donde un modelo softmax(z) = exp(z i ) .
+adapta el comportamiento del robot ante la pérdida o modi- i (cid:80) exp(z )
+j j
+ficación de una pata. esto ilustra la capacidad de adaptación
+(aprendizaje por refuerzo y transferencia) y su potencial en la predicción final corresponde al índice con mayor probabiaplicacionescomoprótesis.mensajepráctico:hayáreasdeml lidad.
+quenosonsolomodelosdelenguaje;robóticaymanipulación
+son opciones reales. vi. arquitectura:capasyconexiones
+se enfatizó también la forma correcta de entregar tareas:
+documentos cortos y autocontenidos, con figuras y tablas una red densa (fully connected / dense) conecta todas las
+dentro del texto, y máximo unas pocas páginas para esta salidas de una capa con todas las entradas de la siguiente.
+actividad (usar el grupo para dudas). añadir capas y activaciones no lineales permite resolver relacionesnolinealesqueunperceptrónsimplenopuede(ejemplo
+ii. pautasparalaentrega clásico: xor).
+el trabajo debe ser claro y compacto. incluir dentro del
+documento: vii. funcionesdeactivaciónygradientes
+resultadosrelevantes(figuras,tablas)ysuinterpretación
+funciones mencionadas en clase:
+breve.
+referencias a notebooks o repositorios solo como com- sigmoide: σ(z) = 1/(1 + e-z). derivada: σ′(z) =
+plemento, no como sustituto. σ(z)(1-σ(z)). tiene problemas de vanishing gradient
+selección crítica de gráficos: mostrar los que aporten a en extremos.
+la conclusión. relu: relu(z) = m'ax(0,z). es eficiente, pero puede
+generar neuronas "muertas" cuando la derivada es cero.
+iii. entradayprimermodelo:regresión
+leaky relu: variante con pequeña pendiente negativa
+logística para evitar neuronas muertas.
+imágenes 28 × 28 se representan como vectores de 784 tanh(z): acotada en (-1,1), útil en algunos contextos.
+píxeles. la regresión logística usa la transformación lineal
+seguida de la sigmoide: viii. forward,pérdidayretropropagación
+1
+z =wtx+b, σ(z)= . el forward calcula salidas capa a capa. con una función de
+1+e-z
+pérdida l se aplica retropropagación para obtener derivadas
+para clasificación binaria (ej.: "¿es 5 o no?") σ(z) da una parciales ∂l/∂w y actualizar parámetros. regla de actualizaprobabilidad entre 0 y 1. ción (descenso de gradiente):
+iv. debinarioamulticlaseynotaciónmatricial ∂l
+w ←w-η ,
+para 10 clases se puede entrenar una regresión por clase o ∂w
+usar una salida vectorial. notación común:
+donde η es la tasa de aprendizaje. para el perceptrón se
+z =xwt +b, mencionó el hinge loss:
+donde, por ejemplo, w puede tener forma 10 × 784 (10 l =m'ax(0, 1-y(wtx+b)).
+hinge
+neuronas de salida y 784 entradas). con un batch de tamaño
+b la entrada x es b×784 y el resultado z es b×10. laretropropagaciónusalaregladelacadenaparapropagar
+ejemplo numérico: con 10 salidas y 784 entradas hay 10× sensibilidades hacia atrás; por eso es necesario que las capas
+784=7840 parámetros sólo en esa capa. sean diferenciables.
+ix. costoscomputacionalesydimensionalidad
+aumentar neuronas y capas incrementa parámetros y costo
+deoptimización.lamaldicióndeladimensionalidadcomplica
+labúsquedadesolucionesóptimas.ejemplo:siunacapatiene
+256 neuronas y la siguiente tiene 10, los pesos entre ellas son
+10×256=2560.
+recomendación práctica: reducir dimensiones innecesarias
+(filtrado de features, pca) cuando sea posible.
+x. notassobrerepresentacionesy
+cnn/embeddings
+para imágenes, las cnn aplican kernels que extraen patrones locales (bordes, texturas, formas). en lenguaje, embeddings condensan palabras o frases en vectores de dimensión
+fija;lasimilitudsemánticasemidepordistanciaeneseespacio
+vectorial.

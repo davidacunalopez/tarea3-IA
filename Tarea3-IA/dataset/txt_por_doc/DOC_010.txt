@@ -1,0 +1,216 @@
+1
+apuntes semana 4
+andrés sánchez rojas
+escuela de ingeniería en computación
+instituto tecnológico de costa rica
+26/8/2025
+abstract-la clase comenzó con un quiz de 4 preguntas
+relacionadas a la materia vista en clases anteriores, luego el ventajas:
+profesor nos explicó las respuestas del quiz antes de comenzar
+- es sencillo de implementar
+con la materia de la clase. durante la clase vimos el algoritmo
+de knn, hicimos un repaso de derivadas y pasamos a ver cómo - sirve para regresión y clasificación
+se construye y optimiza un modelo de regresión lineal. desventajas:
+- es muy costoso
+- features irrelevantes pueden distorcionar las distancias
+i. quiz
+- noesmuyconsistenteyaquelaclasificaciónpuedevariar
+1) 1.anoteydescribalas3propiedadesdelanorma.30pts dependiendo del k usado
+r//
+a) positividad:∥x∥≥0y∥x∥=0siysolosix=0.
+iii. regresiónlineal
+b) homogeneidad: ∥αx∥=|α|∥x∥ para todo escalar método estadístico que intenta hallar la relación entre una
+α. variable dependiente y un conjunto de variables independic) desigualdad triangular: ∥x+y∥≤∥x∥+∥y∥. entes.
+2) 2. describa los tipos de aprendizaje supervised, unsupervised y one-shot learning. 30 pts
+r//
+a) supervised: se utiliza un conjunto de datos con
+característicasyetiquetas.lasetiquetassirvenpara
+validar y corregir las aproximaciones del sistema.
+b) unsupervised:nohayetiquetasconlasqueevaluar
+o corregir, se usa en algoritmos de cluster para
+agrupar valores.
+c) one-shotlearning:seledaunejemploalmodelo
+y luego debe resolver un ejercicio similar
+fig.1. ejemploderegresiónlineal.
+3) 3.siuyvsondosvectorescolinealesconmagnitudesde
+5 y 6 respectivamente. ¿desarrolle cuál es el resultado
+del producto punto entre u y v? a. ¿qué queremos hacer?
+r//
+buscamos construir un modelo
+a) ∥u∥=5, ∥v∥=6.
+f (x)=wx+b
+b) u-v =∥u∥ ∥v∥ cosθ. w,b
+c) cos0=1 - x es un vector d-dimensional
+d) 5-6-1. - w es un vector d-dimensional
+e) u-v =30 - b es un número real
+4. ¿quién propone las redes generativas adversarias - y=f w,b (x)
+r// ian goodfellow lo que queremos es encontrar los valores de w y b óptimos
+para nuestro modelo. es importante recordar que no tiene que
+ser perfecto (mínimo absoluto) pero debemos buscar que sea
+ii. k-nearestneighbors(knn)
+óptimo (mínimo local) para las necesidades que tengamos.
+se tiene un conjunto de datos tiquetados y se le quiere
+asignar una etiqueta a un dato basado en otros datos similares b. loss function
+a este. estos datos similares son los k vecinos más cercanos.
+esta función nos permite calcular qué tan bueno es nuestro
+una vez que se tiene a los vecinos más cercanos se revisa las
+modelo. con esta función calculamos el error cometido por el
+etiquetas de estos en una "votación" la etiqueta más común
+modelo en cada muestra. la función de pérdida penaliza más
+en estos k vecinos se le asigna al dato nuevo. este k es
+los errores grandes por el error cuadrático.
+un hiperparámetro y normalmente es un número impar para
+(cid:0) (cid:1)2
+evitar empates. f (x )-y
+w,b i i
+2
+c. cost function f. descenso de gradiente
+el profe puso un ejemplo para explicar este concepto.
+eselerrorpromediodellossfunctionsobretodoeldataset.
+estamos en la cima de una montaña con los ojos vendados y
+nuestro objetivo es minimizarla ajustando los parámetros w
+debemosencontrarlarutamáscortaalpuntomásbajoposible.
+y b. si tenemos un l grande quiere decir que el modelo da
+el proceso para esto sería:
+valores muy distintos a las etiquetas. un l pequeño indica lo
+opuesto. - buscar la dirección de mayor pendiente hacia abajo
+- descender por ese camino hacia abajo
+n
+l= 1 (cid:88)(cid:0) f (x )-y (cid:1)2 - en cada paso repetimos el proceso.
+n w,b i i tenemos la función:
+i=1
+x =x -α∇f(x )
+nuevo antiguo t
+d. repaso de derivadas α es la taza de aprendizaje que es un hiperparámetro y
+∇f(x ) es el gradiente o la derivada. debemos tener cuidado
+propiedades de las derivadas: t
+al definir el α. si se utiliza un α muy grande el algoritmo
+probablementevaasaltarseelpuntoóptimomuchasveces.un
+d
+[k]=0, α muy pequeño nos va a forzar a hacer muchas iteraciones.
+dx
+debemos pensar bien en el learning rate que se utilizará pero
+d
+[x]=1, serecomiendaquesearelativamentepequeñoparanosaltarnos
+dx
+d (cid:2) xn(cid:3) =nxn-1, e
+e
+l
+n
+p
+d
+u
+e
+n
+fi
+to
+ni
+ó
+r
+p
+u
+t
+n
+im
+v
+o
+al
+o
+or
+us
+ra
+a
+z
+r
+o
+e
+n
+l
+a
+e
+b
+a
+e
+rl
+d
+y
+e
+s
+l
+to
+y
+pp
+d
+in
+et
+g
+en
+m
+er
+et
+l
+h
+a
+o
+f
+d
+u
+.
+n
+e
+c
+s
+ió
+te
+n
+c
+c
+o
+u
+n
+a
+s
+n
+is
+d
+t
+o
+e
+dx
+d (cid:2) f(x)+g(x) (cid:3) =f′(x)+g′(x), se llega a ese valor de l.
+dx
+d (cid:2) f(x)-g(x) (cid:3) =f′(x)-g′(x),
+dx
+d (cid:2) kf(x) (cid:3) =kf′(x),
+dx
+d (cid:2) f(x)g(x) (cid:3) =f′(x)g(x)+f(x)g′(x),
+dx
+d (cid:20) f(x) (cid:21) f′(x)g(x)-f(x)g′(x)
+= ,
+dx g(x) (cid:2) g(x) (cid:3)2
+d (cid:2) f (cid:0) g(x) (cid:1)(cid:3) =f′(cid:0) g(x) (cid:1) - g′(x).
+dx
+ejemplo de derivada parcial:
+sea f(x,y)=2x+3y,
+fig.3. ilustracióndedescensodegradiente.
+∂f
+al calcular , tratamos x como constante,
+∂y
+∂f
+=3
+∂y
+e. función convexa vs no convexa
+lafunciónconvexasólotieneunmínimoabsolutomientras fig.4. ejemplodedescensodegradientecondiferenteslearningrates
+que la no convexa puede tener múltiples mínimos locales.
+fig.2. ejemplodeunafunciónconvexayunanoconvexa.
+3
+g. ¿por qué utilizamos mse (mean squared error) y no
+mae(mean absolute error)
+- el mse penaliza más los errores grandes, el mae los
+penaliza de manera lineal
+- mae no tiene una derivada continua ya que no es
+derivable en 0
+fig.5. ilustracióndemaevsmse
+references
+[1] stevenpachecoportuguez,clasesobreregresiónlineal,tecnológicode
+costarica,2025.

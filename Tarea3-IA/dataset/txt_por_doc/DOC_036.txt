@@ -1,0 +1,217 @@
+inteligencia artificial
+apuntes semana 11, clase #1
+luis fernando benavides villegas
+instituto tecnolo'gico de costa rica
+cartago, costa rica
+lubenavides@estudiantec.cr
+abstract-este documento recopila los apuntes de la clase del de aplicacio'n del filtro, por lo que reduce el taman˜o del mapa
+martes 14 de octubre de 2025 para el curso de inteligencia ar- de salida.
+tificial. se repasan conceptos como los fundamentos de las redes
+2) padding: agrega p'ıxeles de relleno alrededor de la
+neuronales convolucionales (cnn), abarcando el uso de filtros,
+imagendeentradaparacontrolareltaman˜odelmapadesalida
+stride,paddingypoolingparalaextraccio'ndecaracter'ısticasen
+ima'genes.seanalizanarquitecturasrepresentativascomolenet, y preservar las dimensiones espaciales. un padding sime'trico
+alexnet, googlenet, vgg, resnet y densenet, destacando su evita que la convolucio'n reduzca el taman˜o de la imagen:
+evolucio'n y aportes al aprendizaje profundo. adema's, se introk-1
+ducenlosconceptosdeembeddingsyvisualizacio'ndeactivaciones
+p= ,
+para interpretar el comportamiento de los modelos, junto con el 2
+estudio de los autoencoders y su aplicacio'n en reconstruccio'n de
+donde k es el taman˜o del filtro.
+ima'genes,reduccio'ndedimensionalidad,deteccio'ndeanomal'ıas
+y generacio'n de datos. 3) dimensio'ndesalida: dadaunaimagendeentradayun
+index terms-inteligencia artificial, redes neuronales con- kernel, el taman˜o de salida se calcula como:
+volucionales, pooling, embeddings, visualizacio'n, autoencoder,
+(m+2p -k)
+deep learning. +1,
+s
+i. repasodelaclaseanterior donde m es el taman˜o de la entrada, k el taman˜o del filtro,
+p el padding y s el stride.
+a. convoluciones y filtros
+c. comparticio'n de pesos
+una convolucio'n consiste en aplicar un filtro (kernel) sobre
+una imagen para extraer informacio'n relevante. el filtro es en una red convolucional, los mismos pesos que se caluna matriz de nu'meros que se entrena junto con la red. al cularon para una regio'n espec'ıfica se reutilizan en todas las
+desplazarseporlaimagen,calculaunvalorporcadaposicio'n, dema's posiciones donde el filtro se deslice. por ejemplo,
+generandounanuevaimagenllamadamapadecaracter'ısticas si un filtro aprende a detectar l'ıneas verticales, esa misma
+(feature map o activation map). configuracio'n de pesos servira' para reconocerlas sin importar
+1) filtrogaussiano: produceunaimagenconunefectode en que' parte de la imagen aparezcan. de esta manera, se
+desenfoque (blur), eliminando el ruido y dejando solo la parte reducesignificativamentelacantidaddepara'metrosaentrenar
+del contorno. y mejora la eficiencia del modelo.
+2) redes neuronales: en redes convencionales, todos los en arquitecturas como alexnet, permite que las primeras
+p'ıxeles estan conectados a todas las neuronas de la siguiente capas aprendan caracter'ısticas generales como bordes y colcapa. en las convoluciones, solo una porcio'n de los p'ıxeles ores, mientras que las capas ma's profundas combinan esa
+esta' conectada, observando solo una parte espec'ıfica de la informacio'n para reconocer formas y objetos ma's complejos.
+imagen.
+d. capa de pooling
+3) campo receptivo: es la regio'n de la imagen que una
+neurona observa para generar su salida. depende tanto del despue'sdeaplicarlasconvoluciones,seutilizaunacapade
+taman˜o de la entrada como del filtro aplicado. por ejemplo, si pooling para reducir el taman˜o espacial de la imagen y manlaimagendeentradaesde32×32×3,lareddebeprocesarlos tener solo la informacio'n ma's relevante. esta operacio'n toma
+tres canales de color. si el filtro tiene taman˜o 5×5, entonces bloqueslocalesyrealizaunaoperacio'nestad'ısticasobreellos,
+el campo receptivo resultante sera' un cubo de 5×5×3, es como el ma'ximo o el promedio, para resumir su contenido.
+decir, todas las neuronas que intervienen en esa regio'n. estos - max pooling: selecciona el valor ma'ximo de cada
+campos extraen caracter'ısticas necesarias para el clasificador. bloque. es el me'todo ma's utilizado.
+- average pooling: calcula el promedio de los valores de
+b. para'metros de la convolucio'n
+cada bloque.
+1) stride: define cua'nto se deslizan los filtros sobre la - l2 pooling: aplica una norma cuadra'tica sobre los valimagendeentrada.unstridemayorprovocamenosposiciones ores.
+el pooling reduce el ancho y el alto de la imagen, pero c) zfnet: creada en base a alexnet, ajusta el taman˜o
+conserva la cantidad de canales, por lo que con entrada de de los filtros y la profundidad para estudiar co'mo cada capa
+taman˜o w ×h×d, el pooling reduce w y h, manteniendo transforma la informacio'n. introdujo te'cnicas para visualizar
+d.estoevitaqueelmodelocrezcaencantidaddepara'metros activacionesintermedias,ayudandoacomprenderydepurarel
+y mantiene la informacio'n esencial para las siguientes capas. comportamiento interno de las cnn.
+d) googlenet (inception): presentada por google en
+e. capa fully-connected
+2014, redujo de 60 a 4 millones de para'metros mediante los
+tras las etapas de convolucio'n y pooling, la red produce mo'dulos inception, que combinan convoluciones de distintos
+un vector que resume las caracter'ısticas ma's relevantes de la taman˜os (1×1, 3×3, 5×5) y max pooling en paralelo. en
+imagen.estevectorseconectaaunaovariascapastotalmente la etapa final, un average pooling global transforma el tensor
+conectadas. cada neurona de estas capas esta' conectada con de 7×7×1024 en un vector 1×1×1024, reemplazando las
+todas las salidas anteriores, permitiendo combinar las carac- capas densas y mejorando la eficiencia [2].
+ter'ısticas extra'ıdas para realizar la clasificacio'n final.
+e) vgg16: simplifica el disen˜o utilizando solo filtros
+el perceptro'n multicapa (mlp) se encarga de transformar pequen˜os de 3×3 y bloques repetidos de convolucio'n y pooleste vector en una prediccio'n, como la probabilidad de perte- ing. aumenta la profundidad hasta 16 o 19 capas, mostrando
+nencia a una clase espec'ıfica. que ma's capas con filtros simples mejoran el rendimiento
+general.
+f. arquitecturas convolucionales
+f) resnet: introduce las conexiones residuales, que per1) estructura general: una arquitectura convolucional se
+miten que la informacio'n fluya entre capas no consecutivas.
+compone de bloques repetidos de:
+estas conexiones evitan el desvanecimiento del gradiente y
+convolucio'n→activacio'n→pooling posibilitanentrenarredesextremadamenteprofundasdeforma
+estable.
+estosbloquesserepitenvariasvecesparaextraerinformacio'n
+g) densenet: conectacadacapacontodaslasanteriores
+progresivamentema'sabstracta.posteriormente,elresultadose
+dentro de un bloque, promoviendo la reutilizacio'n de caracaplana(flatten)yseconectaaunaoma'scapasfullyconnected
+ter'ısticas y reduciendo la redundancia. esta estructura densa
+para la clasificacio'n.
+mejoralapropagacio'ndelgradiente,optimizalaeficienciadel
+serecomiendaelusodefiltrospequen˜os(porejemplo,3×3
+modelo y mantiene un nu'mero reducido de para'metros.
+o 5×5) ya que permiten:
+- reducir la cantidad de para'metros a aprender. ii. problemasconlasredesneuronales
+- capturar relaciones no lineales al encadenar mu'ltiples convolucionales
+capas.
+a pesar de su alto desempen˜o, las redes convolucionales se
+filtros grandes (7×7 o ma's) capturan ma's informacio'n en comportan como una "caja negra", ya que resulta dif'ıcil comuna sola capa, pero aumentan excesivamente el nu'mero de prender que' tipo de informacio'n esta'n utilizando para tomar
+para'metros y reducen la no linealidad.
+sus decisiones. las representaciones internas que generan son
+2) reglas pra'cticas: altamente abstractas, lo que plantea un reto importante de
+- es preferible que las dimensiones de las ima'genes sean interpretabilidad.
+divisibles entre 2 para facilitar las reducciones con max uno de los principales desaf'ıos actuales es entender que'
+pooling. es lo que realmente afecta a la red durante el proceso de
+- en general, se utiliza stride de 2 y padding de 1 para clasificacio'n.lascapasinternasaprendencaracter'ısticascommantener dimensiones manejables. plejas que no siempre son comprensibles para los humanos.
+- el pooling de 2 × 2 es el ma's comu'n, reduciendo la este problema de explicabilidad motiva el uso de te'cnicas
+imagen a la mitad en cada dimensio'n. de visualizacio'n que permitan analizar la respuesta de las
+3) principales arquitecturas: neuronas ante diferentes est'ımulos visuales.
+a) lenet-5: propuesta por yann lecun en 1998, fue
+a. visualizacio'n y ana'lisis de activaciones
+una de las primeras redes convolucionales aplicadas al reconocimiento de d'ıgitos escritos a mano [1]. su estructura una forma pra'ctica de estudiar el comportamiento interno
+incluye dos capas convolucionales, dos de pooling y una de las cnn es observar los feature maps generados por cada
+totalmente conectada, estableciendo la base para las redes capa.
+modernas de visio'n por computadora. en estos mapas se puede identificar que' regiones de la
+b) alexnet: desarrollada por krizhevsky, sutskever y imagen activan ciertas neuronas y, por lo tanto, cua'les son
+hinton en el 2012, marco' el inicio del deep learning mod- los elementos visuales que el modelo considera relevantes.
+erno. procesa ima'genes de 224 × 224 con filtros grandes en las primeras capas, las activaciones suelen asemejarse
+(11×11, 5×5, 3×3), emplea activaciones relu, dropout todav'ıaalaimagenoriginal,peroconformeseprofundiza,las
+y entrenamiento distribuido en mu'ltiples gpus, logrando un representacionessevuelvencadavezma'sabstractasydif'ıciles
+salto significativo en precisio'n sobre el conjunto imagenet. de interpretar.
+fig.2. diagramadelfuncionamientodeunautoencoder
+proporcionandotransparenciaalprocesodedecisio'ndelmodelo.
+fig.1. representacio'ndeclasescont-sne.
+iii. autoencoders
+es una red neuronal disen˜ada para aprender una repreadema's, la inspeccio'n de los filtros aprendidos ayuda a
+sentacio'n comprimida de sus datos de entrada. a diferencia
+verificar que' patrones esta' capturando la red. los filtros
+de las redes supervisadas, no necesita etiquetas externas, ya
+inicialestiendenamostrartexturas,bordesocolores,mientras
+que su objetivo es reconstruir la entrada en la salida. durante
+que los u'ltimos codifican composiciones ma's complejas. este
+el entrenamiento, el modelo aprende a capturar los patrones
+tipo de ana'lisis permite detectar si la red esta' aprendiendo
+ma's relevantes de los datos, filtrando el ruido y conservando
+caracter'ısticas significativas o simplemente ruido del conjunto
+la informacio'n esencial.
+de entrenamiento.
+la estructura ba'sica se compone de tres partes (fig. 2):
+b. reduccio'n de dimensionalidad encoder→espacio latente→decoder
+para comprender las redes, se puede hacer el estudio de el aprendizaje del autoencoder consiste en minimizar el
+sus embeddings. al final de la red, cada imagen puede error de reconstruccio'n entre la entrada original y la salida
+representarse mediante un vector nume'rico que resume su reconstruida. aunque no haya etiquetas externas, el entreinformacio'n sema'ntica. ima'genes similares quedan pro'ximas namiento es parcialmente supervisado, ya que la salida se
+entre s'ı en este espacio vectorial, mientras que las de distintas compara directamente con la entrada.
+clases se separan claramente. estas representaciones pueden
+visualizarse mediante algoritmos de reduccio'n de dimension- a. encoder
+alidad, como: consiste en una serie de bloques convolucionales seguidos
+- t-sne: proyecta los vectores a dos o tres dimensiones, de operaciones de pooling, con el objetivo de extraer las
+preservando la estructura de las distancias originales, caracter'ısticas ma's relevantes de la entrada y comprimir la
+como se puede ver en la fig. 1. informacio'n a trave's de un proceso de reduccio'n espacial o
+- pca:alternativama'ssimple,aunquemenosefectivapara downsampling. cada bloque convolucional aprende distintos
+relaciones no lineales. niveles de representacio'n, pasando de detalles simples como
+bordes y texturas a rasgos ma's abstractos. de esta manera, el
+cuando la separacio'n entre clases es clara en el espacio
+encoder transforma los datos originales en una versio'n ma's
+reducido, se considera que el modelo ha aprendido una repcompacta, conservando u'nicamente la informacio'n esencial
+resentacio'n adecuada. por el contrario, si las clases aparecen
+para la reconstruccio'n posterior.
+mezcladas, indica que la red no ha logrado distinguir correctamente las caracter'ısticas de cada una. b. espacio latente o cuello de botella
+en esta etapa se almacena la informacio'n esencial en
+c. mapas de activacio'n
+un vector de baja dimensionalidad, conocido como espacio
+se pueden generar heatmaps o mapas de activacio'n que latente. este vector contiene la codificacio'n interna de la
+destacanlaszonasespec'ıficasdeunaimagenqueinfluyenma's entrada, capturando u'nicamente los rasgos ma's significativos.
+enladecisio'ndelmodelo.estosmapassonu'tilesparaverificar debidoasutaman˜olimitado,restringeelflujodeinformacio'n
+silaredesta' enfoca'ndoseenlasregionescorrectasdelobjeto. hacia el decoder, lo que obliga al modelo a conservar solo
+por ejemplo, estos me'todos permiten justificar predicciones, lo ma's relevante para lograr una reconstruccio'n efectiva. en
+como localizar una fractura o anomal'ıa en una radiograf'ıa, este espacio, muestras similares tienden a ubicarse pro'ximas
+iv. conclusiones
+las redes convolucionales permiten extraer
+automa'ticamente caracter'ısticas jera'rquicas de las ima'genes,
+impulsando el desarrollo de arquitecturas cada vez ma's
+profundas y eficientes. a pesar de su potencia, siguen siendo
+poco interpretables, por lo que se recurre a te'cnicas de
+visualizacio'n y ana'lisis de activaciones. finalmente, los
+autoencoders ampl'ıan estos conceptos al aprendizaje no
+fig.3. ejemplodesuper-resolucio'nconautoencoder.
+supervisado, permitiendo la compresio'n, reconstruccio'n y
+generacio'n de datos a partir de representaciones latentes.
+entre s'ı, formando agrupamientos que reflejan la estructura
+referencias
+sema'ntica de los datos.
+[1] y.lecun,l.bottou,y.bengio,andp.haffner,"gradient-basedlearning
+c. decoder y reconstruccio'n appliedtodocumentrecognition,"proceedingsoftheieee,vol.86,no.
+11,pp.2278-2324,1998.
+a partir del vector del espacio latente, utiliza capas de [2] c.szegedyetal.,"goingdeeperwithconvolutions,"proceedingsofthe
+upsampling o convoluciones transpuestas para expandir pro- ieeeconferenceoncomputervisionandpatternrecognition(cvpr),
+pp.1-9,2015.
+gresivamente la representacio'n comprimida hasta recuperar la
+forma original. durante este proceso, el modelo aprende a
+reconstruir los detalles perdidos, generando una salida que se
+asemeje lo ma's posible a la entrada inicial.
+d. aplicaciones de los autoencoders
+- reduccio'n de dimensionalidad: obtener representaciones ma's compactas que las de pca.
+- deteccio'n de anomal'ıas: los ejemplos normales se reconstruyen bien, mientras que los at'ıpicos muestran un
+errordereconstruccio'nelevado.sepuedefijarunumbral
+para decidir cua'ndo un dato es ano'malo.
+- eliminacio'nderuido:aprenderareconstruirunaimagen
+limpia a partir de una ruidosa.
+- edicio'n y generacio'n de ima'genes: al modificar el vector latente se pueden crear variantes o nuevas ima'genes,
+por ejemplo, para comprimirlas.
+- super-resolucio'n: generar versiones de alta resolucio'n
+a partir de ima'genes pequen˜as (fig. 3).
+e. hiperpara'metros relevantes
+- taman˜o del vector latente: define la cantidad de informacio'n que el modelo puede retener en el espacio
+comprimido. un vector ma's pequen˜o produce un modelo
+ma'seficienteenco'mputo,peroconmenorcapacidadpara
+capturardetallesdelaimagen.encambio,unvectorma's
+grande permite representar ma's caracter'ısticas, aunque
+incrementaelcostodeentrenamientoydeprocesamiento.
+- nu'mero de capas: tanto el encoder como el decoder
+puedenvariarenprofundidad.unmayornu'merodecapas
+permite modelar relaciones ma's complejas, pero tambie'n
+hace el entrenamiento ma's pesado y sensible al ajuste de
+para'metros.
+- funcio'n de pe'rdida: para tareas de reconstruccio'n de
+ima'genes se utiliza comu'nmente el mean squared error
+(mse). esta funcio'n compara cada p'ıxel de la imagen
+original con el de la reconstruccio'n, midiendo su diferencia. un error cercano a cero indica que el modelo ha
+logrado reproducir correctamente la entrada.

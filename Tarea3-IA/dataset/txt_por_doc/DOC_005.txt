@@ -1,0 +1,343 @@
+inteligencia artificial
+apuntesdeclase-14deagostode2025
+1st kendall rodr'ıguez camacho
+escuela de ingenieria en computacio'n
+instituto tecnolo'gico de costa rica
+cartago, costa rica
+kenrodriguez@estudiantec.cr
+abstract-en este documento se presentan los apuntes cor- iii. tiposdeaprendizaje
+respondientes a la clase del 14 de agosto de 2025 del curso de
+enmachinelearningexistendistintostiposdeaprendizaje,
+inteligenciaartificial.enprimerlugar,seincluyeunresumende
+cada uno con aplicaciones y caracter'ısticas particulares:
+lasesio'nanterior,enelqueserevisanconceptosdeiaymachine
+learning.posteriormente,seintroduceela'lgebralinealaplicada - supervisado: se dispone de datos con entradas y salidas
+mediante python, empleando librer'ıas como pytorch, numpy y conocidas x ={x ,y },i=1..n. el modelo aprende a
+i i
+pandas, con el objetivo de familiarizarse con las herramientas y predecir la salida y a partir de la entrada x.
+su implementacio'n pra'ctica.
+index terms-machine learning, mlops, models, deep - no supervisado: solo se tienen entradas sin etiquetas. el
+learning, generative ai, vectores, tensores, matrices modelo identifica patrones o estructuras ocultas en los
+datos.
+i. introduction - semi-supervisado: algunos datos esta'n etiquetados y
+la inteligencia artificial incluye diversas te'cnicas, entre
+otrosno.u'tilcuandoetiquetartodoslosdatosescostoso.
+ellas el machine learning o aprendizaje automa'tico, que se - auto-supervisado: el modelo genera etiquetas a partir de
+encarga de que los modelos aprendan de los datos. en esta los propios datos, sin necesidad de intervencio'n manual.
+clase se presento' un resumen de los diferentes paradigmas es ampliamente utilizado en procesamiento de lenguaje
+de resolucio'n de problemas en ia, los distintos tipos de natural (nlp) y en redes neuronales concurrentes. ejemaprendizaje y de las etapas que componen el ciclo de vida plo: predecir la siguiente palabra en una oracio'n.
+de un modelo de ml. adema's, se introdujo el a'lgebra lineal - aprendizaje por refuerzo: el agente aprende mediante
+de forma pra'ctica utilizando python y librer'ıas como numpy, recompensas y penalizaciones, ajustando sus acciones
+pandas y pytorch, trabajando con conceptos como tensores, para maximizar la recompensa futura. ejemplo: entrenar
+matrices y vectores. un agente para jugar mario bros, donde el modelo
+aprende a avanzar, evitar obsta'culos y recolectar recomii. noticias
+pensas.
+a. chatgpt 5, ¿un fracaso? - few-shot: aprende a partir de pocos ejemplos (3-4
+apocosd'ıasdesulanzamientoporpartedeopenai,chat- muestras). ejemplo: modelos de lenguaje que generan
+gpt 5 comenzo' a recibir cr'ıticas por parte de la comunidad. respuestas correctas con muy pocos ejemplos.
+muchos usuarios cuestionaron si realmente representaba una - one-shot: aprende con un solo ejemplo. ejemplo: remejorafrenteachatgpt4,sen˜alandoqueenvariasocasiones conocimiento facial usando una sola foto de referencia.
+el modelo tarda demasiado en generar una respuesta y, en - zero-shot:generalizaatareasnuevassinejemplosdirecalgunoscasos,produceerroresorespuestasdecalidadinferior tos, basa'ndose en conocimientos previos.
+a lo esperado.
+machinelearningvistodesdelaciencia
+b. alexandr wang y la inversio'n de meta desde la perspectiva cient'ıfica, el fin es generar
+alexandr wang, un empresario de 28 an˜os, es el fundador conocimiento, entender patrones y crear teor'ıas. las me'tricas
+descaleai,unastartupespecializadaeninteligenciaartificial se utilizan para cuantificar que' tan bien funciona un modelo,
+y en el etiquetado masivo de datos para entrenar modelos. en aportando una base objetiva para comparar resultados y enfo2025, meta realizo' una inversio'n significativa en la compan˜'ıa, ques.
+destacando el intere's de la empresa en reforzar su estrategia en este contexto, los roles principales incluyen:
+en ia. - data scientist: experimenta con modelos, selecciona alwang se convirtio' en uno de los multimillonarios ma's goritmos, ajusta hiperpara'metros y evalu'a resultados.
+jo'venes creados por s'ı mismos, y su trabajo en scale ai - research scientist: investiga nuevos algoritmos, publica
+lo posiciona como una figura relevante en el desarrollo y art'ıculos cient'ıficos y desarrolla teor'ıas para avanzar la
+aplicacio'n de tecnolog'ıas de inteligencia artificial avanzada. inteligencia artificial.
+machinelearningvistodesdelaingenier'ia
+desde la perspectiva de la ingenier'ıa, el enfoque esta' en
+implementar, mantener y optimizar modelos en produccio'n.
+entre las principales tareas se incluyen transformar modelos
+parareducirsutaman˜oyaumentarlavelocidad,crearpipelines
+de datos que alimenten los modelos de forma automa'tica y
+monitorear me'tricas de rendimiento y tiempos de respuesta.
+adema's, las pra'cticas de mlops se aplican para operacionalizarelaprendizajeautoma'tico,demanerasimilaraco'mo
+devops se utiliza para el desarrollo y despliegue de software.
+iv. paradigmasderesolucio'ndeproblemas
+entrelosprincipalesparadigmasderesolucio'ndeproblemas
+en inteligencia artificial se incluyen:
+float fig.2. ejemplodesolucioneslocalesyglobalesenoptimizacio'n.
+c. prediccio'n y clasificacio'n
+a. problemas de bu'squeda
+1) prediccio'n: estimar un valor futuro o desconocido, ense busca encontrar el camino ma's eficiente hacia una
+contrando patrones segu'n los datos disponibles. por ejemplo,
+solucio'n.
+cua'nta gasolina quedara' en un carro.
+2) clasificacio'n: asignar elementos a categor'ıas predefinidas, basa'ndose en sus caracter'ısticas. por ejemplo, identificar el modelo de un carro segu'n sus partes.
+fig.1. ejemplodeproblemasdebu'squeda.
+b. problemas de optimizacio'n
+fig.3. ejemplodeprediccio'nyclasificacio'n.
+cuandoexisteungrannu'merodesolucionesposibles,hallar
+la mejor solucio'n absoluta puede ser dif'ıcil.
+d. agrupamiento (clustering)
+1) solucio'n local: mejor solucio'n dentro de un a'rea espec'ıfica.
+descubrir patrones o grupos naturales en los datos, uti2) solucio'n global: mejor solucio'n en todo el espacio de lizando diferentes aspectos para formar grupos con distintas
+posibles soluciones. formas.
+fig.4. ejemplodeagrupamiento(clustering).
+v. modelos
+1) determinista: un modelo determinista produce siempre
+el mismo resultado para un mismo conjunto de entradas. fig.6. jerarqu'ıadelaia
+ejemplo: ¿hay luz a mediod'ıa? para las mismas condiciones,
+la respuesta siempre sera' la misma: s'ı.
+2) estoca'stico: un modelo estoca'stico puede producir
+diferentes resultados para el mismo conjunto de entradas,
+dependiendodeprobabilidadesofactoresaleatorios.ejemplo:
+vii. pipelinedemachinelearning
+¿cua'l sera' el clima a mediod'ıa? aunque las condiciones
+iniciales sean similares, el clima puede variar: puede estar
+soleado, nublado o lloviendo.
+1) data acquisition: recolectar datos relevantes y de calidad.
+2) data preparation: limpiar y transformar los datos,
+fig. 5. comparacio'n entre modelos determinista y estoca'stico usando el entrega'ndolos en un formato adecuado para su ana'lisis, elimiejemplodelclima. nando duplicados, valores faltantes o incorrectos, y aplicando
+normalizacio'n o escalamiento de los valores.
+vi. jerarqu'iadelainteligenciaartificial 3) feature engineering: crear y seleccionar las variables
+(features) ma's relevantes para entregar al modelo u'nicamente
+las necesarias para su entrenamiento y ana'lisis.
+1) inteligencia artificial (ia): algoritmos que imitan la
+inteligencia humana, capaces de tomar decisiones o resolver 4) model selection: elegir el modelo que mejor se adapta
+problemas. alproblema,considerandonosolosudesempen˜o,sinotambie'n
+su explicabilidad, es decir, que' tan fa'cil es interpretar y
+2) machine learning (ml): me'todos estad'ısticos que perentender co'mo toma decisiones.
+miten a los modelos aprender de los datos, como regresio'n o'
+a'rboles de decisio'n.
+5) model training: entrenar el modelo y ajustar los hiper3) deep learning (dl): redes neuronales profundas uti- para'metros, utilizando te'cnicas como grid search. durante
+lizadasparaproblemascomplejos,incluyendovisio'nporcom- este proceso, el modelo realiza optimizacio'n basada en los
+putadora y procesamiento de lenguaje natural (nlp). datos para mejorar su desempen˜o y reducir errores.
+4) generative ai (genai): modelos capaces de generar
+contenido nuevo, como texto, ima'genes o audio, a partir de 6) model deployment: poner el modelo en produccio'n,
+patrones aprendidos. integrarlo con aplicaciones y monitorear su desempen˜o.
+import torch # para crear y manipular
+tensores
+import numpy as np # para arreglos y
+operaciones numericas
+import pandas as pd # para manejar datos
+tabulares
+c. creacio'n de tensores
+un tensor es un arreglo de nu'meros que puede tener una o
+varias dimensiones. - si tiene una dimensio'n, se llama vector.
+- con dos dimensiones se llama matriz. - con ma's de dos
+dimensiones, simplemente se denomina tensor de orden k.
+pytorch permite crear tensores ya inicializados. por ejemplo, arange(n) genera un vector con valores de 0 hasta
+n-1, almacenado en memoria principal y listo para operaciones en cpu.
+cada valor dentro del tensor se llama elemento. por ejemplo,eltensorxcreadoconarange(12)tiene12elementos.
+se puede inspeccionar el nu'mero total de elementos con
+numel() y la forma del tensor (taman˜o de cada eje) con
+fig. 7. pipeline t'ıpico de machine learning desde la adquisicio'n de datos
+shape:
+hastaeldesplieguedelmodelo.
+x = torch.arange(12, dtype=torch.float32)
+x.numel() # 12 elementos
+viii. manejoymanipulacio'ndedatoscon
+x.shape # (12,)
+pytorchypandasenpython
+enestaseccio'nseabordanlaste'cnicasba'sicasparaprocesar 1) redimensionamiento (reshape): el me'todo reshape
+y manipular datos utilizando pytorch, junto con pandas y permite cambiar la forma de un tensor sin copiar sus datos.
+numpy. se explicara' co'mo crear y transformar tensores, por ejemplo, un vector de 12 elementos puede transformarse
+realizar operaciones sobre ellos y cargar datos desde archivos en una matriz de 3 filas y 4 columnas:
+csv para su ana'lisis y uso en modelos de aprendizaje aux = x.reshape(3, 4)
+toma'tico. x # matriz de 3x4
+a. anaconda y manejo de ambientes
+2) tensores pre-inicializados: se pueden crear tensores
+anaconda es una distribucio'n que incluye lenguajes como ya con valores espec'ıficos, como ceros, unos o nu'meros
+python y r, junto con herramientas para gestionar paquetes aleatorios, u'tiles por ejemplo para para'metros de modelos:
+y entornos de forma aislada. su principal utilidad es permitir
+zeros = torch.zeros((2, 3, 4)) # tensor de
+manejar dependencias en diferentes ambientes, evitando que
+ceros
+un proyecto interfiera con otro, lo cual es muy u'til en ciencia ones = torch.ones((2, 3, 4)) # tensor de
+de datos y machine learning. unos
+por ejemplo, para instalar pytorch en un ambiente es- randn = torch.randn(3, 4) # valores
+aleatorios
+pec'ıfico se puede usar:
+# activar el ambiente la forma 2×3×4 indica 2 bloques, cada uno con 3 filas
+conda activate ml # o el nombre del ambiente
+y 4 columnas.
+# instalar pytorch dentro del ambiente 3) creacio'n de tensores desde listas de python: pytorch
+activado permite convertir listas de python o arreglos de numpy
+pip install torch directamente en tensores:
+esto asegura que pytorch se instale u'nicamente en el a = torch.tensor([[2, 1, 4, 3],
+[1, 2, 3, 4],
+ambiente seleccionado, sin afectar otros proyectos o config-
+[4, 3, 2, 1]], dtype=torch.
+uraciones.
+float32)
+a
+b. configuracio'n
+para trabajar con datos y tensores, se necesita importar estogenerauntensorde3filasy4columnasconlosvalores
+algunas librer'ıas clave: especificados.
+d. indexacio'n y segmentacio'n (slicing) h. broadcasting
+pytorch permite acceder a elementos, filas, columnas o el broadcasting permite realizar operaciones entre tensores
+submatrices de manera similar a numpy: de distintas formas, expandiendo automa'ticamente sus dimensiones sin duplicar datos:
+fila_ultima = a[-1] # ultima fila
+submatriz = a[1:3] # filas 1 y 2 a = torch.arange(3).reshape((3, 1)) # forma 3
+a[1, 2] = 9 # asigna 9 al elemento en la x1
+fila 1, columna 2 b = torch.arange(2).reshape((1, 2)) # forma 1
+a[:2, :] = 35 # asigna 35 a todas las x2
+columnas de las dos primeras filas broadcast = a + b # tensor resultante de
+forma 3x2
+esto funciona tambie'n para tensores de ma's de dos dimensiones. i. operaciones in-place
+las operaciones in-place modifican directamente el tensor
+e. operaciones elemento a elemento original, ahorrandose memoria. esto es u'til cuando se maneja
+muchospara'metrosysequiereevitarcrearcopiasinnecesarias.
+enpytorch,lasoperacionesaritme'ticasseaplicanelemento
+por elemento, generando un nuevo tensor: before = id(y) # se guarda la
+direccion de memoria original de y
+x = torch.tensor([1.0, 2, 4, 8]) y = y + x # se crea un nuevo
+y = torch.tensor([2, 2, 2, 2]) tensor con la suma; y ahora apunta a nueva
+memoria
+add, sub, mul, div, exp = x + y, x - y, x * y, id(y) == before # false, la memoria de
+x / y, x ** y y cambio
+esto permite realizar suma, resta, multiplicacio'n, divisio'n y z = torch.zeros_like(y) # se crea un tensor z
+con la misma forma que y, lleno de ceros
+potencia de forma directa sobre cada elemento.
+z[:] = x + y # modifica el
+contenido de z directamente (in-place),
+f. concatenacio'n de tensores sin cambiar su direccion de memoria
+se pueden unir varios tensores en uno solo usando se recomienda usar in-place para eficiencia, pero con
+torch.cat, especificando el eje sobre el cual concatenar. cuidadosivariasvariablesapuntanalmismotensor,paraevitar
+por ejemplo, concatenando dos matrices a lo largo de las filas inconsistencias.
+(dim=0) se suman las filas, y a lo largo de las columnas
+(dim=1) se suman las columnas: j. conversio'n a numpy
+pytorch permite convertir tensores a arreglos de numpy y
+x = torch.arange(12, dtype=torch.float32).
+reshape((3,4)) viceversa, sin duplicar los datos en memoria:
+y = torch.tensor([[2.0, 1, 4, 3], [1, 2, 3,
+a_np = a.numpy() # tensor a arreglo
+4], [4, 3, 2, 1]])
+numpy
+torch.cat((x, y), dim=0) # concatenar filas
+type(a_np)
+torch.cat((x, y), dim=1) # concatenar
+columnas
+a_back = torch.from_numpy(a_np) # arreglo
+numpy a tensor
+adema's, se puede construir tensores binarios mediante type(a_back)
+comparaciones.porejemplo,x == ygenerauntensordonde
+cada elemento es 1 si coincide y 0 si no:
+k. carga de datos desde csv
+x == y # comparacion elemento a elemento
+para trabajar con datos externos, se puede usar pandas
+y luego convertir a tensores de pytorch. se pueden aplicar
+codificacio'n *one-hot* y completar valores faltantes:
+g. indexacio'n lo'gica
+import pandas as pd
+se pueden crear ma'scaras booleanas para seleccionar el- import torch
+ementos que cumplan cierta condicio'n. por ejemplo, comdf = pd.read_csv('../data/house_tiny.csv')
+parando dos tensores se obtiene un tensor de valores true
+# leer csv
+o false:
+inputs = df.iloc[:, :2]
+# seleccionar
+mask = x == y # true donde los elementos
+columnas
+coinciden, false en caso contrario
+inputs = pd.get_dummies(inputs, dummy_na=true)
+# one-hot encoding
+inputs = inputs.fillna(inputs.mean())
+# completar valores faltantes tensor:
+x_csv = torch.tensor(inputs.to_numpy(dtype= [[[ 1 2 3]
+float)) # convertir a tensor [ 4 5 6]]
+x_csv
+[[ 7 8 9]
+[10 11 12]]]
+ix. conceptosba'sicosdea'lgebralineal
+en esta seccio'n, como continuacio'n de la anterior, se pre- e. hadamard product
+sentan los fundamentos matema'ticos que sustentan la manip- el producto hadamard corresponde a la multiplicacio'n
+ulacio'n de datos. se introducen escalares, vectores, matrices elementoaelementodedosmatricesotensoresdeigualforma.
+y tensores, junto con sus operaciones ba'sicas. en python se puede realizar usando el operador *.
+a. escalar a = np.array([[1, 2],
+[3, 4]])
+un escalar es un valor nume'rico u'nico que representa una b = np.array([[5, 6],
+solacantidad.enpytorchsepuederepresentarcomountensor [7, 8]])
+con un solo elemento:
+c = a * b
+escalar = 6
+c:
+b. vector
+[[ 5 12]
+un vector es un arreglo unidimensional de escalares. cada [21 32]]
+elemento del vector es un escalar.
+import numpy as np f. propiedades ba'sicas de la aritme'tica de tensores
+sumar o multiplicar un escalar con un tensor produce un
+vector = np.array([1, 2, 3])
+tensordelamismaformaqueeloriginal,dondecadaelemento
+se ve afectado por el escalar:
+vector:
+a = 2
+[1 2 3] x = torch.arange(24).reshape(2, 3, 4)
+a + x # suma escalar elemento a
+elemento
+c. matriz (a * x).shape # multiplicacion escalar,
+mantiene la forma
+al igual que los escalares son tensores de orden 0 y los
+vectores son tensores de orden 1, una matriz es un tensor de
+tensor([[[ 2, 3, 4, 5],
+orden 2. es un arreglo bidimensional de escalares.
+[ 6, 7, 8, 9],
+[10, 11, 12, 13]],
+import numpy as np
+[[14, 15, 16, 17],
+[18, 19, 20, 21],
+matriz = np.array([[1, 2, 3],
+[22, 23, 24, 25]]])
+[4, 5, 6],
+torch.size([2, 3, 4])
+[7, 8, 9]])
+1) reduccio'n: sepuedensumarloselementosdeuntensor
+matriz: usando sum():
+[[1 2 3]
+[4 5 6] x = torch.arange(3, dtype=torch.float32)
+[7 8 9]] x, x.sum() # vector [0,1,2] y su suma
+tensor([0., 1., 2.]), tensor(3.)
+d. tensor
+cuandosetrabajacondatosdema'sdedosdimensiones,se parauntensormultidimensional,sum()pordefectoreduce
+utilizan tensores. son arreglos de orden 3 o superior. todos los ejes:
+import numpy as np a = torch.arange(6, dtype=torch.float32).
+reshape(2, 3)
+tensor = np.array([[[1, 2, 3], [4, 5, 6]], a.shape, a.sum() # suma de todos los
+[[7, 8, 9], [10, 11, 12]]]) elementos
+torch.size([2, 3]), tensor(15.)
+se puede especificar un eje para sumar a lo largo de filas o
+columnas:
+a, a.sum(axis=0), a.sum(axis=1)
+tensor([[0., 1., 2.],
+[3., 4., 5.]]),
+tensor([3., 5., 7.]),
+tensor([3., 12.])
+reducir a mu'ltiples ejes simulta'neamente es equivalente a
+sumar todos los elementos:
+a.sum(axis=[0,1]) == a.sum()
+true
+la media se calcula con mean(), equivalente a la suma
+dividida por el nu'mero de elementos:
+a.mean(), a.sum()/a.numel()
+a.mean(axis=0), a.sum(axis=0)/a.shape[0]
+tensor(2.5000), tensor(2.5000)
+tensor([1.5, 2.5, 3.5]), tensor([1.5, 2.5,
+3.5])
+2) sumasinreduccio'n: sisequiereconservarlaformadel
+tensor tras sumar:
+sum_a = a.sum(axis=1, keepdims=true)
+a_normalized = a / sum_a # broadcasting para
+normalizar filas
+a, sum_a, a_normalized
+tensor([[0., 1., 2.],
+[3., 4., 5.]]),
+tensor([[ 3.],
+[12.]]),
+tensor([[0.0000, 0.3333, 0.6667],
+[0.2500, 0.3333, 0.4167]])
+3) sumaacumulada: sepuedecalcularlasumaacumulada
+con cumsum():
+a.cumsum(axis=0) # suma acumulada a lo largo
+de las filas
+tensor([[0., 1., 2.],
+[3., 5., 7.]])
+references
+[1] stevenpachechoportuguez,clasesobrealgebralinealymanipulacio'n
+de datos con pytorch, pandas y numpy, tecnolo'gico de costa rica,
+2025.

@@ -1,0 +1,130 @@
+apuntes de inteligencia artificial - semana 6
+ashley vasquez
+apuntes del 09 de septiembre
+abstract-estedocumentoreu'neyreformulalosapuntesdela iii. actividadieee
+semana 6 del curso de inteligencia artificial. incluye preguntas
+del quiz, instrucciones de la tarea i, una breve nota sobre una en noviembre se llevara' a cabo un evento ieee en la
+actividad de ieee y los contenidos principales de clase sobre sabana.estecongresoreu'nepresentacionessobreinteligencia
+regresio'n log'ıstica. asimismo, se profundizo' en la funcio'n de artificial y biolog'ıa molecular, y es una oportunidad para
+verosimilitud,elusodelogaritmosparasimplificarderivadas,la
+establecer conexiones con investigadores y profesionales.
+regla de la cadena y la actualizacio'n de para'metros. se an˜aden
+ejemplos pra'cticos (como el caso de la calabaza naranja / no
+naranja) para reforzar la comprensio'n del modelo. iv. regresio'nlog'istica
+a. definicio'n
+i. preguntasdelquiz
+la regresio'n log'ıstica es un modelo de clasificacio'n binaria
+1) overfittingyunderfitting:eloverfittingocurrecuando que estima la probabilidad de que un dato pertenezca a una
+elmodeloaprendedemasiadobienelconjuntodeentre- clase.adiferenciadelaregresio'nlineal,queentregaunvalor
+namiento, pero no logra generalizar en datos nuevos. el continuo,estemodelotransformalasalidaenunaprobabilidad
+underfitting, en cambio, refleja que el modelo no logra entre 0 y 1, y se basa en la distribucio'n de bernoulli.
+captar la relacio'n entre las variables, obteniendo bajo
+rendimiento en ambos conjuntos.
+b. funcio'n sigmoide
+2) k-fold cross-validation: se divide el conjunto de
+entrenamiento en k subconjuntos. en cada iteracio'n se 1
+σ(x)=
+entrenan k-1 y el restante se utiliza para validar. al 1+e-x
+finalizar, se promedian los resultados.
+la funcio'n sigmoide transforma cualquier nu'mero real en un
+3) m'ınimos locales y globales: un m'ınimo local es el
+valor en [0,1]. se define un umbral (generalmente 0.5) para
+valor ma's bajo dentro de una regio'n reducida de la
+decidir la clase asignada. como se observa en la figura 1, es
+funcio'n. el m'ınimo global es el valor ma's bajo en todo
+la base para convertir salidas lineales en probabilidades.
+el dominio.
+4) derivada parcial de l con respecto a w:
+1 (cid:88)(cid:0) (cid:1)2 ∂l 2 (cid:88)(cid:0) (cid:1)
+l= (wx +b)-y , = (wx +b)-y x .
+n i i ∂w n i i i
+ii. indicacionesdelatareai
+- realizar la tarea en equipos de tres personas. fecha de
+entrega: 16 de septiembre.
+- solo un integrante debe subir el archivo comprimido con
+los nombres de todos los miembros.
+- se permite u'nicamente el uso de numpy y pandas.
+- elinformenodebecontenerco'digo,u'nicamenteana'lisis,
+resultados y conclusiones.
+fig. 1: funcio'n sigmoide
+- el notebook sera' evidencia del trabajo realizado.
+- la funcio'n de pe'rdida y las gra'ficas deben hacerse de
+forma manual.
+c. derivada de la sigmoide
+- el formato debe ser ieee.
+- se debe comprobar si la relacio'n entre las variables es
+lineal; si no, aplicar feature engineering. σ′(x)=σ(x)(1-σ(x)).
+- el me'todo describe() ayuda a resumir los datos de
+forma estad'ıstica. el hecho de que la derivada se exprese en funcio'n de la
+- figuras deben colocarse en parte superior o inferior de propia sigmoide la hace eficiente y pra'ctica en optimizacio'n.
+columnas. la figura 2 ilustra este comportamiento.
+fig. 2: derivada de la funcio'n sigmoide fig. 4: ejemplo: calabaza no es naranja
+d. verosimilitud vs. error cuadra'tico
+mientrasqueelerrorcuadra'ticomedio(mse)esidealpara
+predecir valores continuos, la verosimilitud se utiliza cuando
+el resultado es una probabilidad. en regresio'n log'ıstica, se
+busca maximizar la probabilidad de que el modelo asigne la
+clase correcta a cada ejemplo. la figura 3 compara ambos
+enfoques.
+fig. 5: ejemplo: calabaza s'ı es naranja
+g. composicio'n de funciones y regla de la cadena
+el modelo puede expresarse como:
+z(x)=wx+b, a(z)=σ(z), f (x)=a(z).
+w,b
+entonces la funcio'n de costo es:
+fig. 3: comparacio'n entre mse y verosimilitud
+l=y ln(a(z))+(1-y )ln(1-a(z)).
+i i
+e. interpretacio'n de la verosimilitud aplicando la regla de la cadena:
+laverosimilitudseentiendecomolaprobabilidaddeobser-
+∂l ∂l ∂a ∂z
+var los datos dados los para'metros actuales. analicemos los = - - .
+∂w ∂a ∂z ∂w
+casos:
+- caso y i = 1: la probabilidad es σ(wx+b). ejemplo: de manera ana'loga para b.
+wx+b = 1.458 =⇒ σ(1.458) = 0.81. esto significa
+h. derivadas parciales paso a paso
+que hay un 81% de probabilidad de que la calabaza no
+sea naranja, como se muestra en la figura 4. - con respecto a a(z):
+- casoy i =0:laprobabilidades1-σ(wx+b).ejemplo: ∂l y 1-y
+wx + b = -1.32 =⇒ σ(-1.32) = 0.21. entonces =- i + i .
+∂a a(x) 1-a(x)
+1-0.21 = 0.79, lo que se interpreta como un 79% de
+probabilidaddequelacalabazas'ıseanaranja(figura5). - con respecto a z:
+f. uso de logaritmos ∂a
+=σ(z)(1-σ(z)).
+multiplicar probabilidades pequen˜as genera valores cer- ∂z
+canos a cero, causando inestabilidad. aplicando logaritmos se
+- con respecto a w y b:
+transforma en sumas:
+(cid:88)(cid:2) (cid:3) ∂z ∂z
+ln(l)= y ln(f (x ))+(1-y )ln(1-f (x )) . =x, =1.
+i w,b i i w,b i ∂w ∂b
+i. actualizacio'n de para'metros
+finalmente, los para'metros se actualizan con descenso de
+gradiente:
+∂l ∂l
+w =w-α , b=b-α .
+∂w ∂b
+el valor de α (tasa de aprendizaje) es crucial. el flujo de
+ca'lculo se muestra en la figura 6.
+fig. 6: flujo de ca'lculo y actualizacio'n de para'metros
+j. aspectos pra'cticos
+- epochs: nu'mero de veces que el modelo recorre todo
+el dataset. ma's epochs permiten aprender mejor, pero
+tambie'n aumenta el riesgo de overfitting.
+- batch size: cantidad de ejemplos procesados antes de
+actualizar para'metros. un batch pequen˜o hace el entrenamiento ma's ruidoso pero puede mejorar la generalizacio'n.
+- gradiente descendente estoca'stico (sgd): actualiza
+para'metros con un ejemplo a la vez, lo que lo hace ma's
+ra'pido pero inestable.
+v. conclusiones
+durante esta semana se consolidaron los fundamentos de
+la regresio'n log'ıstica. se estudiaron sus bases matema'ticas,
+la funcio'n sigmoide y su derivada, la diferencia entre mse
+y verosimilitud, el uso de logaritmos para simplificar expresiones y la actualizacio'n de para'metros mediante gradiente
+descendente. los ejemplos pra'cticos de la calabaza facilitaron
+lainterpretacio'ndeprobabilidades,yladescomposicio'npasoa
+pasodederivadasmostro' co'moseaplicalaregladelacadena
+en la pra'ctica. con esto se sientan las bases para enfrentar
+algoritmos ma's avanzados en aprendizaje supervisado.

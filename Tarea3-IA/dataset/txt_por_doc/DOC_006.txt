@@ -1,0 +1,312 @@
+inteligencia artificial
+apuntesdeclase14/08/2025
+jose pablo quesada rodr'ıguez
+escuela ingenier'ıa en computacio'n
+cartago, costa rica
+josepabloqr15@estudiantec.cr
+abstract-elpresentedocumentopretendefuncionaramanera oproponermejorasmetodolo'gicasparaquelosresultados
+de resumen detallado de la clase del d'ıa jueves 14/08/2025, se sean cient'ıficamente va'lidos.
+abarca un repaso de los temas vistos en la clase anterior a esta,
+- research scientist: ma's enfocado en la teor'ıa y la
+as'ıtambiencomoconceptosnuevosyexplicacio'ndeherramientas
+innovacio'n que en la aplicacio'n pra'ctica. su objetivo
+utiles para el curso. se busca ampliar la informacio'n mediante
+referencias bibliogra'ficas y adjuntar el apartado de noticias al principal es desarrollar nuevos modelos, marcos teo'ricos
+final del documento. o enfoques de aprendizaje automa'tico que expandan el
+campo.
+i. introduccio'n
+se inicia la clase con una introduccio'n a los tipos de b. ingenier'ıa
+aprendizaje, estos siendo un repaso ra'pido de estos ya que
+fueron vistos en la clase anterior - puesta en produccio'n de un modelo: bajo lo seleccionadoporeldatascientistdelmodelocient'ıfico,tomael
+modelo dado y busca ponerlo en produccio'n para usarios
+tablei
+tiposdeaprendizajel masivos
+- transformar el modelo: busca la optimizacio'n de este
+tipo descripcio'n
+supervisado conjunto de datos que tienen una etiqueta, la cual - onnx:seencargadehacertransformacionesenmodelos
+supervisaelaprendizajeydeterminaquetanbieno para optimizar los modelos.
+malseencuentraladescripcion. - mlops: debe pensar como tomar un modelo masivo y
+no-supervisado norequiereetiquetas,utilizaalgoritmosdemachine
+disponibilizarlo para los usuarios
+learning disen˜ados para descubrir patrones ocultos
+o agrupaciones de datos sin la necesidad de intervencio'nhumana
+iii. pipelineia
+semi-supervisado usa pocos datos etiquetados junto a muchos no
+etiquetados.
+auto-supervisado genera etiquetas a partir de los propios datos de
+entrada.(sus dataset/samples funcionan como sus
+propiasetiquetas)
+refuerzo aprende con recompensas o castigos segu'n sus
+acciones.
+few-shot generalizaapartirdepocosejemplos.
+one-shot aprendeconunu'nicoejemplo.
+zero-shot realiza tareas sin ejemplos previos, usando
+conocimientoprevio.
+ii. enfoquesamachinelearning
+a. ciencia
+- generan conocimiento: se centran en la investigacio'n
+y en la produccio'n de nuevo conocimiento y tecnicas
+especificas sobre como utilizar modelos para generar
+nuevo conocimiento o pulir el existente
+- me'tricas: se enfocan en criterios cientificos para definir
+la me'tricas como por ejemplo la capacidad explicativa
+(que' tan bien un modelo ayuda a entender un feno'meno)
+- data scientist: orientado a extraer conocimiento de los
+datos mediante experimentacio'n rigurosa, pero con una el pipeline de machine learning indica como se debe crear,
+visio'n pra'ctica. a menudo trabajan con datos reales y hacer y mantener una inteligencia artificial segu'n [1] la linea
+aplican te'cnicas existentes, pero tambie'n pueden ajustar de este pipeline es:
+a. conseguir data b. problemas de optimizacio'n
+enestaseccionseconsiguenladata,seobtienedediferentes en estos problemas se tiene una funcio'n matema'tica con
+formas, esta data va a alimentar el modelo para su entre- un punto minimo, al encontrar ese punto minimo se tiene la
+namiento, sin embargo esta puede contener informacio'n inutil mejorsolucio'n,existelasolucio'nlocallacualnosdalamejor
+para el entrenamiento del modelo o en formatos diferentes, solucio'n en un a'rea especifica de bu'squeda (sin embargo no
+por lo tanto se necesita limpiar la misma la mejor) y la solucio'n global que da la mejor solucio'n en
+todo el espacio, (se busca encontrar esta solucio'n)
+b. limpiar la data(data preparation
+c. prediccio'n y clasificacio'n
+se procesa la data, buscando eliminar los datos inutiles o 1) prediccio'n: cuando se quiere determinar el valor real
+rellenar elementos faltantes de los mismos, tambien convertir de una funcio'n o predecir los valores de esta de acuerdo
+formatos, pueden llegar data de diferentes formas, sql o a las caracteristicas que tienen las muestras del data set
+nosql por ejemplo, todo con el objetivo de hacerlos fun- que lo componen, un ejemplo dado por el profesor fue las
+cionales como datos de entrenamiento, estandarizandolos. partesdelosvehiculosenlaprediccio'ndecuantocombustible
+consume, variables dependientes que dependen de variables
+c. feature engineering independientes
+2) clasificacio'n: enestecasoenvezdebuscarpredecirun
+ayuda a definir las caracteristicas que vayan a definir
+valor, se busca hallar la categor'ıa a la que pertenece basado
+las predicciones correctas, consiste en la seleccio'n correcta
+en sus caracter'ısticas, ejemplo la marca del vehiculo con base
+de que variables considerar como relevantes para obtener
+a sus piezas.
+mejores resultados, el objetivo es proporcionar features ma's
+informativos y relevantes, elegir que caracteristicas conservar d. agrupamiento
+y que deshechar
+conjunto de datos no etiquetados y se busca encontrar
+patro'nes de estos mismos datos, aqu'ı aplica el k-means
+d. seleccio'n del modelo
+v. modelosdeterministaoestoca'stico
+consiste en saber identificar el problema y que modelo
+1) determinista: este modelo indica que para una entrada
+ameritasuuso,unabuenasintesisparadefinirestoesmediante
+de datos retoran una salida siempre consistente, un ejemplo
+la caracter'ıstica de explicabilidad, si se trabaja con problemas
+de esto ser'ıa por ejemplo ¿hay luz al medio d'ıa?
+quevananecesitarunaretroalimentacio'nclaradedondeviene
+2) estoca'stico: este modelo indica que para una entrada
+la informacio'n, un modelo de red neuronal no sera' lo ma's
+puede retornar un resultado a partir de un conjunto de los
+indicado.
+posiblesresultados,muyaleatorio,unejemploser'ıa¿cualsera'
+el clima a medio d'ıa?
+e. entrenar el modelo
+vi. conjuntoai
+el modelo es entrenado con alguno de los metodos de
+aprendizaje vistos, teniendo en consideracio'n parametros e
+hiperpara'metros, siendo estos ultimos los que ayudara'n a
+dirigir al modelo por el camino deseado, un ejemplo de esto
+esk-means,el cualesunalgoritmo pararealizarclusteringen
+un modelo de aprendizaje no-supervisado
+f. validar el modelo
+en esta parte ya se tiene el modelo entrenado y se busca
+el testeo del mismo y la validacio'n, se prueba con situacio'nes
+similaresalasdeentrenamiento,peronoexactamenteiguales,
+con el objetivo de verificar que se comporte de la manera
+deseada y al final se realiza una validacio'n del modelo, como
+unaespeciedeexamenfinalysecomparaconproduccio'npara
+verificar que el mismo
+iv. paradigmaderesolucio'ndeproblemas
+a. problemas de bu'squeda
+en estos problemas, los algoritmos tratan de seguir un - inteligencia artificial: algoritmos generativos
+camino para llegar a una solucio'n optima, la solucio'n optima - machine learning: utiliza metodos estadisticos, como
+se considera siempre la opcio'n ma's "barata" regresio'n lineal, log'ıstica y arboles de decisio'n
+- deep learning: redes neuronales (utilizadas para re- x. tensores
+solver problemas complejos)
+¿que son tensores? segu'n [2] los tensores han existido
+- generative ai: generacio'n de nuevo contenido uti- desde que william hamilton acun˜o' el te'rmino hace 200 an˜os
+lizando deep learning
+para describir un objeto matema'tico que representa un conjunto de nu'meros con algunas propiedades de transformacio'n.
+vii. iniciodematerialnuevo
+a. definicio'n de tensor
+viii. jupyternotebook
+untensoresunobjetomatema'ticoquegeneralizaescalares,
+en el curso se ha explicado que para todas las entregas vectoresymatricesenespaciosdedimensionessuperiores.es
+se van a utilizar jupyter notebooks debido a la facilidad que un arreglo de nu'meros y funciones que abarca magnitudes
+tiene esto para representar tanto celadas de texto como celdas f'ısicas, transformaciones geome'tricas y diversas entidades
+de co'digo. se puede usar una extensio'n de visual studio matema'ticas.
+code para esto existen tensores unidimensionales los cuales son llamados
+vectores, bidimensionales en formas de matriz y cuando k ¿
+a. recomendaciones del profesor 2 ejes se deja de usar un nombre especifico y se le conoce
+como tensor de orden k
+1) utilizar conda: conda es una herramienta que permite
+tener diferentes ambientes de desarrollo por separado, lo cual xi. introduccio'napytorch
+permite trabajar con sin errores de compatibilidad al volver a
+a. librerias necesarias para la manipulacio'n de tensores,
+proyectos antiguos
+arreglos y estructuras de datos tabulares
+ix. tutorialdeinstalacio'ndeanaconday
+jupyternotebook import torch
+import numpy as np
+1) paso uno: ingresar a la pagina oficial de anaconda import pandas as pd
+https://anaconda.org/ y descargar la versio'n requerida de
+anaconda de acuerdo a su sistema operativo
+b. ¿como crear tensores?
+2) paso dos: instalarlo y crear una nuevo ambiente
+la funcio'n arange (n) funciona para generar tensores prellenados con valores espaciados uniformemente, comenzando
+en 0 (inlcuido) hasta el n (no incluido) los tensores recien
+creados se almacenan en memoria principal
+x= torch.arange(12,dtype=torch.float32)
+x# tensor unidimensional que puede ser operado
+con diversas funciones que pueden ser
+invocadas sobre el
+3) paso tres: seleccionar la versio'n del nuevo ambiente
+c. funciones sobre tensores
+4) paso cuatro: instalar la extensio'n de jupyter en vscode y
+crear un archivo con extensio'n .ipynb - .numel() indica el numero de elementos que tiene el
+tensor
+5) pasocinco:seleccioneenlaopcio'ndekernel,elambiente
+que creo en anaconda - .shape se usa para acceder al taman˜o de cada eje del
+tensor
+- .reshape se usa para reorganizar las dimensiones del
+tensor sin copiar los datos se puede pasar de un tensor
+de una dimensio'n por ejemplo el ejemplo anterior de 12
+elementos, a un tensor bidimensional de 3 filas por 4
+columnas
+- torch.zeros((z,x,y)) / torch.ones((z,x,y)) /
+torch.grandn(x,y) se utilizan para crear tensores
+de diferentes dimensiones, relleno con ceros, unos o
+a. recomendaciones de profesor
+numeros random
+en caso de que falten dependencias utilizar pip install - operaciones elemento a elemento pytorch permite opcon las dependencias requeridas, es buena idea tener un eracionesaritmeticasentretensoreslascualesseaplicara'n
+requirements.txt para agilizar el proceso elemento a elemento
+- concatenaciones de tensores mediante
+torch.cat((x.y),dim=k se pueden concatenar tensores,
+df = pd.read_csv('../data/house_tiny.csv')
+siendo k el eje donde sobre el que se apilara'n
+inputs = df.iloc[:, :2]
+- indexacio'n lo'gica mediante x==y siendo x y y ten- inputs = pd.get_dummies(inputs, dummy_na=true)
+sores se pueden realizar mascaras booleanas inputs = inputs.fillna(inputs.mean())
+x_csv = torch.tensor(inputs.to_numpy(dtype=
+xii. creaciondesdelistasdepython float))
+x_csv
+a= torch.tensot([[2,1,4,3],
+[1,2,3,4],
+[4,3,2,1]], dtype=torch.float32) xvii. algebralinealintroduccio'n
+a
+a. escalar
+tensor([[2.,1.,4.,3.],
+[1.,2.,3.,4.], esunvalornume'ricoquerepresentaunasitaucio'nalavez,
+[4.,3.,2.,1.]])
+basicamente es un nu'mero, un unico elemento
+xiii. indexacionysegmentacio'n(slicing)
+b. vectores
+se puede pensar en un vector como un arreglo de taman˜o
+fila_ultima = a[-1] # ltima fila de x
+submatriz = a[1:3] # filas 1 y 2 de x fijo de escalares, un vector no ser'ıa ma's que un conjunto de
+fila_ultima, submatriz escalares
+xiv. broadcasting c. matrices
+el broadcasting en tensores permite operar tensores de
+sepuedevercomounarreglodearreglosocomountensor
+diferentes formas al expandir automaticamente,
+de orden 2
+a = torch.arange(3).reshape((3, 1)) # forma 3
+x1 d. tensores de orden superior
+b = torch.arange(2).reshape((1, 2)) # forma 1
+x2 ya no tienen nombre espec'ıfico ma's que tensores de orden
+broadcast = a + b # resultado de forma 3x2 k
+gracias al broadcasting una propiedad util de los escalares, vectores, matrices
+y tensores es que las operaciones elemento a elemento
+xv. operacionesin-place generan resultados que tienen la misma forma que sus
+operandos
+se indica que se tiene que tener cuidado debido a que
+cuando se tratan con modelos de machine learning o deep
+learning, nos encontramos con el hecho de que se ocupa xviii. productohadamard
+muchisima memoria y hay que procurar ser o'ptimos en este
+sentidoyalhacerejecutaroperacionessepuededejarmemoria consiste en la multiplicacio'n de elemento a elemento de
+asignada o se apunta a nuevas secciones de memoria, lo dos matrices de un mismo taman˜o
+cual puede ser innecesario. por eso se recomienda el uso de
+import numpy as np
+operacio'nes totalmente in-place
+# definicin de matrices
+xvi. conversio'nanumpyycargadedatosdesde
+x = np.array([[1, 2, 3],
+csv
+[4, 5, 6]])
+se puede interoperar con numpy, convirtiendo tensores a
+y = np.array([[7, 8, 9],
+arreglos y viceversa sin copiar datos
+[10, 11, 12]])
+a_np = a.numpy() # producto de hadamard (elemento a elemento)
+print(type(a_np)) z = x * y
+a_back = torch.from_numpy(a_np)
+print(type(a_back)) print(z)
+# resultado:
+para cargar datos de un archivo csv usaremos pandas # [[ 7 16 27]
+para convertir sus columnas a tensores. adema's de usar # [40 55 72]]
+codificacio'n one-hot para completar valores faltantes.
+xix. propiedadesbasicasdelaaritmeticade
+a.mean(), a.sum() / a.numel() #se obtiene el
+tensores
+mismo resultado
+sumando o multiplicando un escalan y un tensor, producira
+un tensor del mismo taman˜o como el tensor original. cada
+elementodeeltensosessumadoomultiplicadoporelescalar.
+xxi. sumasinreduccio'n
+si se desea conservar el numero de ejes al sumar como
+a = 2
+x = torch.arange(24).reshape(2, 3, 4) cuando se desea aprovechar el broadcasting, se usa
+a + x, (a * x).shape sum_a = a.sum(axis=1, keepdims=true)
+sum_a, sum_a.shape
+resultado:
+(tensor([[ 3.],
+(tensor([[[ 2, 3, 4, 5],
+[12.]]),
+[ 6, 7, 8, 9],
+[10, 11, 12, 13]],
+torch.size([2, 1]))
+[[14, 15, 16, 17],
+si se desea calcular la suma acumulada de los elementos
+[18, 19, 20, 21],
+de un tensor, se puede usar cumsum
+[22, 23, 24, 25]]]),
+torch.size([2, 3, 4]))
+a.cumsum(axis=0)
+tensor([[0., 1., 2.],
+xx. reduccio'n
+[3., 5., 7.]])
+podemos realizar la suma de tensores se puede invocar
+sum() sin argumentos, esto hara' que se reduzca a un escalar
+xxii. noticiashabladasenclase
+a. alexander wang fundador de scale
+# crear una matriz a de forma (2, 3)
+con valores [0,1,2,3,4,5] se hablo' del caso de alexander wang un joven de solo 28
+a=torch.arange(6,dtype=torch.float32).reshape an˜osquefundo' laempresascaleai,empresaporlacualmeta
+(2,3)
+invirtio' 13 mil millones de euros
+# mostrar la forma de a y la suma
+de todos sus elementos b. guerra de plataformas de llm
+a.shape, a.sum()
+semenciono' quelacompetenciaporserlamejoria,existe
+(torch.size([2, 3]), tensor(15.)) actualmente como si fuera una guerra entre plataformas, de la
+misma forma que ha ocurrido en otras cosas en el pasado,
+como lo reduce a lo largo de sus ejes, se puede especificar
+como las plataformas de streaming.
+alguna de sus ejes x o y para sumar a lo largo del respectivo
+eje usando el parametro axis references
+[1] s.pachecoportuguez,"clasealgebralinealymanipulacio'ndetensores
+a, a.sum(axis=0), a.sum(axis=1) mediantepytorch,"tecnolo'gicodecostarica,2025.
+[2] i.valchanov,"¿que'sonlostensores?"365datascience,2023.[online].
+available:https://365datascience.com/tutorials/python-tutorials/tensor/
+a--->(tensor([[0., 1., 2.],
+[3., 4., 5.]])
+a.sum(axis=0) ---> tensor([3., 5., 7.]),
+a.sum(axis=1)--->tensor([ 3., 12.]))
+si se reduce a lo largo de todos sus ejes equivale a sumar
+todos los elementos de la matriz
+a.sum(axis=[0, 1]) == a.sum()
+tensor(true)
+la media se calcula usando mean, la cual se puede definir
+como la suma de todos los elementos dividido entre el total
+de estos
+a.mean(), a.sum() / a.numel()
+#comparacin entre ambas formas de sacar la
+media

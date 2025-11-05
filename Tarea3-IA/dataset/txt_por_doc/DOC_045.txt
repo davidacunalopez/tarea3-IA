@@ -1,0 +1,101 @@
+apuntes semana 12
+apuntesdel23deoctubre
+juan pablo rodr'ıguez cano
+ic-6200 inteligencia artificial
+tecnolo'gico de costa rica
+jp99@estudiantec.cr
+abstract-la cuantizacio'n en una te'cnica en redes neuronales y hasta 1 bit. la cuantizacio'n resulta en un menor tiempo de
+para reducir el taman˜o de los para'metros de los modelos, inferencia y menor consumo de energ'ıa, adema's de facilitar
+principalmente transformando los datos de punto flotante a
+laopcio'ndecorrerestosmodelosensistemaspequen˜oscomo
+enteros, lo cual adema's reduce el tiempo de computacio'n de
+dispositivos mo'viles o sistemas embebidos.
+operaciones. esta te'cnica es esencial para distribuir modelos en
+sistemas comerciales y ampliar la cantidad de plataformas que
+a. representacio'n de nu'meros
+puedan correr estos modelos.
+index terms-cuantizacio'n, punto flotante, reduccio'n de
+se suelen utilizar nu'meros en bloques de 8 bits para los
+para'mtetros.
+enteros, para representar nu'meros negativos se utiliza el complementoa2enloscomputadores.encontraste,paralospunto
+i. actividaddeieee
+flotantesseutilizaelieee-754,cuyotaman˜oderepresentacio'n
+es un evento anual que se dara' esta vez en noviembre es de 32 bits, se utiliza la siguiente fo'rmula.
+en la sabana. es una oportunidad para conocer sobre temas
+innovadores en inteligencia artificial y biolog'ıa molecular. es 23
+(cid:88)
+una oportunidad para crear contactos dentro de la industria v =(-1)sign×2e-127×(1+ b 23-i 2-i)
+ya que los presentadores suelen ser receptivos al pu'blico y i=1
+disponen de tiempo para hablar.
+para no perder tanta informacio'n se tiene el siguiente
+mecanismo:
+ii. quantization
+1) antes de que las entradas lleguen a la siguiente capa se
+una vez que entrenado un modelo de redes neuronales, se
+cuantizan los pesos
+debe colocar en un sistema para la distribucio'n de este. para
+2) estos pesos se limitan a ciertos rangos, dependiendo de
+esto existen varias te'cnicas, entre ellas, una opcio'n comu'n es
+la cantidad de bits de la cuantizacio'n. lo que se quiere
+utilizar el framework onnx, que toma modelos escritos en
+es que la distribucio'n sea equivalente.
+diferentes lenguajes y bibliotecas y se crea una versio'n que
+3) se hacen las operaciones con los datos de tipo entero.
+maximiza la eficiencia de recursos y computacio'n utilizando
+4) alsalirdelacapa,sede-cuantizanlospesosparaquelas
+c++.
+siguientes capas operen con nu'meros de punto flotante,
+elmecanismoporelcualsedisminuyeeslacuantizacio'ny
+sin "saber" que fueron cuantizados.
+se enfoca en el hecho que los para'metros de los modelos son
+representados con tipos de datos de punto flotante, se reducen iii. tiposdecuantizacio'n
+para hacer los modelos ma's densos con te'cnicas especiales
+1) asime'trica → el valor de 0 corresponde al valor menor
+para no afectar mucho la precisio'n de la inferencia. aunque
+y el ma'ximo es el peso ma'ximo
+no es posible no introducir error, es necesario asumir esta
+2) sime'trica → el cero es el peso 0, el valor absoluto
+desventaja para desplegar los modelos.
+ma'ximo de los pesos se mapea a un extremo, si es
+llama 2 es un modelo muy popular y notorio por tener
+negativo se mapea al valor ma's negativo dentro de los
+un taman˜o muy grande, tiene 70 mil millones de para'metros,
+valores posibles con los bits
+cada uno esta' representado por un punto flotante de 32 bits,
+lo que resulta en 28gb que deber'ıan estar en memoria si
+a. cuantizacio'n asime'trica
+se quisiera utilizar en una ma'quina local. esto claramente
+no es viable porque la mayor'ıa de ma'quinas comerciales x q =clamp(x s f +z;0;2n-1)
+cuentan con una capacidad menor a eso. adema's, las opera- x f =valorflotante
+ciones que se se hacen con datos de punto flotante son muy z =-1× β
+s
+lentas en comparacio'n a datos representados por enteros. la *s es el para'metro de escalado
+cuantizacio'n hace una reduccio'n de los bits requeridos para s= α-β
+2b-1
+representar cada para'metro y lo convierte a enteros, que se x =s(x -z) → permite volver al valor original con un
+f q
+pueden representar en las siguientes configuraciones: 8, 5, 2 grado de error
+b. cuantizacio'n sime'trica
+rango: [-(2n-1),(2n-1)]
+s= abs(α)
+2n-1-1
+x =sx
+f q
+iv. estrategiasdeseleccio'ndelrango
+- cuantizacio'n dina'mica
+- ca'lculo estad'ıstico de cua'l sera' el valor de esa capa
+- se utiliza en la etapa post-training quantization
+- post training quantization
+- hay que tratar los pesos at'ıpicos porque puede confinar los dema's pesos en un rango muy pequen˜o e
+introduce ma's error
+- se puede utilizar el percentil en vez del min y max
+- agregamos observers que se encargan de hacer la
+estad'ısticas, calibran todas las salidas de la capa
+- se hace con los datos de prueba
+- quantization aware training (qat)
+- insertarmo'dulosirrealesenlacomputacio'ndegrafo
+del modelo para similar el efector de cuantizacio'n
+durante el entrenamiento.
+- la funcio'n de perdida es usada para actualizar los
+pesos que constantemente sufren.
+-

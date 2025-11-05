@@ -1,0 +1,232 @@
+inteligencia artificial
+apuntesdeclase-21deoctubrede2025
+1st kendall rodr'ıguez camacho
+escuela de ingenieria en computacio'n
+instituto tecnolo'gico de costa rica
+cartago, costa rica
+kenrodriguez@estudiantec.cr
+abstract-el presente documento contiene los apuntes de la tablei
+clase del martes 21 de octubre de 2025, que cubren conceptos calendarioprevistoparaelrestodelcurso
+clave sobre los modelos de lenguaje extensos (llms). los
+apuntes explican co'mo los llms representan el conocimiento semana martes jueves
+medianteembeddingsyespaciosvectoriales,eintroducente'cnicas 12 asignacio'ndetarea04(agentes) clasedequantization
+como retrieval-augmented generation (rag) y agentes in- 13 quiz 6, terminar tema quantiza- claseunsupervisedlearningyenteligentes que ampl'ıan las capacidades de los llms con infor- tion,empezarunsupervisedlearn- tregaproyecto01
+macio'n externa y acciones auto'nomas. ingypca
+14 revisio'ndeproyecto01deforma entrega de tarea 04 (agentes) y
+presencial (se sacara' cita en un continuarconrevisio'ndeproyectos
+i. introduccio'n forms)
+15 clasevirtual,seasignaproyecto02 revisio'n tarea 04 (agentes) de
+ytarea05sobrequantization formavirtual
+los modelos de lenguaje extensos (llms) han transfor16 claseriesgosdeia visitaamicrosoft
+mado la interaccio'n con la inteligencia artificial gracias a
+17 - -
+su capacidad para generar texto coherente, traducir idiomas,
+18 examenpresencial entregadeproyecto02
+redactar co'digo y analizar informacio'n compleja. su funcionamientosebasaenlarepresentacio'nnume'ricadepalabras
+y frases en espacios vectoriales, donde los embeddings cap- b. asignacio'n de tarea 04
+turan relaciones sema'nticas y contextuales. se asigna la tarea 04, la cual consiste en desarrollar un
+si bien los llms ofrecen capacidades sorprendentes, su asistente conversacional que se desempen˜e ante diferentes
+conocimiento es limitado a los datos de entrenamiento y preguntas basadas en una base de documentos (apuntes de
+carecen de habilidades para actuar o buscar informacio'n acti- clase realizados por los estudiantes hasta la fecha).
+vamente. para superar estas limitaciones, se han desarrollado se requiere implementar te'cnicas de recuperacio'n y auenfoques como retrieval-augmented generation (rag), que mento de contexto (rag) y comparar emp'ıricamente los
+enriquece las respuestas con informacio'n externa relevante en resultados con distintos esquemas de segmentacio'n del texto.
+tiempo real, y agentes inteligentes basados en llms, capaces la fecha de entrega esta' prevista para el jueves 6 de
+de razonar, planificar y ejecutar tareas auto'nomas. noviembre.
+este documento explora estos me'todos y su evolucio'n,
+iii. fundamentosdelosllms
+mostrandoco'mosepuedepasardemodelospasivosasistemas
+que no solo comprenden el lenguaje, sino que tambie'n inter- a. funcionamiento general
+actu'an con el entorno, toman decisiones informadas y aplican los llms procesan los datos de entrada transforma'ndolos
+conocimiento actualizado. en representaciones nume'ricas que describen caracter'ısticas
+sema'nticas. cada palabra, s'ımbolo o cara'cter se convierte en
+una secuencia de valores nume'ricos mediante la tokenizacio'n,
+ii. aspectosdelcurso
+para luego ser procesados en redes neuronales profundas con
+a. calendario previsto para el resto del curso millones o miles de millones de para'metros.
+la siguiente tabla i muestra la planificacio'n de las ac- b. del lenguaje al nu'mero
+tividades restantes del curso, indicando las fechas y tareas eltextodebeconvertirseenrepresentacionesnume'ricaspara
+correspondientes para cada semana. ser interpretado por el modelo. el proceso de tokenizacio'n
+nota: en caso de que no se realice la visita a microsoft, la divideeltextoenunidadesm'ınimasllamadastokens(palabras,
+clase"riesgosdeia"setrasladar'ıaaljuevesdelasemana15, subpalabras o caracteres), asignando a cada una un identifiy el examen se aplicar'ıa el jueves 20 de noviembre (semana cador u'nico. estos identificadores se transforman en vectores
+16). que los modelos utilizan como entrada.
+tableii
+tiposdetokenizacio'n
+tipo ejemplo ventajaprincipal
+porpalabra "losmodelos" simplicidad
+porcara'cter "h","o","l","a" sin palabras fuera del
+vocabulario(oov)
+subpalabra(bpe,wordpiece) "compu","tadora" equilibrioentrevocabularioycontexto
+byte-level co'digoasciioutf-8 soporta cualquier fig. 2. proceso de generacio'n de embeddings desde palabra, oracio'n o
+s'ımbolooidioma documentohastaelespaciovectorial.
+espaciosenblanco "hola","mundo" ra'pidoysimple
+c. fo'rmulas de similitud entre vectores
+paracompararlasimilitudodistanciaentrevectores,seutilizan diversas fo'rmulas matema'ticas, entre las ma's comunes:
+- distancia euclidiana: mide la separacio'n entre puntos en
+el espacio. para dos vectores a,b∈rn:
+(cid:118)
+(cid:117) n
+(cid:117)(cid:88)
+d(a,b)=(cid:116) (a
+i
+-b
+i
+)2
+i=1
+- similitud del coseno: mide el a'ngulo entre vectores y su
+orientacio'nenelespacio,siendolama'susadaenmodelos
+de lenguaje:
+a-b
+sim(a,b)=
+fig.1. representacio'ndetokensenunespaciobidimensionalyejemplode
+∥a∥∥b∥
+operacionessema'nticas.
+d. embeddings
+losembeddingssonrepresentacionesnume'ricasdensasque
+iv. representacio'ndelconocimiento
+capturanelsignificadosema'nticoylasrelacionescontextuales
+a. tokenizacio'n depalabras,oracionesodocumentoscompletos.estosvectores
+permiten comparar ideas, medir similitud y realizar operaenlosllmsseutilizandistintosenfoquesdetokenizacio'n,
+ciones sema'nticas en un espacio continuo de alta dimensio'n.
+cada uno con caracter'ısticas particulares que afectan el
+el proceso de generacio'n de embeddings se puede resumir
+rendimiento del modelo: la tabla ii resume estos enfoques,
+en los siguientes pasos:
+sus ejemplos y ventajas principales.
+- entrada textual: la unidad de texto que se quiere repb. representacio'n en espacios vectoriales resentar, que puede ser una palabra, una oracio'n o un
+documento completo.
+una vez tokenizado el texto, los identificadores se trans-
+- modelo de embeddings: un modelo que transforma la
+forman en vectores dentro de un espacio continuo de alta
+entrada en un vector nume'rico denso, capturando su
+dimensio'n. las palabras con significados similares se ubican
+significado y contexto.
+pro'ximas entre s'ı, mientras que las palabras con significados
+- embedding resultante: el vector que representa la endistintos aparecen ma's alejadas.
+trada en el espacio continuo. vectores cercanos indican
+esto permite medir similitud sema'ntica y realizar operaconceptos sema'nticamente similares.
+ciones vectoriales, como analog'ıas entre conceptos, suma o
+- espacio de embeddings: el espacio vectorial donde cada
+resta de vectores.
+embedding ocupa una posicio'n. este espacio permite
+talcomosemuestraenlafigura1,losvectoresrepresentan
+medir similitudes y realizar bu'squedas por proximidad.
+tokens proyectados en un espacio bidimensional para facilitar
+como se ilustra en la figura 2, la figura representa el flujo
+la comprensio'n, ilustrando relaciones sema'nticas entre ellos.
+de generacio'n de embeddings: desde palabras, oraciones o
+por ejemplo, la conocida analog'ıa:
+documentosdeentrada,pasandoporelmodelodeembeddings,
+rey-hombre+mujer≈reina. hasta el vector resultante y su posicio'n en el espacio de
+embeddings.
+en la pra'ctica, estos vectores existen en un espacio de alta adema's, la figura 3 muestra un ejemplo simplificado de
+dimensio'n(ndimensiones),loquepermitecapturardemanera sentence embeddings proyectados en un plano bidimensional,
+ma's precisa la informacio'n sema'ntica y contextual de las donde frases con significado similar aparecen pro'ximas entre
+palabras. s'ı.
+que inyecta conocimiento externo relevante en tiempo real.
+esto permite generar respuestas ma's precisas y coherentes,
+accediendo a informacio'n actualizada y fundamentada.
+a. preparacio'n de los documentos
+los documentos que se desean utilizar para la recuperacio'n
+se dividen en fragmentos llamados chunks, normalmente de
+entre 200 y 500 tokens. para evitar pe'rdida de informacio'n,
+los chunks suelen tener un overlap entre s'ı.
+1) chunkingdetaman˜ofijo: sesegmentanlosdocumentos
+en trozos de longitud fija, respetando en la medida de lo
+posible los l'ımites de las frases, y se mantiene un overlap
+para preservar contexto.
+2) chunking recursivo: en este enfoque, los chunks no
+fig.3. ejemplodesentenceembeddingsenunespaciobidimensional se cortan estrictamente segu'n el taman˜o ma'ximo, sino que
+se ajustan para mantener la sema'ntica de las oraciones. se
+comparan oraciones con la similitud del coseno y, si son
+v. capacidadesylimitaciones
+suficientementesimilaressegu'nunumbral,secombinanenun
+a. capacidades emergentes
+chunkma'sgrande,lograndounalmacenamientoma'seficiente
+graciasasuentrenamientomasivoyalusodearquitecturas y contextual.
+basadas en transformers, los llms presentan capacidades
+b. transformacio'n en embeddings
+como:
+- compresio'ntextual:interpretanelsignificadodepalabras cada chunk se convierte en un vector mediante un modelo
+y frases segu'n el entorno en el que aparecen. deembeddings.estosvectoresseutilizanparamedirsimilitud
+- generacio'n coherente de texto: pueden redactar, traducir sema'ntica y permitir la recuperacio'n eficiente de fragmentos
+oresumirinformacio'nmanteniendoestiloyconsistencia. relevantes durante la consulta del usuario.
+- razonamiento y planificacio'n: resuelven problemas, ex- c. indexacio'n
+plican pasos y trazan estrategias simples.
+los vectores resultantes se almacenan en bases vectoriales
+- aprendizaje en el prompt: adaptan su comportamiento a
+especializadas, que pueden residir en memoria ram o disco:
+partir de ejemplos dados en la misma conversacio'n (incontext learning). - faiss: principalmente en ram, ra'pido para bu'squedas.
+- multitarea: realizan traduccio'n, clasificacio'n, codifi- - qdrant: almacenamiento en disco con soporte de
+cacio'n, ana'lisis o dia'logo sin requerir entrenamiento bu'squeda vectorial.
+adicional. - pinecone: almacenamiento en disco y nube, escalable.
+se almacena adema's la metadata asociada, como el texto
+b. limitaciones
+original del chunk, para permitir una recuperacio'n eficiente.
+a pesar de sus capacidades, los llms presentan limitad. consulta o recuperacio'n
+ciones importantes:
+- alucinaciones: pueden generar respuestas incorrectas o cuando llega una pregunta del usuario, el proceso consiste
+inventadas, especialmente cuando la informacio'n de en- en:
+trada es ambigua o insuficiente. 1) transformar la consulta en un embedding.
+- memorialimitada:olvidaninformacio'nqueseencuentra 2) calcular la similitud con todos los embeddings indexafuera del contexto actual, no recordando interacciones dos.
+previas a menos que se almacenen externamente. 3) seleccionar los top-k chunks ma's cercanos
+- conocimiento esta'tico: no tienen acceso a informacio'n sema'nticamente.
+posteriorasufechadecortedeentrenamiento,porloque
+e. augmentacio'n y generacio'n
+no esta'n actualizados en tiempo real.
+- altos costos computacionales: requieren hardware espe- paraenriquecerelpromptdelllm,loschunksrecuperados
+cializado y significativos recursos para entrenamiento e se organizan en una plantilla estructurada, que combina el
+inferencia eficiente, lo que puede limitar su uso pra'ctico. contextextra'ıdodelosdocumentosconlaquestiondelusuario.
+estaplantillaaseguraqueelmodelorecibatodalainformacio'n
+vi. retrieval-augmentedgeneration(rag)
+relevantedemaneracoherente,permitie'ndolegenerarrespuesdadas las limitaciones de los llms tradicionales, los en- tas precisas y fundamentadas.
+foques de retrieval-augmented generation (rag) entran en a modo de ejemplo, la figura 4 muestra la estructura
+escena. el enfoque rag potencia los llms conecta'ndolos de la plantilla, donde se pueden observar sus componentes
+con un mo'dulo de recuperacio'n de informacio'n (retriever) principales: prompt, context y question.
+planificar y actuar de manera auto'noma, ejecutando tareas en
+el mundo real, como consultar apis, buscar informacio'n o
+tomar decisiones basadas en conocimiento externo.
+esta capacidad se estructura en tres componentes principales:
+a. memoria
+la memoria permite al agente mantener coherencia y contexto a lo largo de la interaccio'n:
+- corto plazo: ventana de contexto del modelo.
+- largoplazo:basesdedatosexternas,incluyendosistemas
+rag donde la informacio'n se divide en chunks y se
+fig.4. estructuradeundocumentorag
+representan como embeddings para su recuperacio'n.
+b. planificacio'n
+la planificacio'n dota al agente de la habilidad de descomponer problemas complejos y razonar sobre mu'ltiples pasos:
+- chains of thought (cot): razonamiento secuencial paso
+a paso.
+- treesofthought(tot):exploracio'ndemu'ltiplesposibles
+caminos de razonamiento antes de tomar decisiones.
+c. accio'n
+fig.5. diagramadelflujoderagmostrandolapreparacio'ndedocumentos,
+generacio'ndeembeddings,indexacio'n,recuperacio'nygeneracio'nderespues- finalmente, la accio'n permite al agente ejecutar tareas
+tas. concretas y aplicar su razonamiento en el mundo real:
+- utilizacio'n de herramientas externas, como buscadores,
+apis o sistemas rag.
+f. beneficios de rag
+- enriquecimiento de respuestas con informacio'n recuper-
+- reduccio'n de alucinaciones. ada en tiempo real, basada en chunks de documentos
+- actualizacio'n continua con informacio'n reciente. relevantes.
+- eficiencia en costos y tiempo de respuesta.
+- aplicabilidad en dominios especializados con infor- viii. conclusio'n
+macio'n privada. los modelos de lenguaje extensos (llms) han revolucionado el procesamiento del lenguaje natural, permitiendo
+g. aplicaciones de rag
+tareas complejas como la generacio'n de texto coherente, el
+- asistentes empresariales enriquecidos: pueden consultar razonamiento contextual y la ejecucio'n multitarea sin necesidocumentacio'n interna y responder de forma precisa. dad de reentrenamiento.
+- investigacio'n: lectura automa'tica de papers, resu'menes y el uso de embeddings y espacios vectoriales permite que
+citas. los llms comprendan relaciones sema'nticas profundas. adi-
+- soportealcliente:ana'lisisdeticketspreviosparagenerar cionalmente, te'cnicas como retrieval-augmented generation
+respuestas coherentes y ra'pidas. (rag) mejoran su precisio'n y acceso a informacio'n actualla figura 5 ilustra el flujo general de un sistema rag, izada, mientras que los agentes inteligentes basados en llms
+donde se integran la creacio'n de embeddings, la indexacio'n y les permiten actuar de manera auto'noma, planificar y utilizar
+labu'squedavectorialparaenriquecerlasrespuestasgeneradas herramientas externas, superando la pasividad de los modelos
+por el llm. tradicionales.
+si bien los rag mejoran significativamente el rendimiento a pesar de estas mejoras, los llms y sus extensiones ende un llm tradicional al proporcionarle informacio'n externa frentan limitaciones importantes, como memoria finita, costos
+yactualizada,estossistemassiguensiendopasivos:nopueden computacionales elevados y riesgo de alucinaciones. por ello,
+buscaractivamenteinformacio'nenlawebnitomardecisiones su implementacio'n requiere un disen˜o cuidadoso y un uso
+auto'nomas. su funcio'n se limita a complementar la respuesta responsable, asegurando que sus capacidades se aprovechen
+del llm con los datos recuperados. de manera eficiente y confiable.
+vii. dellmsaagentesinteligentes
+losagentesbasadosenllmsrepresentanunpasoma'salla'
+delosrags.mientrasquelosragssoloenriquecenrespuestas con informacio'n recuperada, los agentes pueden razonar,

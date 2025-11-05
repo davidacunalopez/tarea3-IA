@@ -1,0 +1,177 @@
+apuntes de clase: redes neuronales
+brandon emmanuel sa'nchez araya
+escuela de ingenier'ıa en computacio'n
+instituto tecnolo'gico de costa rica
+cartago, costa rica
+brandon01sanchez@estudiantec.cr
+23 setiembre 2025
+abstract-este documento presenta una formalizacio'n de
+apuntes de clase correspondientes al curso de inteligencia artificial. se abordan los conceptos fundamentales de la regresio'n
+log'ıstica (binaria y multiclase), el uso del dataset mnist y
+la representacio'n de ima'genes mediante flatten. asimismo, se
+introduce la codificacio'n one-hot, la formulacio'n matricial con
+pesosysesgos,ylarelacio'ndeestosmodelosconlaconstruccio'n
+de redes neuronales. finalmente, se destacan las propiedades
+esencialesdelasredes,comolanolinealidad,laorganizacio'nen
+capasysucapacidadpararesolverproblemascomplejosatrave's
+de la optimizacio'n por gradiente.
+i. eldatasetmnist
+eldatasetmnist(modifiednationalinstituteofstandards
+andtechnology)esunodelosconjuntosdedatosma'sfamosos
+en el a'rea de aprendizaje automa'tico. fue creado a partir de fig.1. ejemploderepresentacio'ndeund'ıgitoenmnistysusp'ıxelesen
+la recopilacio'n de miles de d'ıgitos manuscritos provenientes escaladegrises.
+de estudiantes de secundaria y empleados de la oficina del
+censodelosestadosunidos.laideaoriginaleradisponerde
+b. por que' esto es un problema complejo
+unconjuntoestandarizadoquesirvieraparaprobarycomparar
+algoritmos de reconocimiento de escritura. aunque un d'ıgito "5" tiene una forma reconocible, cada
+- conjunto de ima'genes:d'ıgitosescritosamano(del0al persona lo escribe distinto. la variacio'n en trazo, grosor,
+9). inclinacio'n y ubicacio'n hace que sea dif'ıcil usar reglas fijas;
+- taman˜o original: 128×128 p'ıxeles. necesitamos un modelo que aprenda a partir de ejemplos.
+- taman˜o transformado: 28×28 pixeles.
+- flatten: cada imagen se convierte en un vector de 784 c. clasificacio'n binaria: "¿es un 5 o no?"
+caracter'ısticas.
+- 1 channel: un solo canal, es decir en blanco y negro. laregresio'nlog'ısticaeslabasedelasredesneuronales.se
+- cantidad de ejemplos: 60,000 para entrenamiento y usa para clasificar entre dos clases (ej: ¿es un 5 o no lo es?).
+10,000 para prueba.
+1
+en la figura 1 se muestra un ejemplo de co'mo un d'ıgito f (x)=
+w,b 1+e-(wx+b)
+manuscritoserepresentaenmnistcomounamatrizde28×
+28 p'ıxeles, que luego puede convertirse en un vector de 784
+caracter'ısticas (flatten).
+h(x)=g(f(x))
+.
+ii. ¿co'modisen˜arunprogramaquereconozca
+todoslosnu'merosquelaspersonaspuedenhacer?
+g(x)=
+1
+1+e-x
+a. p'ıxeles activos e inactivos & formacio'n de la figura
+en una imagen de mnist, cada p'ıxel tiene una intensidad
+(0 = "apagado", valores altos = "encendido"). la figura del f w,b (x)=wx+b
+d'ıgito se forma por el patro'n de p'ıxeles activos/inactivos. el
+aprendizaje consiste en ajustar pesos para que ciertas config- enlafigura2seobservaco'molaregresio'nlog'ısticapuede
+uraciones de p'ıxeles (patrones) produzcan la clase correcta. interpretarse como una red neuronal muy simple.
+input layer (x∈r784) capa de salida (r10)
+capa de entrada (r5)
+f output yˆ∈(0,1)
+fig. 2. modelo de regresio'n log'ıstica como red neuronal: entradas →
+combinacio'nlineal→funcio'nsigmoide.
+d. ¿co'mo alimentar una regresio'n log'ıstica con una matriz?
+sea x ∈ r28×28 la imagen (matriz de p'ıxeles). se aplana
+(flatten) en un vector columna:
+x=vec(x)∈r784.
+fig.3. regresio'nlog'ısticamultinomial:5entradasconectadasdirectamente
+con10salidas.
+taman˜o de entrada (input layer) y conteo de para'metros
+compactacio'n: de 10 vectores a una sola matriz
+- input layer: 784 features (un p'ıxel por entrada).
+en vez de calcular 10 regresiones por separado, apilamos
+- pesos en binario: 784 pesos en w + 1 bias = 785
+sus pesos en una matriz:
+para'metros en total.
+ 
+-
+w 0 ⊤ 
+iii. regresio'nlog'isticamultinomial   -  
+(experimentoenclase)   -    b 0 
+
+w 1
+⊤
+ b 1
+ejercicio del profe: 10 regresiones que responden "s'ı/no" ∈r (cid:124) 1 w (cid:123) 0 (cid:122) × (cid:125) 784 =    - . .     , (cid:124) ∈ (cid:123) r b (cid:122) 1 (cid:125) 0 =   . . .    , z =w (cid:124) ∈ x (cid:123) r (cid:122) 1 + 0 (cid:125) b.
+se eligio' a 10 estudiantes, cada uno "especialista" en un   .   b 9
+ - 
+d'ıgito (0-9). cada imagen se le pregunta a los especialista  
+w⊤
+uno por uno y ellos respondieron "s'ı es mi nu'mero" o "no 9
+-
+es". si la respuesta no coincide con la etiqueta verdadera, se
+hace refuerzo (entrenamiento). como resultado se obtiene: i'ndices: w es el peso que conecta el feature i (p'ıxel i) con
+j,i
+la neurona/clase j.
+- mi w es una matriz w ∈r10×784.
+one-hot vector - mi b es un vector b∈r10 (un bias por neurona/clase).
+laetiquetacorrectasecodificacomounvectorconunu'nico ¿que' sucede con el para'metro b?
+1 en la posicio'n del d'ıgito correcto:
+cada neurona/clase tiene su propio sesgo: b =
+0 1 2 3 4 5 6 7 8 9 (b 0 ,...,b 9 )⊤. cantidad de neuronas = taman˜o de b.
+y (one-hot) 0 0 1 0 0 0 0 0 0 0
+iv. ejercicio:devectoramatriz
+ese 1 marca cua'l estudiante (regresio'n) deber'ıa decir "s'ı". 1) una sola regresio'n binaria (vector x)
+la figura 3 representa la extensio'n al caso multinomial.
+sea
+en este modelo, las entradas se conectan directamente con  3   3 
+mu'ltiples salidas, de manera que cada una corresponde a 4 2
+una clase distinta. de esta forma se pueden reconocer si- x= 5   , w = 4   , b=2.
+multa'neamente los diez d'ıgitos de mnist. 6 5
+entonces neurona (para decidir entre dos clases, por ejemplo "s'ı"
+  o "no") o varias neuronas (para elegir entre mu'ltiples
+3
+categor'ıas, como los 10 d'ıgitos en mnist).
+z =w⊤x+b=[3 2 4 5]   4 +2=67+2=69, yˆ=σ(z).
+5 profundidad y complejidad
+6
+entre ma's capas profundas tenga la red, ma's puede "des2) varias regresiones a la vez menuzar" el problema en representaciones intermedias, lo
+que le permite identificar patrones complejos que una simple
+ahora dos regresiones (piensa "dos neuronas de salida").
+apilamos sus pesos en una matriz w y sus sesgos en un regresio'n log'ıstica no podr'ıa capturar.
+vector b: en la figura 4 se muestra un ejemplo de red neuronal con
+(cid:20) (cid:21) (cid:20) (cid:21) tres entradas, una capa oculta de cinco neuronas y cuatro
+3 2 4 5 2
+w = ∈r2×4, b= ∈r2. salidas.esteesquemailustraco'molaintroduccio'ndecapasin4 3 2 1 3
+termedias permite transformar las representaciones y capturar
+con el mismo x de arriba: relaciones no lineales ma's complejas en los datos.
+ 
+3
+(cid:20) 3 2 4 5 (cid:21) 4 (cid:20) 2 (cid:21) (cid:20) 69 (cid:21) capa oculta
+z =wx+b=  + = .
+4 3 2 1 5 3 43 capa de salida
+6 capa de entrada
+v. redneuronal
+una red neuronal es un modelo matema'tico inspirado en
+el funcionamiento del cerebro humano. esta' compuesta por
+unidades llamadas neuronas, organizadas en capas. las capas
+esta'nconectadasentres'ı,demaneraquelasalidadeunacapa
+sirve como entrada de la siguiente.
+propiedades clave
+- nolinealidad:permiteresolverproblemascomplejosque
+un modelo lineal no podr'ıa.
+fig.4. redneuronalpequen˜a:3entradas,1capaocultade5neuronasy4
+- capas: la profundidad de la red es un hiperpara'metro salidas.
+que define su capacidad, y en cada una de las capas hay
+neuronas.
+vi. conclusiones
+- diferenciabilidad: cada capa debe ser diferenciable para
+que podamos optimizar mediante gradiente descendente. el estudio de la regresio'n log'ıstica permite comprender
+- optimizacio'n: si puedo derivar, puedo optimizar. los cimientos de las redes neuronales modernas. a partir de
+problemas de clasificacio'n binaria simples se llega de manera
+cuando aplicamos una red neuronal despue's de un clasinatural a la extensio'n multiclase, donde se introducen la forficador multinomial, la lo'gica cambia respecto a una clasifimulacio'n matricial y la codificacio'n one-hot. estos elementos
+cacio'nbinariatradicional.enunaclasificacio'nbinariasimple,
+muestran co'mo mu'ltiples regresiones pueden integrarse en un
+larelacio'neslinealentrelasentradas(features)ylasalida.en
+solo modelo ma's general.
+una red neuronal, la salida ya no depende directamente de la
+el concepto de red neuronal surge al conectar varias de
+imagen original, sino de las activaciones de la capa anterior.
+estas operaciones en capas sucesivas, incorporando funciones
+estructura t'ıpica de activacio'n no lineales que ampl'ıan la capacidad de representacio'n. la diferenciabilidad de cada capa asegura la
+- capadeentrada:eslaquerecibedirectamentelosdatos
+posibilidad de entrenar el modelo mediante optimizacio'n,
+del problema. cada neurona de esta capa representa una
+mientras que la profundidad incrementa su habilidad para
+caracter'ıstica (feature) de la entrada. por ejemplo, en el
+capturar patrones complejos. en s'ıntesis, las redes neuronales
+caso de mnist cada p'ıxel de la imagen se convierte en
+sonunaevolucio'ndirectadelaregresio'nlog'ıstica,potenciadas
+una neurona de la capa de entrada.
+porlaorganizacio'nencapasylaintroduccio'ndenolinealidad.
+- capas intermedias (ocultas): son las que procesan la
+informacio'n recibida. aqu'ı la red va combinando y
+transformando los datos para encontrar patrones ma's
+abstractos.sellaman"ocultas"porquenointeractu'ancon
+el mundo exterior: solo comunican informacio'n entre la
+entrada y la salida.
+- capa de salida: es la que entrega el resultado final del
+modelo. dependiendo del problema, puede ser una sola

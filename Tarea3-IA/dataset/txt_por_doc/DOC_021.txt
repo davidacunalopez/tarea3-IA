@@ -1,0 +1,230 @@
+apuntes de la clase
+apuntes semana 6
+apuntes del 11 de setiembre de 2025
+sahid rojas chacón - 2018319311
+curso: inteligencia artificial
+reds@estudiantec.cr
+resumen-en este documento, se resume la clase del 11 de caso "no es naranja" (clase 0).: si wx+b = 1,458,
+setiembrede2025,enlacuálserealizóprimeramenteunrepaso entonces σ(1,458)≈0,81; como aquí me interesa que no sea
+delovistoenlaclaseanterior.demanerageneral,estedocumento
+naranja (y =0), la probabilidad es 1-σ(1,458)≈0,19. para
+i
+recopilainformaciónsobreverosimilitudenlaregresiónlogística,
+el evento complementario (no naranja como etiqueta positiva
+lafuncióndecostoeinformaciónsobreunnotebookderegresión
+logística compartido por el profesor. enesaformulación),sereportó0,81;elpuntoesqueelmismo
+indexterms-verosimilitud,regresiónlogística,gradientedes- f sirve para ambos casos cambiando y i .
+cendiente, función sigmoide, derivada. caso "sí es naranja" (clase 1).: si wx+b = -1,32,
+entonces σ(-1,32) ≈ 0,21; la probabilidad de sí ser naranja
+i. notasobretareai (clase 1) se obtiene con 1-σ(-1,32)≈0,79. estos números
+ilustran cómo interpretar f(x) en los dos escenarios.
+serecuerdaotorgarladebidaimportanciaalinformeescrito
+y a su documentación, por cuanto constituirán la base de la
+iii. porquémetemoslogaritmos
+retroalimentación para entregas posteriores y para las etapas
+multiplicar muchas probabilidades puede complicar la desubsiguientes del proyecto. el informe deberá presentar con
+rivada y además es numéricamente inestable. usamos identiclaridadlosobjetivos,lametodologíaylosresultados,asegurar
+dades de logaritmos:
+la reproducibilidad (datos, código, semillas y versiones), e
+incluir instrucciones de ejecución suficientes y verificables,
+ln(an)=nlna, ln(ab)=lna+lnb,
+manteniendo coherencia entre texto, figuras y conclusiones.
+para convertir el producto en suma. aplicando ln a (1):
+ii. verosimilitud:ideayfunciónparaeldataset
+n
+(cid:88)(cid:2) (cid:3)
+ii-a. qué es verosimilitud lnl(w,b)= y lnf (x )+(1-y )ln(1-f (x )) .
+i w,b i i w,b i
+verosimilitud es: dado un conjunto de datos y un modelo i=1
+(4)
+conparámetros,¿quétanprobableesobservaresosdatosbajo
+esosparámetros?enbinario,nuestromodelof (x)devuelve esto se llama log-likelihood y es mucho más amigable para
+w,b
+una probabilidad en (0,1) y la verosimilitud del dataset se derivar.
+construye multiplicando las probabilidades individuales.
+iv. demaximizaraminimizar:negandoel
+ii-b. modelo y notación log-likelihood
+usaré f (x)=σ(w⊤x+b), donde σ es la sigmoide: en entrenamiento solemos minimizar. como maximizar (4)
+w,b
+es equivalente a minimizar su opuesto, definimos la pérdida
+1
+σ(t)= . logística promedio:
+1+e-t
+n
+ii-c. verosimilitud del conjunto l(w,b)=- 1 (cid:88)(cid:104) y lnf (x )+(1-y )ln (cid:0) 1-f (x ) (cid:1)(cid:105) .
+n i w,b i i w,b i
+para datos {(x ,y )}n con y ∈{0,1}: i=1
+i i i=1 i (5)
+nota : esta pérdida es ≥ 0 en práctica; si te da negativa,
+n
+l(w,b)= (cid:89) f (x )yi (cid:0) 1-f (x ) (cid:1)1-yi. (1) probablemente hay un bug de signos o promedios. el objetivo
+w,b i w,b i
+es empujarla hacia cero.
+i=1
+ii-d. ejemplo narrativo: calabaza/naranja v. quéparámetrossípodemosactualizar
+la misma fórmula (1) explica los dos casos: los parámetros libres del modelo son w (vector de pesos)
+y =1⇒f (x
+)1(cid:0)
+1-f (x )
+(cid:1)0
+=f (x ), (2)
+y b (sesgo). todo lo demás depende de ellos. por eso,
+i w,b i w,b i w,b i necesitamos∂l/∂w y∂l/∂bparapoderaplicardescensopor
+y =0⇒f (x
+)0(cid:0)
+1-f (x )
+(cid:1)1
+=1-f (x ). (3) gradiente.
+i w,b i w,b i w,b i
+vi. composicióndefuncionesyregladela vii. actualizacióndeparámetros(descensopor
+cadena gradiente)
+primero reescribo el modelo de forma explícita como com- con learning rate α>0:
+posición:
+n
+1 (cid:88)(cid:0) (cid:1)
+z(x)=w⊤x+b, a(z)=σ(z), f w,b (x)=a(z(x)). w ←w-α n a i -y i x i , (14)
+i=1
+la pérdida por muestra (sin el promedio y con el signo n
+1 (cid:88)(cid:0) (cid:1)
+negativo puesto) queda: b←b-α a -y . (15)
+n i i
+(cid:104) (cid:0) (cid:1)(cid:105) i=1
+l=- y lna(z(x))+(1-y) ln 1-a(z(x)) .
+(nota : si la curva de pérdida sube o se vuelve errática, probá
+reducir α.)
+usamos regla de la cadena:
+∂l
+=
+∂l
+-
+∂a
+-
+∂z
+, (6)
+viii. código
+∂w ∂a ∂z ∂w
+∂l ∂l ∂a ∂z en esta sección explico únicamente el código fuente y
+= - - . (7) cómo implementa la teoría vista en clase: verosimilitud →
+∂b ∂a ∂z ∂b
+log-likelihood → log-loss, derivadas por regla de la cadena
+vi-a. paso 1: derivada de l respecto a a
+y actualización de los parámetros w y b. las figuras 1-3
+derivando los logaritmos (regla de la cadena incluida): corresponden a tres capturas del archivo main.py.
+∂l (cid:104) 1 1 (cid:105)
+=- y- -(a)′ + (1-y)- -(1-a)′ viii-a. definiciones del modelo: clase, sigmoide y pérdida
+∂a a 1-a (cap01)
+(cid:104) 1 1 (cid:105)
+=- y- -1 + (1-y)- -(-1) la figura 1 muestra la clase logisticregressionai.
+a 1-a
+y 1-y en el constructor (__init__) se fijan los hiperparámetros
+=- + . (8) lr (tasa de aprendizaje) y epochs (épocas de entrenamiena 1-a
+to), y se inicializan los parámetros entrenables w ∈ rd y
+vi-b. paso 2: derivada de a respecto a z b∈r, que son los únicos valores que el algoritmo ajusta.
+la derivada de la sigmoide es la famosa forma cerrada: el método sigmoid implementa la activación logística
+∂a =σ(z) (cid:0) 1-σ(z) (cid:1) =a(1-a). (9) σ(z)= 1 , z =w⊤x+b,
+∂z 1+e-z
+vi-c. paso 3: derivadas de z respecto a w y b que mapea la combinación lineal z a una probabilidad a =
+de z(x)=w⊤x+b: σ(z)∈(0,1).
+lafunciónbinary_cross_entropy_losscodificala
+∂z ∂z
+log-loss (negativa del log-likelihood promedio):
+=x, =1. (10)
+∂w ∂b
+n
+vi-d. juntando todo: primero ∂l/∂z l(w,b)=- 1 (cid:88)(cid:2) y lna +(1-y )ln(1-a ) (cid:3) ,
+n i i i i (16)
+es útil agrupar ∂l = ∂l - ∂a y luego propagar a w y b: i=1
+∂z ∂a ∂z a =σ (cid:0) w⊤x +b (cid:1) .
+i i
+∂l (cid:16) y 1-y(cid:17)
+= - + -a(1-a)
+∂z a 1-a antesdeaplicarloslogaritmos,elcódigorealizaclippingcon
+=-y(1-a)+(1-y)a ε=10-15 para evitar log(0) y mejorar la estabilidad numérica.minimizar(16)esequivalenteamaximizarlaverosimilitud
+=a-y. (11) (cid:81)
+i
+ay
+i
+i(1-a
+i
+)1-yi.
+vi-e. gradientes finales de w y b
+viii-b. entrenamiento vectorizado y predicción (cap02)
+usando (11) y (10):
+lafigura2concentraelcorazóndelaprendizaje:elmétodo
+∂l
+=(a-y)x, (12) fit (bucle de entrenamiento) y predict (inferencia).
+∂w forward (vectorizado).: con x ∈ rn×d y w ∈ rd, se
+∂l
+=(a-y). (13) calcula
+∂b
+z =xw+b1, a=σ(z),
+promediando sobre el dataset (dividiendo entre n y sumando
+en i) recuperamos las expresiones habituales de la pérdida usando multiplicación matricial de numpy (np.dot). este
+promedio (5). paso implementa la composición x→z→a vista en clase.
+figura 3. cap03: flujo completo: imports, generación del dataset con
+make_classification, división entrenamiento/prueba, entrenamiento
+delmodelopropioybloqueanálogoconsklearn.
+viii-c. bloque principal: imports, dataset y flujo del entrenamiento (cap03)
+figura1. cap01:claselogisticregressionai.hiperparámetros(lr,
+epochs),parámetrosw,b,sigmoideypérdida(16).
+como se muestra en la figura 3, se realiza la importación de librerías necesarias (numpy y módulos de
+sklearn). luego, se crea un dataset de clasificación con
+make_classification, que genera datos sintéticos controlados para problemas binarios. en este caso, se indica:
+n_samples=1000, n_features=2, n_informative=2, n_redundant=0, n_clusters_per_class=1, random_state=225.
+esto produce dos features informativas sin redundancia y un
+solo clúster por clase, coherente con los ejemplos del curso.
+a continuación, se realiza la división entrenamiento/prueba con train_test_split, manteniendo la
+proporción de clases mediante stratify=y y fijando
+random_state para reproducibilidad. seguidamente, se
+instancia y entrena el modelo implementado desde cero:
+modelo_manual = logisticregressionai(lr=0.001, epochs=6000),
+ejecutando el bucle explicado en la subsección anterior (forward, gradientes y actualización). finalmente, el bloque incluye logisticregression de sklearn para replicar
+figura 2. cap02: fit (forward z→a, gradientes dw/db, actualización) y el mismo enfoque con la librería estándar, lo que sirve como
+predict(umbral0,5).
+referencia y valida que la implementación manual respeta la
+teoría.
+gradientes(regladelacadena).: deladerivaciónteórica
+viii-d. resumen código ↔ teoría
+se obtiene
+verosimilitud → log-loss. el código minimiza (16), que es
+∂l ∂l 1 ∂l 1
+=a-y, = x⊤(a-y), = 1⊤(a-y). -logl; así, "minimizar la pérdida" equivale a "maximizar la
+∂z ∂w n ∂b n verosimilitud".
+regla de la cadena. la ruta x→z→a→l da ∂l =a-y,
+en el código aparecen como dw = (1/n_samples) ∂z
+base de los gradientes vectorizados dw y db.
+* x.t @ (a - y) y db = (1/n_samples) *
+parámetros actualizables. solo w y b cambian; el resto (signp.sum(a - y).
+moide, datos) son transformaciones/entradas fijas conforme a
+actualización (descenso por gradiente).: con tasa α =
+la formulación del modelo.
+lr:
+∂l ∂l
+w ←w-α , b←b-α , ix. conclusiones
+∂w ∂b
+laclaveparanoperderseesmirarlacomposiciónx→z →
+que en el código se implementa como w = w - lr * dw a→l y empujar las derivadas con la regla de la cadena. el
+y b = b - lr * db. al disminuir (16) se incrementa la uso de logaritmos cambia productos por sumas y, al negar
+verosimilitud del modelo. el log-likelihood, pasamos a minimizar una función estable
+predicción.: el método predict repite z =xw+b y y derivable. con los gradientes compactos (a-y)x y (aa=σ(z)yumbralizacon0,5paradevolveretiquetasbinarias y), actualizar w y b se vuelve mecánico con descenso por
+yˆ∈{0,1}, consistente con decidir por la clase más probable. gradiente.
+apéndice:fórmulasrelevantes
+sigmoide y derivada:
+σ(t)= 1 , σ′(t)=σ(t) (cid:0) 1-σ(t) (cid:1) .
+1+e-t
+verosimilitud y log-likelihood:
+l= (cid:89) f(x )yi (cid:0) 1-f(x ) (cid:1)1-yi, lnl= (cid:88)(cid:2) y lnf(x )+(1-y )ln(1-f(x )) (cid:3) .
+i i i i i i
+i i
+pérdida logística promedio (lo que minimizo):
+1 (cid:88)(cid:104) (cid:0) (cid:1)(cid:105)
+l(w,b)=- y lnf(x )+(1-y )ln 1-f(x ) .
+n i i i i
+i
+gradientes (por muestra):
+∂l y 1-y ∂a ∂z ∂z
+=- + , =a(1-a), =x, =1,
+∂a a 1-a ∂z ∂w ∂b
+∂l ∂l ∂l
+=a-y, =(a-y)x, =(a-y).
+∂z ∂w ∂b

@@ -1,0 +1,220 @@
+apuntes semana 6
+apuntes del 11 de setiembre de 2025
+andrey ureña bermúdez - 2022017442
+inteligencia artificial
+andurena@estudiantec.cr
+resumen-en este documento, se resume la clase del 11 de caso y i =0:
+setiembrede2025,enlacuálserealizóprimeramenteunrepaso
+delovistoenlaclaseanterior.demanerageneral,estedocumento f w,b (x i )yi(1-f w,b (x i ))(1-yi) =f w,b (x i )0(1-f w,b (x i ))1
+recopilainformaciónsobreverosimilitudenlaregresiónlogística, (1)
+lafuncióndecostoeinformaciónsobreunnotebookderegresión
+=(1-f (x ))1 (2)
+logística compartido por el profesor. w,b i
+indexterms-verosimilitud,regresiónlogística,gradientedescon la misma fórmula puedo estudiar de que ocurra o no
+cendiente, función sigmoide, derivada.
+un evento. ejemplo: calabaza es naranja:
+i. notasobretareai wx+b=-1,32
+sehacerecordatoriosobredarleimportanciaynodescuidar f (x )=σ(wx +b)=σ(-1,32)=0,21
+w,b i i
+eltrabajoescritodelatarea,asícomosudocumentación,pues =f (x )0(1-f (x ))1
+w,b i w,b i
+de este se dará el feedback para los escritos que haya que
+=(1-f (x ))1 =(1-σ(-1,32))
+realizar en tareas próximas y etapas del proyecto. w,b i
+=(1-0,21)=0,79
+ii. repasosobreclasedelmartes
+la probabilidad de que x sea naranja es 0,79.
+i
+ii-a. verosimilitud
+al final lo que obtenemos es la probabilidad de que la
+es la probabilidad de observar cada uno de los datos
+muestra x tenga la etiqueta y .
+cambiando ciertos parámetros. lo que se busca es maximizar i i
+para llegar al punto de máxima probabilidad. ii-b. derivada de la función de costo
+ladiferenciaentremseymaximumlikelihoodradicaensu
+primero, se debe calcular la probabilidad de que x tome la
+aplicación: para la predicción de valores continuos, se utiliza i
+etiqueta de y , así con cada muestra.
+mse, mientras que para modelar probabilidades, se utiliza i
+dado que esto implica la multiplicación de probabilidades,
+maximum likelihood.
+el cálculo de la derivada se vuelve complejo. para simasí, nuestra función de costo es:
+plificarlo, se busca una expresión equivalente que evite la
+n multiplicación, lo cual se logra aplicando logaritmos.
+(cid:89)
+l= f (x )yi -(1-f (x ))(1-yi) (1)
+w,b i w,b i ii-c. logaritmos
+i=1
+ln(an)=n-ln(a)
+se vió el desarrollo de cada uno de los casos de y en
+i
+f
+w,b
+(x
+i
+)yi(1-f
+w,b
+(x
+i
+))(1-yi): ln(a-b)=ln(a)+ln(b)
+ln(an-bn)=n-ln(a)+n-ln(b)
+caso y =1:
+i
+f (x )yi(1-f (x ))(1-yi) =f (x )1(1-f (x ))0 ii-d. aplicación de logaritmo a la verosimilitud
+w,b i w,b i w,b i w,b i
+(1) l= (cid:81) f
+w,b
+(x
+i
+)yi -(1-f
+w,b
+(x
+i
+))(1-yi)
+=f w,b (x i )1 (2) ln(l)= (cid:80) ln(f w,b (x i )yi)+ln((1-f w,b (x i ))(1-yi))
+(cid:80)
+acá el modelo nos da el valor directo. ejemplo: calabaza ln(l)= y -ln(f (x ))+(1-y )-ln(1-f (x ))
+i w,b i i w,b i
+no es naranja:
+esto lo vamos a llamar log-likelihood. es mucho más fácil
+wx+b=1,458
+decomputaryderivar,ademásdequequitaerroresalmomento
+f w,b (x i )=σ(wx i +b)=σ(1,458)=0,81 decomputarlasmultiplicacionesdeprobabilidades.ahoraesta
+=f (x )1(1-f (x ))0 es la función de costo que se va a usar.
+w,b i w,b i
+=f (x )1 =σ(1,458) paraminimizarmaximizandoloquesepuedehaceresdarle
+w,b i
+vuelta a la función, para eso se multiplica por -1:
+=0,81
+1 (cid:88)
+la probabilidad de que x i no sea naranja es 0,81. l= n y i -ln(f w,b (x i ))+(1-y i )-ln(1-f w,b (x i ))
+1 (cid:104)(cid:88) (cid:105)
+l=- y -ln(f (x ))+(1-y )-ln(1-f (x )) 1) cálculo de derivadas parciales
+n i w,b i i w,b i
+importante recordar que el l que se está usando es:
+ahora puedo minimizar la función, lo que permite aplicar
+el descenso del gradiente que se ha estado trabajando. l=-[y -ln(a(z(x)))+(1-y )-ln(1-a(z(x)))]
+i i
+primero se inicia calculando la derivada parcial de l con
+respecto a la función sigmoide:
+(cid:20)(cid:18) (cid:19) (cid:18) (cid:19)(cid:21)
+∂l 1 1
+=- y - -a(x)′ + (1-y )- -(1-a(x))′
+∂a i a(x) i 1-a(x)
+(cid:20)(cid:18) (cid:19) (cid:18) (cid:19)(cid:21)
+y (1-y )
+=- i -1 + i --1
+a(x) 1-a(x)
+(cid:20)(cid:18) (cid:19) (cid:18) (cid:19)(cid:21)
+y (1-y )
+=- i - i
+a(x) 1-a(x)
+-y (1-y )
+= i + i
+a(x) 1-a(x)
+figura1. gráficaminimizandol
+ahora,secalculaladerivadaparcialdelafunciónsigmoide
+aquí lo ideal es intentar que el loss llegue a cero; si se respecto a z. importante recordar que la derivada de sigmoide
+obtiene un loss negativo, significa que algo se está haciendo es σ(x)-(1-σ(x)), por lo que la derivada parcial sería:
+mal.
+∂a
+=σ(z(x))-(1-σ(z(x)))
+ii-e. actualización de parámetros ∂z
+por último, se debe calcular de manera individual la deries necesario actualizar los parámetros w y b, ya que son
+vada parcial de cada uno de los parámetros con respecto a la
+losquepermitenmodificarlosresultadosdelasprobabilidades
+regresión lineal:
+obtenidas.
+z(x)=wx+b
+para actualizar el parámetro w se necesita: ∂l
+∂w
+∂z
+para actualizar el parámetro b se necesita: ∂l =x
+∂b ∂w
+ii-f. composición de funciones ∂z
+=1
+se va a utilizar el concepto de composición de funciones ∂b
+para que el cálculo de derivadas sea más sencillo. ya que se hizo el cálculo de cada derivada de manera
+derivada función de costo para un sample: individual, se prosigue a realizar las multiplicaciones:
+l=y -ln(f (x ))+(1-y )-ln(1-f (x ))
+i w,b i i w,b i
+modelo: f (x)=a(z(x))
+w,b
+a(x)=σ(x)= 1
+1+e-x
+z(x)=wx+b
+el resultado de combinar ambas es:
+l=y -ln(a(z(x)))+(1-y )-ln(1-a(z(x)))
+i i
+cuandosehabladelatécnicadecomposicióndefunciones
+seaplicalaregladelacadena.sedebencalcularlasderivadas figura2. derivadaparcialdelrespectoaz
+parciales:
+l=y -ln(a(z(x)))+(1-y )-ln(1-a(z(x)))
+i i
+∂l ∂l ∂a ∂z
+= - -
+∂w ∂a ∂z ∂w
+∂l ∂l ∂a ∂z
+= - - figura3. derivadaparcialdelrespectoawyb
+∂b ∂a ∂z ∂b
+se procede a actualizar parámetros: se actualizan los valores de w y b, y se calcula el error en
+z(x)=wx+b cada iteración.
+w =w-α∂l la función predict se encarga de predecir la clase de una
+∂w nueva muestra en base al umbral que se define. una vez
+b=b-α∂l
+∂b obtenida la probabilidad, se asigna la clase correspondiente.
+donde α es un hiperparámetro (learning rate).
+iii. código
+se muestra un notebook con el fin de comprender mejor
+cómo hacer una regresión logística. enlace a notebook.
+figura4. códigoclasificación
+como se muestra en la figura 4, se hace la importación de
+libreríasnecesarias,muchasdelascualespertenecenasklearn.
+luego, se hace la clasificación con make_classification, el
+cual es un método para crear un dataset de clasificación. en
+este caso, se indica que sea de 1000 samples, con 2 features
+informativas, sin features redundantes y con un solo clúster
+por clase.
+posteriormente, se visualiza el conjunto de datos utilizando
+plt.scatter, donde los puntos se colorean según su clase (y).
+luego, se crea un dataframe con pd.dataframe que contiene
+las dos características (feature_1 y feature_2) y la variable
+figura5. códigoregresiónlogística
+objetivo (target).
+finalmente, se divide el dataset en entrenamiento y prueba
+finalmente, el modelo se implementa instanciando la clase
+contrain_test_split,reservandoel80%delosdatosparaentrey entrenándola con x train y y train. luego, se evalúa con
+namiento y el 20% para prueba, asegurando reproducibilidad
+x test y y test, calculando la accuracy y generando un clas
+con random_state=225.
+sification report para medir su desempeño, el cuál muestra
+la figura 5 muestra la implementación manual de la remétricas como el nivel de accuracy, precision, recall, f1-score
+gresiónlogística.laclaserecibecomoparámetroslacantidad
+y support.
+de epochs a ejecutar, el learning rate que se aplicará y los
+parámetros de la regresión w y b, que serán ajustados durante
+el entrenamiento.
+primero, se define la función sigmoide, utilizada para
+convertir la predicción lineal en una probabilidad. luego, se
+implementa la función de costo binary_cross_entropy_loss,
+quecalculalapérdidanegativaconelobjetivodeminimizarla
+durante el entrenamiento.
+enlafunciónfit,serecibentodoslosfeaturesylasetiquetas
+correspondientes. antes de iniciar el ajuste de los parámetros,
+se inicializan aleatoriamente los valores de w, cuyo tamaño figura6. entercaption
+corresponde al número de features, ya que cada uno necesita
+un peso asociado. luego, se ejecuta el ciclo de entrenamiento de igual forma, en lugar de implementar la regresión
+por la cantidad de epochs definida, donde primero se calcula logísticamanualmente,sepuedeutilizarelmétodoquefacilita
+la predicción lineal, que luego pasa por la función sigmoide sklearn,talycomosemuestraenlafigura6.enestecaso,
+para obtener una probabilidad. a partir de esta probabilidad, se instancia el modelo de regresión logística con
+iv. conclusión
+a lo largo de este documento se profundizó en los fundamentos de la regresión logística, en particular en el uso de
+la verosimilitud como función de costo y en la aplicación del
+logaritmoparasimplificarsuderivación.serevisaronejemplos
+prácticos que ilustran cómo interpretar probabilidades según
+losvaloresdeentrada,yseabordóelprocesodeactualización
+de parámetros mediante gradiente descendente. además, el
+repaso permitió conectar la teoría con la implementación
+práctica en python, reforzando la comprensión del modelo y
+su utilidad en la clasificación de datos. con esto, se sientan
+lasbasesparacontinuarcontécnicasmásavanzadasdeaprendizaje supervisado.

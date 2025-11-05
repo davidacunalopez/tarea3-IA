@@ -1,0 +1,203 @@
+inteligencia artificial
+apuntesdeclase-19deagosto2025
+javier rojas rojas
+escuela de ingenier'ıa en computacio'n
+tecnolo'gico de costa rica
+cartago, costa rica
+javrojas@estudiantec.cr
+abstract-this paper summarizes the topics covered in class
+on august 19, 2025. the session focused on two main areas: a
+reviewoflinearalgebraconcepts,withemphasisonvectors,and u=b-a=(b 1 -a 1 , b 2 -a 2 , ..., b n -a n )
+an introduction to supervised learning. in the first part, vectors
+de esta manera, cada componente del vector se obtiene
+were examined in terms of their definitions, norms, distances,
+and operations, highlighting their importance as mathematical restandolascoordenadascorrespondientesdelpuntodeorigen
+tools for representing and comparing data. in the second part, a las del punto final.
+supervised learning was introduced through the notions of
+b. norma de un vector
+features, labels, regression, and classification. the connection
+between these two areas illustrates how algebraic concepts serve lanormadeunvectorrepresentasumagnitud,esdecir,que'
+as the foundation for machine learning techniques.
+tan grande es o cua'nto mide desde el punto de inicio hasta el
+i. introduccio'n punto final. se denota como ∥x∥.
+existen diferentes formas de medir la norma de un
+estosapuntesesta'nbasadosenlaclasedel19deagostode
+vector:
+2025 [1]. el a'lgebra lineal es la base matema'tica de muchas
+1) norma l1: distancia manhattan: la distancia mante'cnicas de inteligencia artificial. en particular, los vectores
+hattan entre dos puntos se calcula sumando las distancias
+permitenrepresentardatos,medirsimilitudesyrealizaroperaabsolutas de cada componente, desplaza'ndose u'nicamente a
+ciones fundamentales en espacios multidimensionales. estos
+lo largo de los ejes del espacio desde el punto de inicio hasta
+conceptos resultan esenciales para entender el aprendizaje
+elpuntofinal.estame'tricaseutilizaespecialmentecuandono
+supervisado, paradigma en el que los datos se expresan mese permiten desplazamientos negativos.
+diante vectores de caracter'ısticas y etiquetas asociadas. dicho
+enfoque permite construir modelos de regresio'n, orientados a (cid:88) n
+|x -y |
+predecir valores continuos, y de clasificacio'n, enfocados en i i
+asignar categor'ıas. este documento resume lo visto en clase, i=1
+dondesetocaronambostemas,destacandolaconexio'nentrela
+teor'ıaalgebraicaysuaplicacio'nenelaprendizajeautoma'tico.
+ii. repasodea' lgebralineal
+a. ¿que' es un vector?
+un vector es una estructura de datos que permite organizar
+informacio'n de forma secuencial y que tambie'n puede interpretarse geome'tricamente.
+1) caracter'ısticas:
+- tieneunpuntodeorigen(normalmente(0,0))yunpunto
+final.
+- posee una direccio'n espec'ıfica.
+- tiene una magnitud (distancia entre el punto de origen y
+punto final). fig.1. ejemplodedistanciamanhattan
+2) vector como desplazamiento: un vector puede inter- 2) norma l2: distancia euclidiana: la distancia eupretarse como un desplazamiento entre dos puntos en un clidiana representa la distancia directa entre dos puntos y
+espacio n-dimensional. si se considera un punto de origen se calcula usando el teorema de pita'goras. para un vector
+a = (a 1 ,a 2 ,...,a n ) y un punto final b = (b 1 ,b 2 ,...,b n ), x=(x 1 ,x 2 ,...,x n ), su norma es:
+elvectorquerepresentaeldesplazamientodeaabsecalcula
+(cid:113)
+como: ∥x∥= x2+x2+...+x2
+1 2 n
+c. propiedades de la norma
+- positividad: ∥x∥≥0 y ∥x∥=0 si y solo si x=0.
+- homogeneidad: ∥αx∥=|α|-∥x∥ para cualquier escalar
+α.
+- desigualdad triangular: ∥x+y∥≤∥x∥+∥y∥.
+d. vector unitario
+- es aquel vector que tiene una longitud o magnitud de 1. fig.3. ejemploproductopunto
+- se puede obtener el vector unitario de un vector u
+f. identidad del coseno
+dividiendo el vector u entre su norma.
+la identidad del coseno para el producto punto entre dos
+vectores u y v en funcio'n de sus magnitudes y el a'ngulo θ
+u es:
+uˆ =
+∥u∥
+u-v=∥u∥-∥v∥-cos(θ)
+al multiplicar este vector por un escalar, se puede hacer
+crecerodecrecer,osisetieneunescalarespec'ıfico,sepodr'ıa
+llegar al vector original.
+fig.4. a'nguloentredosvectoresayb[2]
+¿por que' es esto importante? esta es una de las me'tricas
+ma's importantes para determinar la similitud entre vectores,
+ya que entre menor sea el a'ngulo, los vectores sera'n ma's
+similares.
+en nlp (natural language processing), esto puede ser
+usado para identificar que' tan similares son dos frases, transformando las frases en vectores y midiendo ese a'ngulo.
+1) ejemplo de ca'lculo de a'ngulo entre dos vectores: se
+fig.2. ejemplodeunvectorysuvectorunitario consideran los vectores u=(1,2) y v=(3,4).
+paso 1: calcular el producto punto
+u-v=1-3+2-4=3+8=11
+e. producto punto
+paso 2: calcular las normas
+es el producto interno entre dos vectores, siempre genera (cid:112) √ (cid:112) √
+∥u∥= 12+22 = 5, ∥v∥= 32+42 = 25=5
+un escalar.
+paso 3: aplicar la identidad del coseno
+u-v 11 11
+cos(θ)= = √ = √ ≈0.9839
+ y  ∥u∥-∥v∥ 5-5 5 5
+1
+xty∈rn = (cid:2) x 1 x 2 ... x n (cid:3)     y . . . 2    = (cid:88) n x i y i paso 4: calcul θ ar = el ar a' c n c g o u s l ( o 0.9839)≈10.3◦
+i=1
+y
+n g. vector co-direccional
+son dos vectores que siguen la misma direccio'n, pero con
+es especialmente u'til en inteligencia artificial, ya que se magnitudes distintas:
+puede usar como indicador de importancia de features, utiu=k-v
+lizandounvectordepesos,yalrealizarlaoperacio'nnosdar'ıa
+un indicador de la importancia del feature. estos al ser iguales en direccio'n, su a'ngulo es de 0◦.
+1) ejemplo:vectorysuvectorunitario: seconsiderav= j. ortogonalidad
+(4,3) y su vector unitario u=(0.80,0.60). dos vectores x y y son ortogonales si y so'lo si:
+v=(4,3), u=(0.80,0.60) x-y=0
+paso 1: calcular el producto punto y se denota como x⊥y.
+k. ortonormalidad
+u-v=0.80-4+0.60-3=3.2+1.8=5.0
+siadema'sdeserortogonales,∥x∥=1y∥y∥=1,esdecir,
+paso 2: calcular las normas ambos vectores son unitarios, entonces se dice que x y y son
+ortonormales.
+(cid:112) √ √
+∥u∥= 0.802+0.602 = 0.64+0.36= 1=1
+iii. supervisedlearning
+(cid:112) √ √ setieneundataset,dondesetieneunconjuntodeejemplos
+∥v∥= 42+32 = 16+9= 25=5 que se toma de algu'n feno'meno, y unas etiquetas que nos
+paso 3: usar la identidad del coseno ayudara'n a realizar nuestro proceso de aprendizaje.
+a. feature
+u-v 5
+cos(θ)= = =1⇒θ =cos-1(1)=0◦ - es una propiedad o atributo medible de una entidad.
+∥u∥-∥v∥ 1-5
+- normalmente se representa nume'ricamente para ser
+conclusio'n:sedemuestraqueela'nguloentredosvectores procesada
+co-direccionales es cero. - ejemplos:
+h. ¿que' ocurresicalculaelproductopuntoconsigomismo? - altura de una casa
+- peso de un individuo
+sesabequeunvectoresco-direccionalconsigomismo,por
+lo tanto su a'ngulo es de 0◦: - intensidad de un pixel en una imagen
+u-u=∥u∥-∥u∥-cos(0◦) b. vector de caracter'ısticas
+se denota un vector de caracter'ısticas como
+u-u=∥u∥2
+x=(x ,x ,...,x )∈rd
+se puede expresar la distancia l2 en te'rminos de producto 1 2 d
+punto: √ donde cada x i es un feature. este vector agrupa todas las
+u-u=∥u∥ propiedades de un ejemplo en una sola estructura.
+si se tiene solamente el vector u, se puede calcular su
+magnitud, o hacer la operacio'n inversa. nu'merodehabitaciones metroscuadrados cantidaddejardines
+2 250 1
+i. ¿que' sucede con vectores que tienen a'ngulo de 90◦?
+cuando dos vectores forman un a'ngulo de 90◦: tablei
+ejemplodevectordecaracter'isticas
+u-v=∥u∥-∥v∥-cos(90◦)=∥u∥-∥v∥-0=0
+c. label
+elproductopuntoenestecasoser'ıacero.sedicequeestos
+vectores son perpendiculares. - valor objetivo que se quiere predecir
+- puede ser
+- continuo: y ∈r (regresio'n)
+- discreto: y ∈ {1,...,k} (clasificacio'n, donde en
+el conjunto finito se representar'ıa la categor'ıa)
+d. dataset
+conjunto de datos que se utilizara'n que tiene la forma
+{(x ,y )}n
+i i i=1
+nu'merodehabitaciones metroscuadrados cantidaddejardines precio
+2 250 1 250000
+3 350 5 650000
+tableii
+ejemplodedataset
+fig.5. ejemplovectorescona'ngulode90◦
+donde las primeras columnas son features y "precio" ser'ıa clasificacio'n? respuesta: regresio'n, ya que se esta'
+el label. prediciendo valores continuos de esperanza de vida.
+2) basado en datos sobre animales, se dispone del peso de
+e. subcategor'ıas principales
+cada ejemplar y de si tiene alas o no. se esta' tratando
+1) regresio'n:
+de determinar cua'les animales son pa'jaros. ¿es este
+- consiste en ajustar una curva o l'ınea que pase lo ma's un problema de regresio'n o clasificacio'n? respuesta:
+cerca posible de un conjunto de puntos de datos. clasificacio'n, ya que se esta' determinando si pertenece
+- se emplea para analizar tendencias, por ejemplo: a la categor'ıa "pa'jaro" o no.
+- ¿existe una relacio'n directa entre las iniciativas de 3) basado en datos sobre dispositivos informa'ticos, se
+marketing (anuncios en l'ınea) y las ventas reales de cuenta con el taman˜o de pantalla, el peso y el sistema
+un producto? operativo de varios dispositivos. se quiere determinar
+- ¿co'mo afecta el tiempo al valor de una crip- cua'les dispositivos son tablets, laptops o tele'fonos. ¿es
+tomoneda? ¿aumentara' exponencialmente su valor este un problema de regresio'n o clasificacio'n? recon el paso del tiempo? spuesta: clasificacio'n, ya que se esta' asignando dispositivos a categor'ıas discretas.
+4) basado en datos meteorolo'gicos, se tiene la cantidad
+de precipitacio'n y un valor de humedad. se quiere
+determinar la humedad en diferentes e'pocas del an˜o.
+¿es este un problema de regresio'n o clasificacio'n?
+respuesta:regresio'n,yaqueseesta' prediciendovalores
+continuos de humedad.
+references
+[1] s.a.p.portuguez,"apuntesdelaclasedeinteligenciaartificial,"cartago,
+costarica,agosto2025,clasedel19deagostode2025.
+[2] f. explicadas. (2025) a'ngulo entre dos vectores. [online]. available:
+https://www.formulasexplicadas.com/angulo-entre-dos-vectores/
+fig.6. ejemploderegresiones
+2) clasificacio'n:
+- tienecomoobjetivopredecirlacategor'ıaoclasealaque
+pertenece un ejemplo, segu'n sus caracter'ıstica.
+- ejemplo pra'ctico:
+- ¿sepuededeterminarsiunveh'ıculoesunautomo'vil
+o un camio'n basa'ndonos en su nu'mero de ruedas,
+peso y velocidad ma'xima?
+fig.7. ejemplodeclasificacio'n
+iv. ejercicioscomprobatoriosdesupervised
+learning
+1) basado en datos sobre ratas, se tiene una caracter'ıstica
+de esperanza de vida y una de obesidad. se esta' intentando encontrar una correlacio'n entre las dos caracter'ısticas. ¿es este un problema de regresio'n o

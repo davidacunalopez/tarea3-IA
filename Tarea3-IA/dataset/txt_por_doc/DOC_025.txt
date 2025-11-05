@@ -1,0 +1,122 @@
+apuntes de clase: me'tricas y preprocesamiento de
+datos en ia
+isaac david brenes torres
+inteligencia artificial
+tecnolo'gico de costa rica
+ibreto@estudiantec.cr
+18 de septiembre del 2025
+resumen-este documento presenta una formalizacio'n de seguridad y autenticacio'n: utiliza criptograf'ıa avanzaapuntesdeclasecorrespondientesalcursodeinteligenciaartifi- da para verificar la identidad de los agentes y asegurar
+cial.seabordanconceptosfundamentalesdeme'tricasdeevalualas transacciones.
+cio'ndemodelosdeclasificacio'n-comoprecisio'n,exhaustividad
+descentralizacio'n: puede operar en entornos distribui-
+(recall), f1-score y curvas roc-, as'ı como te'cnicas esenciales
+de preprocesamiento de datos, incluyendo limpieza, integracio'n, dos, reduciendo puntos u'nicos de fallo.
+reduccio'n y transformacio'n. adicionalmente, se incluye una escalabilidad: esta' disen˜ado para manejar un alto voluinvestigacio'n sobre el protocolo de pagos para agentes de ia men de micro-transacciones simulta'neas.
+(agent payments protocol, ap2).
+interoperabilidad: permite la integracio'n con mu'ltiples
+sistemas de pago y plataformas blockchain.
+i. introduccio'n
+ap2 representa un avance significativo hacia la econom'ıa
+los sistemas de inteligencia artificial (ia) requieren no auto'noma, donde los agentes de ia pueden participar en
+solamentedealgoritmosrobustos,sinotambie'ndeunaevalua- mercados digitales sin intervencio'n humana constante.
+cio'n rigurosa y un preprocesamiento adecuado de los datos.
+iii. me'tricasdeevaluacio'nparaclasificacio'n
+lasme'tricasdeevaluacio'npermitencuantificarelrendimiento
+de un modelo, mientras que las te'cnicas de preprocesamiento iii-a. matriz de confusio'n
+aseguran la calidad y idoneidad de los datos de entrada. estos lamatrizdeconfusio'nesunaherramientafundamentalpara
+aspectos son cr'ıticos para el desarrollo de aplicaciones de ia evaluar el rendimiento de un modelo de clasificacio'n binaria.
+confiables y efectivas. este documento organiza y expande organiza las predicciones del modelo en cuatro categor'ıas
+los apuntes de clase sobre estos to'picos, integrando adema's (tabla i).
+unainvestigacio'nsobreelemergenteagentpaymentsprotocol
+cuadro i: matriz de confusio'n para clasificacio'n binaria.
+(ap2).
+valorreal
+ii. agentesdeiayagentpaymentsprotocol prediccio'n negativo(n) positivo(p)
+(ap2) positivo(p) fp vp
+negativo(n) vn fn
+ii-a. agentes de ia
+verdadero positivo (vp): el modelo predice la clase
+losagentesdeiasonentidadesauto'nomasquepercibensu
+positiva correctamente.
+entorno mediante sensores y actu'an sobre dicho entorno mefalso positivo (fp): error tipo i. el modelo predice
+diante actuadores. estos agentes pueden variar desde simples
+positivo cuando la clase real es negativa.
+programasreflexivoshastasistemascomplejosqueaprendeny
+falso negativo (fn): error tipo ii. el modelo predice
+se adaptan. un componente clave en los agentes modernos es
+negativo cuando la clase real es positiva.
+su capacidad para realizar transacciones de manera auto'noma,
+verdadero negativo (vn): el modelo predice la clase
+lo cual requiere protocolos seguros y eficientes.
+negativa correctamente.
+ii-b. agent payments protocol (ap2) de google cloud
+iii-b. exactitud (accuracy)
+el agent payments protocol (ap2) es un framework la exactitud mide la proporcio'n de predicciones correctas
+desarrollado por google cloud disen˜ado espec'ıficamente para sobre el total de instancias.
+permitirquelosagentesdeiarealicenpagosdeformasegura
+y automatizada [1]. ap2 facilita las transacciones econo'micas vp +vn
+exactitud=
+entre agentes, servicios y usuarios, actuando como una capa vp +vn +fp +fn
+de confianza y estandarizacio'n. es u'til cuando las clases esta'n balanceadas, pero puede ser
+caracter'ısticas principales de ap2: engan˜osa en conjuntos de datos desequilibrados.
+iii-c. precisio'n (precision) iv-a. limpieza de datos (data cleaning)
+laprecisio'nevalu'alacapacidaddelmodeloparanoetique- valores faltantes: se pueden ignorar tuplas, completar
+tar como positivo un ejemplo negativo. mide la proporcio'n de manualmente, usar un valor global constante, rellenar
+verdaderos positivos entre todas las predicciones positivas. con la media/mediana/moda, o inferir valores mediante
+modelos.
+vp datos ruidosos: te'cnicas como binning (agrupacio'n en
+precisio'n=
+vp +fp intervalos), regresio'n o filtrado (media mo'vil) ayudan a
+suavizar el ruido.
+iii-d. exhaustividad (recall o sensibilidad)
+iv-b. integracio'n y reduccio'n de datos
+la exhaustividad mide la capacidad del modelo para encontrar todos los ejemplos positivos. calcula la proporcio'n de integracio'n: combina datos de mu'ltiples fuentes, aborverdaderos positivos identificados correctamente. dando problemas de duplicados e inconsistencias (ej.
+estandarizacio'n de formatos).
+vp reduccio'n:reduceelvolumendedatosmanteniendola
+recall=
+vp +fn informacio'n esencial. incluye reduccio'n de dimensionalidad (pca) y seleccio'n de caracter'ısticas.
+iii-e. puntuacio'n f1 (f1-score)
+iv-c. transformacio'n y discretizacio'n
+el f1-score es la media armo'nica entre la precisio'n y
+la exhaustividad. es especialmente u'til cuando existe un transformacio'n: normalizacio'n (min-max) y estandadesbalance entre clases. rizacio'n (z-score) para escalar caracter'ısticas.
+discretizacio'n: convierte variables continuas en ca2×precisio'n×recall tego'ricas mediante binning (igual-ancho o igualf1=
+precisio'n+recall frecuencia).
+iii-f. ejemplo de caso: deteccio'n de ca'ncer iv-d. prueba de correlacio'n χ2 para datos nominales
+considere un conjunto de 1000 pacientes, donde 30 tienen esta prueba estad'ıstica determina si existe una asociacio'n
+ca'ncer (clase positiva) y 970 no (clase negativa). la matriz de significativa entre dos variables catego'ricas. la hipo'tesis nula
+confusio'n obtenida es: (h ) supone independencia. se calcula el estad'ıstico χ2 com0
+parandolasfrecuenciasobservadas(o )yesperadas(e )en
+ij ij
+cuadro ii: matriz de confusio'n para el caso de deteccio'n de
+una tabla de contingencia:
+ca'ncer.
+prediccio'n/realidad ca'ncer noca'ncer χ2 = (cid:88) r (cid:88) c (o ij -e ij )2
+ca'ncer 25(vp) 20(fp) e
+ij
+noca'ncer 5(fn) 950(vn) i=1j=1
+si χ2 >χ2 , se rechaza h , indicando correlacio'n.
+calculado α,gl 0
+precisio'n = 25 2 + 5 20 =0,555 (55.5%) v. conclusio'n
+exactitud = 25+950 =0,975 (97.5%)
+1000 este documento basado en los apuntes de clase sobre
+exhaustividad = 25 =0,833 (83.3%)
+25+5 me'tricasdeevaluacio'nypreprocesamientodedatosenia.se
+f1-score = 2×0,555×0,833 ≈0,662 (66.2%)
+0,555+0,833 cubrieron las principales me'tricas de clasificacio'n, ilustradas
+aunque la exactitud es alta (97.5%), la precisio'n y el conunejemplopra'ctico,ysedetallaronlas etapascr'ıticasdel
+f1-score revelan problemas significativos en la identificacio'n preprocesamiento de datos. adicionalmente, se investigo' el
+correcta de la clase minoritaria (ca'ncer). agent payments protocol (ap2) como un avance tecnolo'gico
+relevante para la autonom'ıa de los agentes de ia. la clariiii-g. curva roc y a'rea bajo la curva (auc) ficacio'n y expansio'n de estos conceptos busca servir como
+la curva caracter'ıstica de operacio'n del receptor (roc) base para futuras investigaciones y aplicaciones pra'cticas en
+grafica la tasa de verdaderos positivos (exhaustividad) vs. el campo de la inteligencia artificial.
+la tasa de falsos positivos (1 - especificidad) para distintos
+referencias
+umbrales de clasificacio'n. el a'rea bajo la curva (auc)
+[1] google cloud, "announcing the agent payments protocol (ap2)
+cuantificalacapacidaddelmodeloparadistinguirentreclases.
+for ai commerce," google cloud blog, 2024. [en l'ınea].
+unauccercanoa1indicaunexcelenteclasificador,mientras disponible: https://cloud.google.com/blog/products/ai-machine-learning/
+que un auc de 0.5 corresponde a un clasificador aleatorio. announcing-agents-to-payments-ap2-protocol.[accedido:18-sep-2025].
+iv. preprocesamientodedatos
+la calidad de los datos es crucial para el e'xito de cualquier
+proyecto de ia. las te'cnicas de preprocesamiento incluyen:

@@ -1,0 +1,159 @@
+apuntes de clase: redes neuronales con el dataset mnist
+fabián díaz barboza
+estudiante ing. computación
+tecnológico de costa rica
+cartago, costa rica
+fdiaz@estudiantec.cr
+23/09/2025
+1 el dataset mnist y la representación de 1.3 píxeles activos e inactivos: la semántica del
+características input
+1.1 descripción del dataset mnist un píxel con intensidad 0 se considera "apagado" y
+valores altos indican un píxel "encendido".
+imágenes en blanco y negro (1 canal).
+incluso la regresión logística binaria más simple exige
+10 clases (dígitos 0-9).
+784 pesos (w )+1 sesgo (b)=785 parámetros,
+i
+tamaño estándar: 28×28 píxeles (entrada comúnmente utilizada).
+lo que muestra la complejidad del espacio de entrada.
+conjunto: 60000 ejemplos de entrenamiento y 10000
+de prueba.
+2 la regresión logística binaria: la neurona
+fundamental
+1.2 proceso de aplanamiento (flattening)
+una imagen de entrada x ∈r28×28 se convierte en un 2.1 clasificación binaria como problema inicial
+vector columna mediante flatten:
+la regresión logística estima la probabilidad de que
+x∈r784, 28×28=784. una entrada pertenezca a la clase positiva; la salida está
+en (0,1).
+cada uno de los 784 elementos es una característica
+(feature) que alimenta el modelo.
+2.2 ecuaciones fundamentales de la neurona
+potencial de activación:
+z =w⊤x+b.
+función sigmoide:
+1
+g(z)= .
+1+e-z
+salida del modelo:
+yˆ=h(x)=g(w⊤x+b).
+figura: diagrama esquemático de la neurona
+(entradas → combinación lineal → activación →
+salida)
+figura 1: ejemplo de la representación de un dígito en
+mnist como matriz 28×28 y su aplanamiento a un figura 2: diagrama esquemático que interpreta la regrevector de 784 características. sión logística como la neurona más simple.
+1
+3 extensión a la clasificación multinomial y la 4.2 ejemplo numérico de clase: de vector a matriz
+codificación one-hot
+v.b.1. cálculo de una sola regresión (vector de
+4 features):
+3.1 ejemplo de clase: 10 regresiones logísticas, una
+por alumno    
+3 3
+para manejar las 10 clases se puede entrenar una regre- w =   2 , b=2, x=   4 .
+sión logística por estudiante (una por clase); la capa de
+4 5
+5 6
+salida tendría 10 neuronas (una por clase).
+z =w⊤x+b=(3-3)+(2-4)+(4-5)+(5-6)+2=69.
+3.2 codificación one-hot de las etiquetas (y)
+la etiqueta escalar se codifica como un vector one-hot
+en r10. yˆ=σ(z).
+v.b.2. cálculo de varias regresiones a la vez (2
+clase (dígito) vector one-hot (y ∈r10) esperada neuronas):
+0 [1,0,0,0,0,0,0,0,0,0] neurona 0
+2 [0,0,1,0,0,0,0,0,0,0] neurona 2  3 
+9 [0,0,0,0,0,0,0,0,0,1] neurona 9 (cid:20) 3 2 4 5 (cid:21) (cid:20) 2 (cid:21) 4
+w = , b= , x= .
+4 3 2 1 3 5
+cuadro 1: codificación one-hot de etiquetas (ejemplos). 6
+(cid:20) (cid:21)
+69
+z =wx+b= .
+43
+4 compactación por álgebra lineal
+5 arquitectura de las redes neuronales profun4.1 formulación matricial de pesos y sesgos
+das
+stackeando los vectores de pesos obtenemos la matriz
+5.1 definición y estructura típica
+de pesos y el vector de sesgos:
+unaredneuronalartificialesunmodelodecómputo
+w ∈r10×784, b∈r10. inspirado en el cerebro humano, compuesto por unidades
+llamadas neuronas artificiales. cada neurona recibe
+la combinación lineal de la capa de salida se escribe un conjunto de entradas x, aplica una combinación lineal
+como: con sus pesos w y un sesgo b, y luego pasa el resultado
+por una función de activación g:
+z =wx+b, z ∈r10.
+h(x)=g(w⊤x+b).
+capa de entrada: recibe los 784 píxeles (flatten).
+elemento símbolo dimensión
+capas ocultas: transforman la información en reentrada x 784×1
+presentaciones abstractas.
+matriz de pesos w 10×784
+sesgos b 10×1 capa de salida: entrega la predicción (10 neuronas
+potencial de activación z 10×1 para mnist).
+cuadro 2: dimensiones en la formulación matricial para
+mnist.
+figura 3: matriz de pesos w en la capa fully connected:
+cada fila corresponde a una neurona de salida y cada figura 4: ejemplo esquemático de una red neuronal con
+columna a un píxel de entrada. capa de entrada, capa(s) oculta(s) y capa de salida.
+2
+5.2 el rol del sesgo b 5.4 propiedades esenciales de la red
+retomando, el parámetro b (bias o sesgo) podriamos 1. nolinealidad:lasfuncionesdeactivación(sigmoide,
+verlo como un desplazamiento en la función de acti- relu, etc.) permiten que la red modelice relaciones
+vación. sin b, todas las funciones aprendidas por la red no lineales entre entradas y salidas.
+tenderíanapasarporelorigen,loquelimitalaflexibilidad
+2. capasyprofundidad:amayorprofundidad,mayor
+del modelo.
+capacidad para representar abstracciones jerárquicas.
+en el caso de mnist:
+3. diferenciabilidad: la diferenciabilidad de las funtenemos 10 regresiones logísticas (una por cada clacionesinternasesrequisitoparaaplicarretropropaga-
+se).
+ción y optimizar los parámetros mediante gradiente
+cada regresión tiene un vector de pesos w i ∈r784 y descendente.
+un sesgo b .
+i
+enconjunto,lospesosformanlamatrizw ∈r10×784 6 conclusiones
+y los sesgos forman un vector b∈r10.
+enconclusióndelaclase,lasredesneuronalessoncomo
+es importante corregir una confusión que se habló en una evolución natural de la regresión logística: partienclase: no existe un único b de dimensión 784 por ejemplo. do de la clasificación binaria, pasando por la extensión
+en cambio, hay un sesgo por neurona de salida. cada multinomial y compactando parámetros mediante álgecomponente b actúa como umbral independiente para la bra lineal, se llega a arquitecturas fully connected que
+i
+neuronai,permitiendodesplazarsufuncióndeactivación permiten mayor expresividad y paralelización. la ecuay ajustar su probabilidad de disparo de forma individual. ción z =wx+b nos sintetiza el paso fundamental hacia
+la representación matricial; pero el verdadero salto en
+5.3 fully connected (completamente conectadas) capacidad proviene de combinar esa formulación con funciones de activación no lineales y con múltiples capas
+las capas fully connected (fc) son aquellas en las
+diferenciables, lo que habilita la retropropagación y el
+que cada neurona de una capa se conecta con todas las
+entrenamiento eficiente de modelos capaces de abstraer
+neuronas de la capa anterior.
+características complejas de datos como mnist.
+en nuestro ejemplo de mnist:
+cada neurona de salida (de las 10) recibe conexión
+de los 784 píxeles de entrada.
+cada conexión tiene su propio peso, y además cada
+neurona tiene su sesgo b .
+i
+esta estructura convierte el modelo en un clasificador mucho más potente que una sola regresión logística
+binaria, porque permite:
+1. aprender múltiples fronteras de decisión en paralelo.
+2. combinar la información de todos los píxeles de
+forma diferenciada para cada clase.
+3. ajustar umbrales específicos gracias a los b .
+i
+en otras palabras, una red fully connected extiende el
+poder de una regresión logística binaria: al apilar capas
+con activaciones no lineales, las salidas de una capa se
+convierten en features no lineales que alimentan la siguiente, permitiendo construir clasificadores mucho más
+expresivos.
+5.3.1 de la multiclase al clasificador binario
+unaarquitecturaútilconsisteenusarprimerolas10regresioneslogísticas(capamulticlase)yluegoaplicarsobre
+su salida un clasificador binario adicional. por ejemplo,
+para determinar si la imagen corresponde al dígito "5" o
+no, la decisión puede tomarse a partir de las 10 salidas
+(o de una combinación entrenada de ellas), en lugar de
+hacerlo directamente sobre los píxeles. de este modo, las
+capas previas actúan como extraedores de características
+no lineales que potencian una decisión binaria final más
+robusta.
+3

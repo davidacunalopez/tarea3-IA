@@ -1,0 +1,271 @@
+apuntes de la clase del 16 de setiembre de 2025
+cursodeinteligenciaartificial
+nelson rojas obando
+estudiante ingeniería en computación
+nelson.rojas@estudiantec.cr
+resumen-this paper summarizes the main topics discussed la regresión lineal y la regresión logística son técnicas
+during the artificial intelligence course on september 16, 2025. fundamentales en el aprendizaje supervisado, pero se
+it covers the quiz about concepts such as linear and logistic
+aplican a diferentes tipos de problemas:
+regression, concepts as techniques for handling outliers, and
+strategies to reduce high bias and high variance in machine regresión lineal: se utiliza cuando la variable delearning models. furthermore, it presents evaluation metrics pendiente es continua. el modelo estima una relación
+including accuracy, precision, recall, f1-score, confusion matrix, lineal entre las variables independientes y la variable
+roc curve, and auc, illustrated with practical case studies.
+dependiente, siguiendo la forma:
+finally,thepaperhighlightstheimportanceofdatapreprocessing
+tasks-such as cleaning, integration, reduction, transformation,
+y =β +β x +---+β x +ε
+and discretization-as essential steps to improve the quality of 0 1 1 n n
+datasets and ensure better performance of predictive models.
+donde y puede tomar cualquier valor real.
+index terms-inteligencia artificial, machine learning, métricas de evaluación, matriz de confusión, roc, auc, data regresión logística: se emplea cuando la variable
+preprocessing dependiente es categórica, típicamente binaria (0 o 1).
+el modelo estima la probabilidad de pertenecer a una
+i. introducción clase utilizando la función sigmoide:
+la inteligencia artificial (ia) y el aprendizaje automático
+1
+requieren no solo del diseño de modelos predictivos, sino p(y =1|x)=
+1+e-(β0+β1x1+---+βnxn)
+también de procesos rigurosos para evaluar su desempeño
+y garantizar su aplicabilidad en escenarios reales. en este de esta forma, la salida está acotada en el intervalo
+documento se abordan conceptos fundamentales que permiten [0,1] y se interpreta como probabilidad.
+comprender la relación entre los modelos, las métricas de 2. describa 3 técnicas para el tratamiento de datos sobresaevaluación y la calidad de los datos utilizados en su entre- lientes.
+namiento. respueta:
+enprimerlugar,seestudianmétricasclásicascomolaexac- los datos sobresalientes, también conocidos como
+titud, precisión, exhaustividad y f1-score, así como métricas outliers, son observaciones que se desvían significativamás avanzadas como la curva roc y el área bajo la curva mente del resto de los datos. su presencia puede afectar
+(auc), las cuales proporcionan una visión más completa del de manera negativa el rendimiento de los modelos de
+rendimiento de un clasificador. aprendizaje automático. entre las técnicas más comunes
+además, se presenta la matriz de confusión como herra- para su tratamiento se encuentran:
+mienta central para interpretar los aciertos y errores de los a) eliminacióndeoutliers:consisteendescartaraquellas
+modelos, junto con un caso práctico aplicado a la detección observaciones que superan un umbral definido, por
+de cáncer en pacientes. asimismo, se destacan las principales ejemplo, valores que se encuentran a más de tres
+tareas del preprocesamiento de datos, entre ellas la limpie- desviaciones estándar de la media. esta técnica es útil
+za, integración, reducción, transformación y discretización, cuando los outliers provienen de errores de medición
+esenciales para enfrentar problemas como datos incompletos, o registro.
+inconsistentes o ruidosos. b) transformacionesdelosdatos:aplicartransformacionesmatemáticas,comolatransformaciónlogarítmicao
+ii. aspectosadministrativos
+la raíz cuadrada, puede reducir la influencia de valores
+ver dos lecturas asociadas con lectura procesamiento de extremos, estabilizando la varianza y mejorando la
+datos y de redes neuronales además de dos capítulos de un distribución de los datos.
+libro. c) imputación o sustitución de valores: reemplazar
+se realizó el quiz #3, donde al finalizar se vieron las los outliers por valores más representativos, como la
+respuestas correspondientes. el quiz consistió en: media, la mediana o un valor obtenido mediante inter1. mencione la diferencia de regresión lineal y logística. polación.estatécnicaconservaeltamañodelconjunto
+respuesta: dedatosyesútilcuandolaeliminaciónnoesdeseable.
+3. mencione2técnicasparaevitarunaltosesgoy2técnicas
+para evitar alta varianza.
+respuesta:
+en el contexto del aprendizaje automático, el alto sesgo
+(underfitting) y la alta varianza (overfitting) son problemas comunes. algunas técnicas para mitigarlos son las
+siguientes:
+para evitar un alto sesgo:
+a) aumentar la complejidad del modelo, por ejemplo, utilizando modelos polinómicos en lugar de
+regresión lineal simple, o redes neuronales más
+profundas. figura1. entercaption
+b) reducir la regularización excesiva, ajustando los
+hiperparámetrosdetécnicascomol1/l2odropout,
+que en exceso limitan la capacidad de aprendizaje
+del modelo.
+para evitar una alta varianza:
+a) aumentar la cantidad de datos de entrenamiento,
+mediante recolección adicional o técnicas de data
+augmentation.
+b) aplicar regularización, como l1/l2, dropout o
+early stopping, con el fin de penalizar la complejifigura2. entercaption
+dad excesiva y mejorar la generalización.
+4. anote la derivada de la función sigmoide
+1 elcasodelamujer,siexistelaposibilidadporloquesepodría
+σ(x)=
+dar un resultado equivocado, y se conoce como error de tipo
+1+e-x
+2.
+respuesta:
+ejemplos de métricas clásicas:
+σ′(x)=σ(x) (cid:0) 1-σ(x) (cid:1) accuracy (exactitud): mide la proporción de prediccionescorrectassobreeltotaldeprediccionesrealizadas.es
+iii. métricas
+ampliamente usada en problemas de clasificación, como
+son medidas que se utilizan para indicar el rendimiento en la regresión logística. se define como:
+de un modelo predictvo. constituyen la forma más objetiva
+de evaluar y comparar modelos de aprendizaje automático, tp +tn
+accuracy=
+permitiendo determinar qué tan bien se ajustan a los datos de tp +tn +fp +fn
+entrenamiento y, sobre todo, qué tan bien generalizan a datos
+donde tp (verdaderos positivos), tn (verdaderos negano vistos.
+tivos), fp (falsos positivos) y fn (falsos negativos).
+asimismo, se emplean benchmarks, que son conjuntos de
+este tipo de metrica otorga importancia igual a todas las
+datos o pruebas estandarizadas utilizadas en la comunidad
+clases. es importante tomar esto en cuenta si las clases
+científica para comparar de manera justa el desempeño de
+no están balanceadas. puede no ser suficiente y da como
+distintos modelos.
+resultado un valor porcentual (de 0 a 1). para un modelo
+iv. matrizdeconfusión bien hecho se esperaría que se acerque bastante a 1.
+en la matriz de confusión se colocan las clases y se realiza precisión (precision): mide la proporción de predicuna clasificación según su posibilidad y veracidad, como se ciones positivas correctas entre todas las predicciones
+muestra en la figura 1. de esta forma se obtienen true positivas realizadas, como los errores de tipo 1:
+positive (verdadero positivo), false positive (falso positivo),
+tp
+true negative (verdadero negativo) y false negative (falso precision=
+tp +fp
+negativo). esta tabla puede ser n x n clases y al hacer un
+ploteo de esta tabla se espera que la diagonal esté dando exhaustividad (recall): indica la proporción de verdavalores verdaderos. deros positivos identificados correctamente sobre el total
+un ejemplo práctico de esto es el caso de la figura 2. en el de elementos positivos, y se usa para medir los errores
+queseevaluánelresultadodeembarazoenhombresymujeres. de tipo 2:
+claramente un hombre no puede embarazarse por lo que de
+tp
+obtener un resultado positivo este sería un error de tipo 1. en recall=
+tp +fn
+f1-score:eslamediaarmónicaentreprecisiónyexhaus- 1
+tividad, útil cuando existe un desbalance de clases:
+precision-recall
+f1=20,8
+precision+recall
+caso de estudio: dado un conjunto de 1000 pacientes se
+han realizado estudios para determinar la presencia de cancer.
+0,6
+del total de pacientes, 30 son pacientes con cáncer (clase
+positiva) y 970 pacientes sin cáncer (clase negativa).
+matriz de confusión:
+0,4
+predicción/objetivo cáncer no cáncer
+cáncer 25(tp) 20(fp)
+no cáncer 5(fn) 950(tn) 0,2
+métricas de evaluación:
+accuracy:
+0
+tp +tn 25+950 0 0,2 0,4 0,6 0,8 1
+accuracy= = =0,975(97,5%)
+total 1000
+tasa de falsos positivos (fpr)
+recall (sensibilidad):
+tp 25
+recall= = =0,833(83,3%)
+tp +fn 25+5
+indica la capacidad del modelo para identificar correctamente a los pacientes con cáncer. a pesar del alto
+accuracy, el recall muestra espacio de mejora en la
+detección de la clase positiva (cáncer).
+precisión:
+tp 25
+precisión= = =0,55(55%)
+tp +fp 25+20
+el modelo presenta una baja precisión, lo cual implica
+que muchas predicciones positivas son en realidad falsos positivos. este valor debe considerarse con cautela,
+dependiendo del contexto clínico.
+f1-score:
+2-precisión-recall 2-0,55-0,833
+f1= = ≈0,662(66,2%)
+precisión+recall 0,55+0,833
+el f1-score refleja un balance bajo entre precisión y
+sensibilidad, indicando que la capacidad del modelo para
+clasificar correctamente la clase minoritaria (cáncer) aún
+no es adecuada.
+otras métricas no tan básicas:
+receiver operating characteristic (roc)
+lacurvarocesunarepresentacióngráficaquemuestra
+el rendimiento de un clasificador binario a diferentes
+umbralesdedecisión.enelejexserepresentalatasade
+falsos positivos (fpr) y en el eje y la tasa de verdaderos
+positivos (tpr o recall). una curva más cercana a la
+esquina superior izquierda indica un mejor desempeño
+del modelo.
+area under the curve (auc)
+el auc corresponde al área bajo la curva roc. su
+valor varía entre 0 y 1, donde un valor de 0,5 indica un
+modelosincapacidaddediscriminación(equivalenteaun
+clasificador aleatorio), mientras que un valor cercano a 1
+representa un modelo con alto poder de discriminación.
+)rpt(
+sovitisop
+soredadrev
+ed
+asat
+clasificador aleatorio
+modelo
+figura3. ejemplodecurvaroc.unáreabajolacurva(auc)máscercano
+a1indicamejorrendimiento.
+de darse un caso en el que la curva, como por ejemplo en
+la figura3, se acercaramucho a larecta perderíavalor porque
+estaríadandolosresultadosincorrectos,deunaformacasique
+aleatoria. el área bajo la curva debe de ser de al menos 0,5.
+procesamiento de datos
+problemas encontrados
+incompletitud: valores faltantes en atributos importantes,
+ej. si el producto estaba en oferta.
+inexactitud o ruido: errores y valores atípicos en las
+transacciones.
+inconsistencia: discrepancias en los códigos de departamentos o categorías.
+sediocomocomparaciónelcasodeladiabetesylapresión
+sanguínea. si se registran mediciones, se espera que tenga un
+valor sino tiene presión sanguínea entonces no tendría sentido
+o el sujeto estaría muerto, sería un valor que no aporta pero
+esimportantenoelimiarelregistroyaquepodríanhaberotras
+features que si aporten valor.
+porestarazón,losdatasetsrequirenpreprocesamientoantes
+de aplicar técnicas de minería o aprendizaje. es un problema
+del mundo real.
+porque pueden ser inexactos?
+instrumentos de recolección de datos defectuosos
+errores humanos o computacionales en la entrada de
+datos
+usuarios que ingresan valores falsos para campos obligatorios (ej. fecha por defecto '1 de enero' para ocultar
+cumpleaños)
+- conocido como datos faltantes disfrazados
+inconsistencias en convenciones de nombres, códigos o
+formatos (ej. fechas con distintos formatos)
+tuplas duplicadas que requieren procesos de data clea- ◦ el borde más cercano del bin.
+ning - ejemplo: valores de salarios.
+por qué los datos pueden estar incompletos? suavizado de ruido:
+atributos de interés no siempre están disponibles - ajustar una función matemática a los datos (puede ser
+noseincluyenporquenoseconsideraronimportantesen lineal o no lineal).
+el momento de la entrada
+◦ ejemplo: ventas mensuales con fluctuaciones; se
+datos relevantes no se registran por malentendidos o
+ajusta una regresión lineal para capturar la tendenfallos de equipo
+cia general y se consideran ruido los valores que
+datos inconsistentes con otros registros pueden ser elise desvían demasiado.
+minados
+- aplicar técnicas de filtrado, como la media móvil.
+historial o modificaciones de datos pasados pueden no
+haberse registrado ◦ ejemplo: datos diarios de temperatura con ruido;
+valores faltantes en atributos clave pueden necesitar ser se calcula la media móvil de 7 días.
+inferidos. data integration: manejo de redundancia:
+por que los datos pueden ser inconsistentes? lamismainformaciónpuedeestarregistradavariasveces
+diferencias en convenciones de nombres o códigos usa- o con valores distintos.
+dos para clasificar elementos - ejemplo: un cliente registrado como "juan pérez" y
+formatos de entrada distintos para un también como "j. a. pérez".
+principales tareas en el preprocesamiento de datos: - direccionesalmacenadascomo"sanjosé,costarica"
+datacleaning(limpiezadedatos):eliminaciónderuido, en una base de datos y como "sj-cr" en otra.
+corrección de inconsistencias y tratamiento de valores uso de pruebas estadísticas para detectar redundancia o
+faltantes. asociación entre variables:
+data integration (integración de datos): combinación - prueba de correlación χ2 para datos nominales:
+de información proveniente de múltiples fuentes hetero- mide la asociación entre variables categóricas.
+géneas en un repositorio coherente y unificado. - hipótesis de independencia:
+data reduction (reducción de datos): disminución del
+h :p(a ∩b )=p(a )p(b )
+volumen mediante selección de atributos relevantes, re- 0 i j i j
+ducción de dimensionalidad o discretización. - las variables se consideran independientes si:
+datatransformation(transformacióndedatos):incluyenormalización,estandarización,agregaciónyconstrucχ2
+calculado
+≤χ2
+α,df
+ción de nuevas variables.
+data discretization (discretización de datos): transformación de atributos continuos en atributos categóricos
+para facilitar el análisis y la modelización.
+data cleaning: tratamiento de valores faltantes y ruido:
+tratamiento de valores faltantes:
+- ignorar tuplas con valores faltantes (puede llevar a la
+pérdida de datos).
+- completar manualmente los valores faltantes (costoso
+y poco práctico en grandes datasets).
+- usar un valor global constante (por ejemplo: "desconocido", ∞).
+- rellenar con la media, mediana o moda. también
+puede hacerse por clase.
+◦ ejemplo: en clasificación de clientes por riesgo
+crediticio, reemplazar con el ingreso promedio de
+clientes en la misma categoría de riesgo.
+- inferir valores mediante modelos estadísticos o de
+aprendizaje automático (regresión, k-nn, árboles de
+decisión).
+binning (agrupación en intervalos):
+- reemplazar cada valor por:
+◦ la media del bin.
+◦ la mediana del bin.

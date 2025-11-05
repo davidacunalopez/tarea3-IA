@@ -1,0 +1,174 @@
+notas de clase
+inteligenciaartificial-23deoctubre-semana12
+luis alfredo gonza'lez sa'nchez
+escuela de ingenier'ıa en computacio'n
+instituto tecnolo'gico de costa rica
+cartago, costa rica
+2021024482 gonzal3z.luis@estudiantec.cr
+abstract-neural network quantization is a vital technique in modelos de aprendizaje automa'tico desarrollados en distinaithatreducesmodelsizeandcomputationalcostbyconverting tos frameworks como pytorch o tensorflow en una repreweights and activations from floating-point to lower-precision
+sentacio'n intermedia esta'ndar y eficiente. esta representacio'n
+formats, such as integers. this process enables deployment on
+facilita la interoperabilidad y el despliegue de modelos en
+resource-constrained devices, like mobile or embedded systems,
+while maintaining high accuracy. different methods include diferentes plataformas y hardware mediante optimizaciones
+symmetricandasymmetricquantization,withstrategiestailored en c++ u otros lenguajes, asegurando que el mismo modelo
+to specific data distributions and hardware constraints. dy- pueda ejecutarse con alto rendimiento en entornos variados.
+namic, granular, and post-training quantization further refine
+considerandoloanterior,lasplataformasposeendiversaslimthis approach by adjusting intervals per layer, per sample, or
+itacionesyrendimientotantoensoftwarecomoenhardware,si
+after training, respectively. these techniques involve calculating
+scaling factors and zero points to effectively map high-precision se entrenan modelos grandes, posiblemente un celular no este
+valuestolower-bitrepresentations,introducingminimalaccuracy adaptado para soportar dicho modelo, para ello se observara
+loss. overall, quantization enhances efficiency, reduces power el concepto de quantization.
+consumption, and facilitates real-time ai applications, making
+it a cornerstone of practical deep learning deployment. iii. quantization
+index terms-quantization in neural networks,model com- suponga que se tiene un modelo de deep learning con
+pression,qat quantization techniques,integer representation
+muchas capas, por ejemplo , llama 2 , con 70 mil millones
+de parametros aproximadamente, si cada parametro es de 32
+i. introduction bits, se obtiene un taman˜o aproximado de 28 gb para solo
+almacenar el modelo, ¿co'mo podr'ıamos cargarlo a memoria?
+lacuantizacio'nenredesneuronalesesunate'cnicaesencial
+una alternativa es comprar una gpu con dicho taman˜o para
+para mejorar la eficiencia del co'mputo y reducir el taman˜o
+el procesamiento del modelo, pero gpus que soporten esos
+de los modelos, principalmente transformando los datos de
+taman˜os son costosas , lo que se busca es reducir el taman˜o
+punto flotante a formatos de menor precisio'n, como enteros.
+del modelo, una de sus te'cnicas es quantization
+esta transformacio'n permite que los modelos se ejecuten de
+manera ma's ra'pida y con menor consumo de memoria, lo a. definicion
+cual es fundamental para desplegar inteligencia artificial en quantization es una te'cnica de compresio'n de modelos de
+dispositivos con recursos limitados, como mo'viles y sistemas aprendizajeautoma'ticoquereduceelnumerodebitsutilizados
+embebidos. en el presente documento, se busca resumir la para representar los para'metros del modelo, transformando
+informacio'n vista en la clase del 23 de octubre,donde se ha los valores de punto flotante a representaciones de menor
+revisado co'mo diferentes me'todos de cuantizacio'n -desde la precisio'n, generalmente enteros de 8, 5, 2 o incluso 1 bit.
+sime'trica y asime'trica hasta la dina'mica, granulada y post- lo que se busca es disminuir el taman˜o y la complejidad
+entrenamiento-manejanlaconversio'ndepesos,activaciones computacionaldelmodelo,manteniendounaprecisio'ncercana
+y sesgos, optimizando el balance entre precisio'n y eficiencia. al original. no se debe de confundir como una te'cnica de
+adema's, se menciona co'mo te'cnicas como la cuantizacio'n redondear pesos, sino de convertir y ajustar los tipos de datos
+conscienteduranteelentrenamiento(qat)ayudanamantener paraoptimizarelbalanceentretaman˜o,velocidaddeinferencia
+la precisio'n del modelo al considerar el efecto de la cuanti- yprecisio'n.sebuscauntradeoffoptimoentrecapacidadesdel
+zacio'n desde el inicio del aprendizaje. modelo vs rendimiento.
+b. ventajas
+ii. brevedefinicio'ndeonnix
+- menor consumo de memoria al cargar los modelos en
+para continuar el tema de quantization en supervised learn- memoria
+ing , es importante entender la herramienta onnix, suponga - permite insertar el modelo en sistemas con recursos
+un modelo llm ya entrenado¿co'mo empieza a funcionar el limitados / con propo'sito especifico, como celulares o
+productoosistema?laherramientaonnixpermiterepresentar embebidos
+asignan rangos de valores flotantes a niveles discretos
+enteros.
+- cuantizacio'n de entradas: las entradas a cada capa
+tambie'nseconviertenaenterosparamantenerlacoherencia en la representacio'n y facilitar operaciones eficientes.
+fig.1. partesdeunnu'meropuntoflotante - cuantizacio'n del sesgo (bias): los te'rminos de sesgo,
+que son sumados en cada neurona, se transforman de
+float.
+- genera un menor tiempo para hacer las inferencias, sus - normalizacio'ndelrango:sedefinenvaloresma'ximosy
+datos son ma's simples
+m'ınimosparapesos,entradasysesgos,quecorresponden
+- menor consumo energ'ıa debido a menor complejidad de a los valores l'ımite de la representacio'n entera (por
+computacio'n
+ejemplo, el rango de int8). esto asegura que los valores
+cuantizados este'n dentro de rangos representables.
+iv. breverepasoalasoperacionesconbits
+- ca'lculo en espacio entero: las operaciones de la capa
+se dara' un breve repaso a la manipulacio'n de bits en (multiplicacio'nysuma)serealizanenenteros,generando
+sistemas computacionales para entender mejor el proceso de un vector cuantizado.
+quantization - des-cuantizacio'n: despue's de la capa, los valores encon2n bitssepuedenrepresentar2n valoresdistintos.esto teros se convierten nuevamente a punto flotante para
+significa que, por ejemplo, con 3 bits es posible representar continuar con el procesamiento de modo que las capas
+23 =8 nu'meros diferentes. siguientes no requieren conocer el esquema de cuantiun ejemplo ba'sico que se vio' en clase es de conversio'n de zacio'n aplicado.
+binario a decimal es el nu'mero 6, que en binario se escribe
+durante la dequantization es donde puede ocurrir pe'rdida de
+como 110. la conversio'n se realiza sumando las potencias de
+precisio'n, ya que la conversio'n entre representaciones intro2 correspondientes a los bits activos (1) segu'n su posicio'n:
+duceaproximaciones.sinembargo,elobjetivoesquelasalida
+cuantizadasealosuficientementecercanaalaoriginalparano
+6=1×22+1×21+0×20 =4+2+0=6 afectarelrendimientodelmodelo.esteprocesoesbeneficioso
+ya que permite que modelos originalmente pesados funcionen
+cada d'ıgito binario representa una potencia de 2, comen- eficientemente con menor consumo de memoria y tiempo
+zando desde la derecha con la potencia 0. de co'mputo, esencial sistemas embebidos o con capacidad
+los nu'meros enteros en sistemas digitales se representan limitada. es importante aclara que las capas que siguen a una
+normalmente en complemento a 2, donde el bit ma's significa- capa cuantizada generalmente no requieren modificaciones ni
+tivo indica el signo: 0 para positivo y 1 para negativo. esto conocen directamente la cuantizacio'n aplicada, manteniendo
+facilitarealizaroperacionesaritme'ticasconnu'merosnegativos transparencia en la mayor'ıa de frameworks.
+usando operaciones binarias esta'ndar.
+vi. tiposdequantization
+para nu'meros en punto flotante, la representacio'n se divide
+en tres partes: signo, exponente y mantisa (fraccio'n). el valor los tipos de consonantizan son los siguientes:
+decimal se calcula aproximadamente como: - quantizationsime'trica:mapeavalorespositivosynegativos de un rango m'ınimo a ma'ximo que incluye el cero.
+aqu'ı, el valor cero real se mapea exactamente a cero
+valor=(-1)signo×(1+mantisa)×2exponente-bias
+entero. esto simplifica el manejo de pesos y activaciones
+esta te'cnica de representacio'n permite expresar un amplio con signo, aplicando la misma escala en ambos lados del
+rangodenu'merosrealesconprecisio'nlimitadayeficienciaen cero.
+almacenamiento mediante manipulacio'n de bits. - quantization asime'trica: mapea valores entre 0 y un
+observe la figura 1 donde se puede observar las partes valor ma'ximo entero, pero el valor m'ınimo real no se
+del numero flotante de 32 bits ahora bien , considerando las mapea a cero, sino a un valor entero llamado zero point
+partes del numero punto flotante, es importante detallar que (z), que representa el valor neutro o "offset" de la
+la precisio'n dada por la mantiza se va a disminuir con cuantizacio'n.estopermiterepresentarvaloresconundequantization . splazamiento, u'til cuando los valores no esta'n centrados
+en cero.
+v. procedimientodequantizationenmodelosde las fo'rmulas para la cuantizacio'n simetrica y asime'tricas se
+redesneuronales describen a continuacio'n : se toma un rango [b,a] y se mapea
+pasos generales del procedimiento: a un rango de salida, se calcula el para'metro de escalado y
+por ultimo se calcula el nu'mero neutro del mapeo.
+- transformacio'n de pesos:lospesosdelared,originalmente en formato de punto flotante (float), se convierten - x q =clamp (cid:0)(cid:4)x s f (cid:5) +z; 0; 2n-1 (cid:1)
+a valores enteros mediante mapas de cuantizacio'n que - x =valor flotante
+f
+- las convoluciones se realizan con mu'ltiples filtros que
+aprenden valores y distribuciones distintas.
+- cada filtro detecta diferentes caracter'ısticas (features) de
+la imagen.
+- no es posible aplicar el mismo intervalo a,b para todos los filtros, por lo que se calcula un intervalo a,b
+espec'ıfico para cada filtro respetando su distribucio'n.
+quantization post-training:
+- se realiza despue's del entrenamiento, utilizando datos
+fig.2. tiposdequantizaton:sime'tricavsasime'trica
+nunca antes vistos por el modelo.
+- introduce un componente llamado observer, que obtiene
+- para'metro de escalado s: estad'ısticas de cada capa para calibrar las salidas y
+calcular los para'metros de cuantizacio'n como la escala
+α-β
+s= (s) y punto cero (z).
+2n-1
+- permite cuantizar el modelo sin necesidad de re2n-1=el rango de salida
+entrenamiento completo.
+- para'metro neutro z:
+(cid:22) (cid:23) quantization aware training (qat):
+β
+z = -1- s - me'todoavanzadodondelacuantizacio'nsesimuladurante
+el entrenamiento.
+- n es el nu'mero de bits. - el modelo aprende a compensar la pe'rdida de precisio'n
+y su respectiva des-cuantizacio'n : por la cuantizacio'n al utilizar la funcio'n de perdida para
+actualizar los pesos que constantemente sufren de este
+x =s×(x -z)
+f q efecto.
+para la cuantizacio'n sime'trica : - mejora el rendimiento en modelos cuantizados para en-
+- x q =clamp (cid:0)(cid:4)x s f (cid:5) ; - (cid:0) 2n-1-1 (cid:1) ; 2n-1-1 (cid:1) tornos de baja precisio'n.
+- para'metro de escalado s: viii. conclusio'n
+abs(α)
+s= la informacio'n presentada demostro' la importancia para
+2n-1-1
+la optimizacio'n del uso de recursos en modelos de redes
+- n es el nu'mero de bits. neuronales,especialmentesisedeseaimplementarensistemas
+y su respectiva descuantizacio'n se brinda por la siguiente embebidos o con recursos limitados, en esta clase se aprendio
+formula que : tex
+x f =s×x q - la cuantizacio'n consiste en transformar pesos, activaciones y sesgos de punto flotante a representaciones de
+vii. otrostiposdecuantizaciones
+menor precisio'n, principalmente enteros, con el fin de
+cuantizacio'n dina'mica: la cuantizacio'n dina'mica se en- reducir taman˜o y acelerar la inferencia.
+foca en cuantizar las activaciones de las neuronas seleccio- - existen distintos tipos de cuantizacio'n: sime'trica,
+nandoapropiadamentelosvaloresm'ınimos(a)yma'ximos(b) asime'trica, dina'mica, granulada y postpara el mapeo de cuantizacio'n de cada tensor. la estrategia entrenamiento,cadaunaconestrategiasespec'ıficaspara
+de seleccio'n del intervalo a,b es la siguiente: mapear y convertir datos.
+- para cuantizacio'n asime'trica, se seleccionan los valores
+extremos reales del tensor, es decir, b y a corresponden
+al ma'ximo y m'ınimo del tensor respectivamente.
+- para cuantizacio'n sime'trica, se toma el mayor valor en
+te'rminos absolutos y se define el intervalo como [-a,a],
+centrado en cero.
+- esta te'cnica puede inducir un mayor error debido a la
+sensibilidad a valores at'ıpicos (outliers). una solucio'n es
+utilizar percentiles basados en la distribucio'n del tensor,
+excluyendo los outliers y reduciendo el error cuadra'tico
+medio (mse).
+cuantizacio'n granulada en convoluciones:

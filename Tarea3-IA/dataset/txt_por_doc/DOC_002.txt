@@ -1,0 +1,142 @@
+inteligencia artificial
+apuntesdelaclase07/08/2025
+fernando daniel brenes reyes
+escuela de ingenier'ıa en computacio'n
+instituto tecnolo'gico de costa rica
+cartago, costa rica
+2020097446@estudiantec.cr
+abstract-estos apuntes organizan y ampl'ıan el material b. impacto en el empleo y en programadores
+introductoriodelaclasesobreinteligenciaartificial.seincluyen
+laautomatizacio'nconiaesta' permitiendoaorganizaciones
+noticias recientes , fundamentos te'cnicos , cuestiones pra'cticas,
+unal'ıneadetiempohisto'rica,yunadescripcio'ndelasprincipales reducir tiempo en tareas repetitivas (redaccio'n de correos,
+ramasdelaprendizajeautoma'tico.eldocumentoesta' preparado generacio'n de reportes, tests ba'sicos de software). para proen formato ieee, con lugares marcados para figuras y sugeren- gramadores esto significa:
+cias bibliogra'ficas.
+indexterms-inteligenciaartificial,gpt-5,autosauto'nomos, - aumento de productividad: asistentes que generan esdatos, aprendizaje supervisado, aprendizaje no supervisado. queleto de co'digo y pruebas unitarias.
+- cambio en habilidades requeridas: mayor e'nfasis
+en disen˜o, validacio'n, e'tica, pruebas adversariales y
+i. introduccio'n
+orquestacio'n.
+la inteligencia artificial (ia) es un campo multidisci- - riesgos: tareas de bajo nivel y rutinas repetitivas pueden
+verse desplazadas; se recomienda desarrollar habilidades
+plinario que combina informa'tica, estad'ıstica, matema'tica
+de alto valor (arquitectura, ingenier'ıa de datos, devops,
+y aspectos del dominio de aplicacio'n para crear sistemas
+ml ops).
+que pueden percibir, razonar, aprender y actuar. en esta
+compilacio'n ampliada se cubren conceptos teo'ricos, avances
+c. autos auto'nomos en california
+recientes y aplicaciones pra'cticas relevantes para un curso
+introductorio. california es uno de los centros donde empresas realizan
+pruebas y despliegues de veh'ıculos auto'nomos; estos sistemas
+ii. noticiasycontextoreciente integran lidar, ca'maras, mapas hd y planificacio'n en
+tiempo real. las a'reas de intere's incluyen:
+a. gpt-5 y modelos de lenguaje avanzados
+- sensores y fusio'n: lidar + ca'maras + radar + gps.
+a mediados de 2025 emergieron nuevas generaciones de - percepcio'n: deteccio'n y clasificacio'n de peatones,
+grandes modelos de lenguaje con capacidades multimodales, veh'ıculos y sen˜ales.
+mejor manejo del contexto y mejoras en razonamiento. estos - planificacio'n: toma de decisiones en entornos urbanos
+modelos impactan fuertemente en herramientas de productivi- complejos.
+dad(resu'menes,generacio'ndeco'digo,asistenciadeescritura) - protocolos de emergencia: procedimientos para fallas
+y han generado debate acerca de su adopcio'n responsable y del sistema, intervencio'n humana y registro de eventos.
+efectos laborales.
+fig. 1. l'ınea simplificada deevolucio'n de modelos delenguaje: gpt-1 →
+gpt-2→gpt-3→gpt-4 fig.2. veh'ıculoauto'nomo:sensores,percepcio'n,planificacio'nycontrol.
+iii. definicionesyconceptosba'sicos
+a. ¿que' es inteligencia?
+noexisteunadefinicio'nu'nicaaceptada.eniaoperativase
+sueleentendercomolacapacidaddeunsistemaparapercibir
+su entorno, razonar, tomar decisiones auto'nomas y adaptarse
+a cambios. distintos campos (psicolog'ıa, filosof'ıa, ciencias
+de la computacio'n) aportan matices: aprendizaje, simbolismo,
+fig.3. esquemadeunaredconvolucional
+razonamiento probabil'ıstico, entre otros.
+b. auto'nomo vs. adaptativo v. datos:elcorazo'ndelaia
+a. calidad y preprocesamiento
+auto'nomo: actu'a sin intervencio'n humana constante.
+adaptativo:modificasucomportamientobasa'ndoseennueva los datos deben ser:
+informacio'n o retroalimentacio'n. - representativos del problema real.
+un sistema puede ser auto'nomo pero no adaptativo (p. ej. un - limpios: sin errores obvios (p. ej. mezcla celrobot con una ruta fija) o adaptativo pero no completamente sius/fahrenheit).
+auto'nomo (p. ej. un asistente que sugiere cambios que un - balanceados o bien tratados para evitar sesgos.
+humano valida). - steven pacheco 2025 - si tenemos mal los datos, mala
+es la salida de nuestra funcio'n
+c. capacidad de generalizacio'n te'cnicas comunes: normalizacio'n, imputacio'n
+(media/mediana), deteccio'n y tratamiento de outliers,
+la generalizacio'n es la habilidad de un modelo de deingenier'ıa de caracter'ısticas y enriquecimiento.
+sempen˜arse bien sobre datos no vistos durante el entrenamiento. es el objetivo central al medir la utilidad pra'ctica b. sesgos y equidad
+de un modelo.
+los datasets reflejan las desigualdades del mundo real.
+un modelo entrenado con datos sesgados puede perpetuar
+iv. deeplearningyredesneuronales discriminaciones. ejemplos pra'cticos:
+a. perceptro'n y or'ıgenes - reconocimiento facial con peor desempen˜o en ciertos
+grupos demogra'ficos.
+el perceptro'n (de'cada de 1950) es un modelo de unidad - modelos de cre'dito que penalizan poblaciones subreprede decisio'n lineal que calcula una combinacio'n ponderada de sentadas.
+entradas y aplica una funcio'n de activacio'n. funciona bien buenas pra'cticas: auditor'ıas de sesgo, conjuntos de prueba
+paraproblemaslinealmenteseparables,peronopuederesolver estratificados, transparencia en datos y procesos.
+problemas no lineales (ej. xor).
+c. ejemplo del profe: celsius vs fahrenheit
+b. redes profundas y arquitecturas comunes un error cla'sico en datasets es mezclar unidades. si un
+campo de temperatura contiene valores en ambas escalas sin
+el deep learning usa redes con muchas capas: perceptrones
+etiqueta, el modelo puede aprender patrones erro'neos. es
+multicapa (mlp), redes convolucionales (cnn) y redes reesencial normalizar unidades y validar rangos.
+currentes (rnn/lstm/transformer). cada arquitectura esta'
+orientada a distintos tipos de datos: vi. brevehistoriadelaia(l'ineadeltiempo)
+- cnn: ima'genes y datos con estructura espacial. - 1950s: perceptro'n y primeras investigaciones (rosen-
+- rnn / lstm: secuencias temporales y texto blatt).
+(histo'ricamente). - 1960s: nacimiento temprano del machine learning y
+- transformers: atencio'n y modelado de dependencias a primeros sistemas simbo'licos.
+larga distancia (estado del arte en nlu y nlg). - 1970s: lenguajes lo'gicos (prolog), algoritmos cla'sicos
+(dijkstra).
+c. yann lecun y las cnn - 1980s:iniciodelaexperimentacio'nconautosauto'nomos.
+- 1990s: resurgimiento con redes multicapa y aprendizaje
+yann lecun fue pionero en redes convolucionales (lenet) por refuerzo.
+y en su aplicacio'n al reconocimiento de d'ıgitos. las cnn - 2000s: auge del reconocimiento facial y visio'n por
+aprenden filtros que detectan caracter'ısticas locales (bordes, computadora.
+texturas) y luego construyen representaciones de alto nivel - 2010s-2020s: deep learning, grandes modelos de
+mediante capas sucesivas. lenguaje, despliegues comerciales.
+vii. ramasdelaprendizajeautoma'tico b. aprendizaje no supervisado
+a. aprendizaje supervisado - definicio'n: modelo identifica patrones en datos sin etiquetas.
+consiste en aprender una funcio'n f : x → y a partir
+- ejemplo: agrupamiento de clientes por ha'bitos de comde ejemplos etiquetados (x ,y ). te'cnicas: regresio'n lineal,
+i i pra.
+svm,a'rboles,redesneuronales.seevalu'aconme'tricascomo
+- te'cnicas:
+rmse, accuracy, f1.
+- clustering (ej. k-means).
+b. aprendizaje no supervisado - reduccio'n de dimensionalidad (ej. pca).
+no hay etiquetas; el objetivo es encontrar estructura. c. comparacio'n
+te'cnicas: clustering (k-means, dbscan), reduccio'n de di- aspecto supervisado no supervisado
+mensionalidad (pca, t-sne, umap). datos etiquetados sin etiquetas
+objetivo prediccio'n descubrir patrones
+c. aprendizaje por refuerzo
+ejemplos regresio'n, clasificacio'n clustering
+agentes aprenden interactuando con un entorno y recibiendo recompensas. aplicaciones: juegos (atari, go), control
+robo'tico. referencia cla'sica: sutton & barto.
+fig.5. ejemplodeaprendizajeporrefuerzo
+fig.4. ejemplodeaprendizajeporrefuerzo
+conclusio'n
+viii. cient'ificovsingenieroenia la ia es un campo en ra'pida evolucio'n: combina teor'ıa
+matema'tica, ingenier'ıa de software y consideraciones e'ticas.
+cient'ıfico de ia: foco en investigacio'n, nuevos modelos,
+comprender fundamentos, cuidar la calidad de los datos y
+experimentos.
+adquirir habilidades pra'cticas (keras, mlops, validacio'n) son
+ingeniero de ia / ml engineer: foco en produccio'n,
+claves para trabajar efectivamente en este a'mbito.
+rendimiento, escalabilidad, mlops y despliegue.
+ambos roles se complementan; en proyectos reales conviven
+y colaboran.
+ix. tiposdeaprendizajeenia
+a. aprendizaje supervisado
+- definicio'n: modelo que aprende a partir de datos etiquetados (caracter'ısticas + valores conocidos).
+- ejemplo: predecir el precio de una casa usando sus
+caracter'ısticas.
+- proceso:
+- divisio'n: muestra (caracter'ısticas) + etiqueta (valor
+objetivo).
+- aproximacio'n: minimiza el error mediante una
+funcio'n de pe'rdida (l).
+- te'cnicas:
+- regresio'n (valores continuos).
+- clasificacio'n (categor'ıas discretas).

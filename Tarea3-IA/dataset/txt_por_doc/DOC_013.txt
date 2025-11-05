@@ -1,0 +1,172 @@
+apuntes semana 4 clase #2
+28/08/2025
+alex steven naranjo masis
+instituto tecnolo'gico de costa rica
+cartago, costa rica
+email: alnaranjo@estudiantec.cr
+resumen-para esta clase se repasaron temas de la clase b. regresio'n lineal
+anteriorcomolosonknn,regresio'nlineal,meansquareerror,
+descensodelgradienteyunrepasogeneraldederivadas.yluego lo que queremos hacer es encontrar la l'ınea que mejor se
+del repaso continuamos viendo temas como lo son: derivadas ajuste a los datos, para poder realizar una prediccio'n de un
+parciales con respecto a w y b en la funcio'n de pe'rdida con
+valor.
+el fin de actualizarlos y ajustar la funcio'n, y por u'ltimo vimos
+epoch y batch. b1. variables:
+index terms-knn, regresio'n lineal, mean square error,
+variables independientes: son las caracter'ısticas de la
+mae, descenso del gradiente, epoch y batch
+muestra.
+i. noticasdelasemana variables dependientes: es el valor a predecir y es
+afectada por las varibales independientes
+a. small language models are the future of agentic ai
+con esto lo que queremos hacer es encontrar un modelo
+enelart'ıculosedicequelosmodelosdelenguajepequen˜os
+estad'ıstico lineal: f (x)=wx+b
+(slms) son ma's adecuados que los grandes (llms) para w,b
+donde:
+ciertossistemasinteligentesauto'nomos(agenticai),especialmente en tareas especializadas y repetitivas. [1] x es un vector d-dimensional.
+w es un vector d-dimensional.
+b. canaries in the coal mine? six facts about the recent
+b un nu'mero real.
+employment effects of artificial intelligence
+wx es un producto punto, da'ndonos como resultado un
+el estudio analiza co'mo la adopcio'n de la inteligencia escalar.
+artificialgenerativahaafectadoalmercadolaboralenee.uu.,
+el modelo esta' parametrizado por w y b, por lo que
+utilizando datos administrativos mensuales de no'minas de
+debemos encontrar los valores o'ptimos de w y b que hara'n
+adp,elmayorprocesadordeno'minasdelpa'ıs,elcualabarca
+quelafuncio'nrealicelasprediccionesma'sprecisas.peroojo,
+millonesdetrabajadoresendecenasdemilesdeempresas.[2]
+optimo̸=perfecto
+ii. repasoclaseanterior
+a. k nearest neighbor (knn)
+en resumen, cuando obtenemos una nueva instancia, medimos contra todos los elementos del dataset, y tomamos las
+distancias ma's cercanas, y en base a eso determina'bamos la
+clase de la nueva instancia.
+contamos con el hiperpara'metro k.
+es un algoritmo de lazy learning, porque realmente no se
+aprende de los datos.
+a1. ventajas:
+sencillo de implementar.
+es flexible: aplica tanto para regresion como clasificafigura1. tiposderegresio'n
+cio'n.
+a2. desventajas:
+c. funcio'n de pe'rdida
+las caracter'ısticas irrelevantes pueden distorsionar las
+distancias necesitamos de un me'todo que' nos permita cuantificar que'
+es computacionalmente costoso. tan bien se ajusta nuestro modelo a los datos. funcio'n de
+poco eficiente en grandes volu'menes de datos. pe'rdida = medida del error del modelo
+d. error cuadra'tico medio (mse)
+es el resultado del modelo contra la etiqueta. sumamos
+todos los errores de los samples y lo promediamos.
+n
+l= 1 (cid:88) (f (x )-y )2
+n w,b i i
+i=1
+d1. conceptos clave):
+figura2. comparacio'ndedistintosvaloresparaalpha
+loss function: (f (x )-y )2 es la medida de penaw,b i i
+lidad que cuantifica el error de cada ejemplo.
+iii. contenidodelaclase
+error cuadra'tico: penaliza los errores grandes.
+a. funcio'n de pe'rdida y sus derivadas parciales
+costfunction:eselpromediodelalossfunctionsobre
+todo el dataset. para optimizar los para'metros w y b de nuestro modelo,
+objetivo: minimizar l para ajustar los parametros w,b. necesitamos actualizar sus valores de manera que la funcio'n
+de pe'rdida se minimice. para esto, evaluamos co'mo cada
+el motivo por el cual queremos minimizar l, es porque
+para'metro afecta la pe'rdida utilizando derivadas parciales con
+entre menor sea l, significa que tenemos un mejor modelo, y
+respecto a w y b.
+entre ma's grande significa que tenemos un peor modelo.
+considerando la funcio'n de pe'rdida basada en el error
+cuadra'ticomedio(mse)paranuestromodelolinealf (x)=
+w,b
+e. ¿por que' mse y no mae?
+wx+b, tenemos:
+esdebidoaque' escuadra'tica,yestonosaseguraquevamos
+n
+a tener un punto m'ınimo. y ta'mbien es porque la funcio'n no l(w,b)= 1 (cid:88) ((wx +b)-y )2
+mae no es smooth, por lo que no nos va a permitir obtener n i i
+i=1
+las derivadas en todos los puntos, lo que induce a errores de
+las derivadas parciales de l con respecto a w y b se
+ca'lculo
+calculan como:
+f. derivadas generales n
+∂l 2 (cid:88)
+= ((wx +b)-y )x
+∂w n i i i
+regla funcio'nf(x) derivadaf′(x) i=1
+constante k 0 n
+identidad x 1 ∂l 2 (cid:88)
+= ((wx +b)-y )
+constantemultiplicativa kx k ∂b n i i
+potencia xn nxn-1 i=1
+suma u(x)+v(x) u′(x)+v′(x) estas derivadas nos indican la direccio'n y magnitud del
+producto u(x)v(x) u′(x)v(x)+u(x)v′(x)
+constantesumada u(x)+z u′(x) ajuste necesario para cada para'metro, permitiendo aplicar
+derivadasparciales f(x,y)=2x+3y ∂f =2,∂f =3 algoritmos de optimizacio'n como el gradient descent para
+∂x ∂y
+actualizar w y b.
+cuadroi
+repasodederivadasba'sicas
+b. epoch
+unaepochesunaiteracio'ncompletasobretodoelconjunto
+deentrenamiento.esunhiperpara'metroquedefinecua'ntasveg. descenso del gradiente ces se recorrera' el dataset completo durante el entrenamiento,
+por ejemplo, epochs = 5.
+el descenso del gradiente es un algoritmo iterativo de opti- si tenemos 10 000 muestras y ejecutamos 5 epochs, signimizacio'n para encontrar el m'ınimo de una funcio'n. funciona fica que se procesara'n todas las muestras 5 veces en total. la
+actualizando repetidamente los para'metros en la direccio'n actualizacio'n de los para'metros puede realizarse al finalizar
+opuesta al gradiente de la funcio'n de costo. cada epoch o de manera ma's frecuente utilizando batches.
+g1. regla de actualizacio'n:
+c. batch
+x nuevo =x antiguo -α-(2x) un batch es un subconjunto del conjunto de entrenamiento
+que se utiliza para calcular la gradiente y actualizar los
+g2. importancia del α: es el learning rate, debe ser para'metros del modelo.
+pequen˜o para no pasarnos del punto m'ınimo. este es un por ejemplo, si tenemos 10 000 muestras y un batch
+hiperpara'metro size = 1 000, necesitaremos 10 batches para completar
+una epoch. cada batch permite calcular la gradiente y actua- c3. mini-batch gradient descent: el mini-batch gralizar los para'metros sin esperar a procesar todo el dataset. dient descent combina las estrategias anteriores: calcula la
+dependiendo de la estrategia, se puede actualizar los para'me- gradiente sobre batches de taman˜o intermedio.
+tros despue's de cada batch o acumular gradientes antes de la ventajas:
+actualizacio'n. reduce el ruido respecto a sgd y es ma's estable.
+c1. batch gradient descent (vanilla): el batch gra- ma's eficiente que batch gd.
+dient descent calcula la gradiente utilizando todo el dataset: mejora la explotacio'n de hardware (vectorizacio'n,
+gpus).
+n
+1 (cid:88) ∂l
+∇l=
+n ∂θ
+i
+i=1
+y actualiza los para'metros solo despue's de procesar el
+conjunto completo.
+ventajas:
+gradiente estable y pasos consistentes.
+ayuda a evitar m'ınimos locales y aporta robustez en la
+optimizacio'n.
+figura5. mini-batchgradientdescent
+desventajas:
+requiere todo el dataset en memoria. referencias
+las actualizaciones son lentas para datasets grandes.
+[1] belcak, p., et al, "small language models are the future of agentic
+la gradiente muy estable puede ocultar sen˜ales u'tiles.
+ai"2025.
+[2] e.brynjolfssonetal.,"canariesinthecoalmine?sixfactsaboutthe
+recentemploymenteffectsofartificialintelligence"2025.
+figura3. batchgradientdescent
+c2. stochastic gradient descent (sgd): el stochastic
+gradient descent actualiza los para'metros despue's de cada
+muestra del dataset (o un pequen˜o conjunto aleatorio de
+muestras).
+ventajas:
+detecta ra'pidamente si el algoritmo puede converger.
+u'til para datasets muy grandes.
+desventajas:
+las actualizaciones pueden ser muy ruidosas.
+la trayectoria de los para'metros es oscilatoria.
+muchasactualizacionespuedensercostosascomputacionalmente.
+∂l
+w ←w-α
+∂w
+figura4. stochasticgradientdescent

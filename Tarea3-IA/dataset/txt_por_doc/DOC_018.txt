@@ -1,0 +1,117 @@
+apuntes semana 6
+apuntesdel09deseptiembre
+juan pablo rodr'ıguez cano
+ic-6200 inteligencia artificial
+tecnolo'gico de costa rica
+jp99@estudiantec.cr
+abstract-en este documento se detallan las indicaciones de - elme'tododescribe()resumelosdatosanal'ıticosqueson
+la tarea 1 de inteligencia artifical y se introduce el tema importantes para saber co'mo se comportan los features
+de regresio'n log'ıstica como un modelo de clasificacio'n cuyas
+- no debe haber co'digo en el informe, solo resultados,
+propiedades de funcio'n son aptas para modelar problemas
+ana'lisis etc.
+complejos y la optimizacio'n de recursos.
+index terms- - el notebook sera' evidencia del trabajo
+- elobjetivoesversilarelacio'nconlaprediccio'neslineal,
+i. preguntasdelquiz y si no aplicar un feature engineering
+1) describa que' es "overfitting" y "underfitting". - figurasenieeesiemprevanenlapartesuperioroinferior
+de las columnas.
+r/ "overfitting" es cuando el modelo tiene una mejor
+me'trica con el conjunto de entrenmaiento que con el - el formato es de ieee para conferencias
+conjunto de testing, lo cual indica una pobre generaliii. actividaddeieee
+izacio'n con datos nuevos. "underfitting" es cuando el
+es un evento anual que se dara' esta vez en noviembre
+model no logra captar la relacio'n entre los features de
+en la sabana. es una oportunidad para conocer sobre temas
+manera que los puntajes de me'trica son bajos para el
+innovadores en inteligencia artificial y biolog'ıa molecular. es
+conjunto de entrenamiento y testeo.
+una oportunidad para crear contactos dentro de la industria
+2) describa k-fold cross-validation
+ya que los presentadores suelen ser receptivos al pu'blico y
+sesubdivideelconjuntodeentrenamientoenk-1partes.
+disponen de tiempo para hablar.
+en cada e'poca se entrenan k-1 partes y se utiliza el otro
+subconjunto para la validacio'n, el iv. contenidodeclase
+3) ¿que' es un m'ınimo global y m'ınimo local en una
+a. regresio'n log'ısitca
+funcio'n?
+un m'ınimo local es el valor m'ınimo de una funcio'n en a diferencia de la regresio'n lineal que es un modelo que
+una vecindad reducida, mientras que el m'ınimo global predice un nu'mero real a partir de los features, la regresio'n
+se refiere al m'ınimo global a trave's de todo el dominio log'ıstica es un modelo de clasificacio'n binaria. el resultado
+de la funcio'n. de dicho modelo es la probabilidad de que suceda un evento
+y esta' basado en la distribucio'n de bernoulli: p(x = k) =
+4) desarrolleladerivadaparcialdelconrespectoawde:
+pk(1-p)1-k
+1 (cid:88)
+l= ((wx +b)-y )
+n i i b. funcio'n sigmoide
+∂l 2 (cid:88)
+= ((wx +b)-y )x )
+∂w n i i i
+ii. indicacionesdelatarea
+- la tarea se deber realizar en grupos de 3 personas.
+- la fecha de entrega es el 16 de septiembre.
+- solo hace falta que una persona del grupo suba la tarea.
+en el nombre del archivo zip debe venir el nombre de
+todos.
+- nosepuedeutilizarningunabibliotecaquenoseanumpy
+o pandas
+- kagg;e es una plataforma con datasets para machine
+learning para el pu'blico y tambie'n presentan oportunidades para participar en concursos de ml. esta funcio'n es conveniente porque puede modelar com-
+- la funcio'n de pe'rdida y la gra'ficacio'n debe se manual portamientos no lineales, el cual es un comportamiento muy
+comu'n en la mayor'ıa de problemas. trae consigo una mayor porloquehayqueconvertirunproblemademaximizacio'nen
+complejidad pero a su vez logra resolver problemas ma's minimizacio'n.paraesto,simplementesedavueltaalafuncio'n
+complejos. de ln multiplicando por -1.
+sucodominioesde0a1yestoesmuyconvenienteyaque
+los valores probabil'ısticos comparten ese mismo espacio.
+la funcio'n sigmoide se expresa de la siguiente manera
+1 1
+σ(x)= ⇒σ(f (x))=
+1+e-x w,b 1+e-fw,bx
+la manera en que esta funcio'n se convierte en un clasificador es al escoger un umbral. este umbral se utiliza para
+definir un punto a partir de cua'l se calsifica un evento con
+unaetiquetaolaotra.porlogeneralsesueleescogerunvalor
+umbral de 0.5.
+c. derivada de la funcio'n sigmoide
+como la regresio'n log'ıstica es un clasificador, se debe
+encontrar una funcio'n de pe'ridica adecuada para el problema.
+para esto se debe analizar la derivada de la funcio'n sigmoide,
+ya que es necesario para cualquier problema de optimizacio'n.
+1′(1+e-x)-(1(1+e-x)′)
+σ′(x)=
+(1+e-x)2
+⇒σ′(x)=σ(x)(1-σ(x))
+como se puede notar, la derivada se puede expresar en
+te'rminosdelafuncio'nmisma,locuallohacemuyconveniente
+ya que no se requieren operaciones muy complejas y con esto
+se obtiene una mayor eficiencia.
+d. funcio'n de pe'rdida: verosimilitud
+en vez de utilizar mse o mae, se utiliza la verosimilitud.
+esta esta' dada por la siguiente ecuacio'n
+(cid:89)
+l= f (x )yi(1-f (x ))1-yi
+w,b i w,b i
+el resultado que se obtiene para un punto en esta ecuacio'n
+es la probabilidad de que su etiqueta sea y con los pesos
+i
+w actuales. como se quiere optimizar los pesos para los
+cuales se obtiene una mejor me'trica, se debe derivar esta
+funcio'n. sin embargo, existe un problema con esta expresio'n
+donde una multiplicacio'n incluye polinomios muy grandes,
+y calcular la dervida respectiva se vuelve muy complejo
+y computacionalmente costoso. adema's, como se trata de
+valores probabil'ısticos, o sea, de 0 a 1, su multiplicacio'n
+se vuelve extremadamente pequen˜a y as'ı la derivada de la
+funcio'n se vuelve virtualmente cero, y esto no cambia los
+pesosenelpasodeentrenamiento.aestoseleconocecomoel
+feno'meno de "vanishing gradients". por esta razo'n se aplican
+los teoremas de logaritmo y se obtiene la siguiente expresio'n.
+(cid:88)
+ln(l)= ln(f (x )yi +ln((1-fw,b(x ))1-yi)
+w,b i i
+(cid:88)
+⇒ln(l)= y ln(f (x )+1-y ln((1-fw,b(x )))
+i w,b i i i
+estoseconvierteenunatareama'sfa'cildeoptimizacio'n.sin
+embargo, la funcio'n de logaritmo es estrictamente creciente,

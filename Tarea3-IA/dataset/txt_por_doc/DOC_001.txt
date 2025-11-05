@@ -1,0 +1,143 @@
+inteligencia artificial
+apuntesdeclases
+rodolfo david acun˜a lo'pez
+escuela de ingenier'ıa en computacio'n
+instituto tecnolo'gico de costa rica
+cartago, costa rica
+rodolfoide69@estudiantec.cr
+abstract-en este documento podra' encontrar informacio'n a. yann lecun
+sobre la primera clase de ia donde se presentan distintas
+yann lecun es un investigador muy reconocido en el
+perspectivas sobre esta. desde la perspectiva de la ia podremos
+campo de la inteligencia artificial y es considerado uno de
+encontrar conceptos como autonom'ıa y adaptabilidad. tambie'n
+introducenlosprincipiosba'sicosdelaprendizajesupervisadoyno los tres padrinos del deep learning. es el fundador de las
+supervisado, destacando su aplicacio'n para resolver problemas convolutionalneuralnetworks,untipoderedneuronalcapaz
+complejos. de procesar ima'genes de manera eficiente.
+index terms-principios de la ia, conceptos de ia
+anteriormente, los costos computacionales para procesar
+i. introduccio'n ima'genes eran muy altos lo que limitaba su uso. por esta
+razo'n, e'l disen˜o' una arquitectura que permit'ıa realizar este
+lainteligenciaartificialpuedeserunconceptomuyvariado
+procesamiento con un costo computacional mucho menor, un
+desde diferentes perspectivas. en el a'rea de la computacio'n
+modelo ma's liviano y efectivo para tareas visuales.
+pueden ser sistemas que puedan tener y mostrar comporactualmenteyannlecunesdirectordeproyectosenmeta,
+tamientos de forma "inteligente". en la primer clase pudimos
+donde dirige todas lo relacionado con inteligencia artificial.
+ver conceptos que nos permiten comprender las bases de esta,
+su impacto en el a'rea fue reconocido con el premio turing,
+incluyendo distintas perspectivas sobre que' es la ia y co'mo
+otorgado por sus contribuciones en el desarrollo y avance de
+se puede definir desde puntos de vista.
+las redes neuronales.
+ii. noticias
+b. ¿que' es la inteligencia?
+a. sobre la ia
+noexisteunconsensoclaroquedefinaque'eslainteligencia
+ahora la ia ha llegado para facilitar el trabajo de los
+artificial. este concepto ha sido estudiado desde diversas
+programadores, por ejemplo, cursor es una herramienta que
+disciplinas como la psicolog'ıa y la filosof'ıa, pero podemos
+ayuda mucho en el area de la programacion.
+decir de forma abstracta que la inteligencia puede verse de
+b. benchmark varias maneras, como un grupo de animales que trabajan
+swe-lancer es un benchmark el cual fue desarrollado para realizar una tarea espec'ıfica, o como la manera en que
+por openai y servia como herramienta para evaluar los los humanos piensan y se comportan. adema's estos sistemas
+modelosdelenguajeentareasfreelanceextra'ıdasdediferentes pueden ser auto'nomos y adaptativos capaces de aprender y
+plataformas. este inclu'ıa ma's de 1400 tareas reales. ajustarse a nuevas situaciones.
+iii. introduccio'nalainteligenciaartificial c. auto'nomo y adaptativo
+¿que' piensas cuando escuchas hablar de ia? ¿co'mo crees auto'nomo significa que no necesitamos realizar instrucque funciona? al inicio la inteligencia artificial pod'ıa basarse ciones para funcionar ya que es capaz de tomar decisiones
+en una lo'gica el cual estaba llena de instrucciones condi- y ejecutar acciones por s'ı mismo.
+cionales, donde se procesaban mu'ltiples datos para llegar a adaptativo implica que un sistema puede modificar su
+una conclusio'n. con el tiempo se llego a utilizar el modelo comportamiento si el entorno o el espacio del problema
+de machine learning, que ba'sicamente a partir de datos, cambian.porejemplo,enclasesemostro' unaimagendeunas
+comienza a identificar y resolver patrones. cuando hablamos hormigas que se apilaban unas sobre otras para alcanzar una
+de ia hay diferentes perspectivas de lo que es. la sociedad hoja. este comportamiento demuestra co'mo pueden adaptarse
+podr'ıa pensar que puede ser como un terminator que quiere a las condiciones de su ambiente para cumplir un objetivo.
+dominar al mundo, los amigos de otras carreras no relad. ¿que' puede ser la ia?
+cionasdasconcomputacionpuedenpensarqueeresunamente
+brillantehaciendoalgunatareacontecnolog'ıaosilepreguntas un sistema que muestra un comportamiento "inteligente".
+a otro de computacion puede que te vea como un vago gando porejemplo,laautomatizacio'ndetareasoalgoquenosayuda
+mucho dinero, y as'ı sucesivamente con diferentes analog'ıas. a resolver problemas complejos. tambie'n puede ser como ver
+unrobotquemueveunacajadeunlugaraaunlugarb.puede 1970s
+estar relacionado con simulacio'n, como la visio'n, escucha o - se popularizan los algoritmos evolutivos.
+sentidosnaturales.sonsolucionesquesoncapacesdeaprender - el robot freddy puede usar la percepcio'n visual.
+auto'nomamentemientrasseadaptananuevosdatos.entonces, - se inventa el lenguaje de programacio'n prolog para el
+en otras palabras ma's resumidas, puede ser: uso de reglas.
+- sistema mostrando comportamiento "inteligente" 1980s
+- algo "inteligente" que resuelva tareas complejas - esta'n las ma'quinas lisp para sistemas expertos.
+- simulacio'n de visio'n, escucha o sentidos naturales - redes neuronales a trave's de la introduccio'n de la retro-
+- soluciones adaptativas que aprenden de forma auto'noma propagacio'n.
+un ejemplo de lo que puede ser ia es observar carros de - se populariza la inteligencia de enjambre.
+uber que utilizan varias capacidades, como computer vision,
+1990s
+la cual sirve para reconocer diversos para'metros, tales como
+veh'ıculos,personas,sen˜alesdetra'nsito,distancias,entreotros. - td-gammon muestra el poder del aprendizaje por refuerzo que es como optimizaje a prueba y error.
+otro ejemplo es la capacidad estad'ıstica que la ia puede
+emplear para extraer las caracter'ısticas de una imagen. - experimentos con coches auto'nomos.
+- auge de los bots de internet y la bu'squeda.
+e. ¿que' puede ser el corazo'n de la ia? 2000s
+comobiensabemoslaiapuedeseralimentadademultiples - reconocimiento facial con redes neuronales.
+maneras. sin embargo, llamamos como corazo'n de la ia a: - watson de ibm gana en jeopardy.
+- funcio'n matema'ticas - deteccio'n de movimiento avanzada de xbox kinect.
+- datos - alphago de google se convierte en campeo'n de go.
+apesardequeesta'nestasdos,puedenserma'simportantelos - agentes para realizar tareas especificas.
+datosyaquesinestos,nohayia.ademaslosdatospresentes
+v. machinelearning
+deben ser buenos datos ya que si son erro'neos, las funciones
+arthur samuel fue la persona en acun˜ar este termino en
+matema'ticas no van a hacer nada.
+1959 el cual lo hace un juego llamado checkers. este hombre
+f. datos trabajo' para ibm y tenia que encontrar una manera de vender
+como mencionamos anteriormente, podemos decir que un el producto
+algoritmo va a ser malo si tenemos datos que son incorrectos entonces el machine learning cuenta con dos aristas, las
+o hay datos faltantes. un ejemplo puede ser el prono'stico cuales son ciencia y ingenier'ıa. la idea es que se construyen
+del tiempo en cartago erroneos ya que hacen faltan datos maquinas que puedan hacer tareas solo infiriendo entre los
+estad'ısticos, por lo que genera una incorrecta prediccio'n. hay datos existentes, aproximamos una funcio'n. este sigue un envarios tipos de datos pero principlamente tenemos: foque estad'ıstico para entrenar modelos. tengamos en cuenta
+que las aproximaciones son u'tiles pero no perfectas.
+- los datos cuantitativos o sin sesgos que puede tomar
+una cantidad exacta para que represente un para'metro
+vi. tiposdeaprendizajes
+medible.
+hay varios tipos de aprendizajes, sin embargo solo men-
+- losdatoscualitativoscomoelolordeunafloroelsabor
+cionare' las dos vistas en clases.
+de una comida. estos son datos que no son sencillos de
+medir y que puede variar entre los humanos. a. supervisado
+iv. l'ineadeltiempo enestevoyatenerunconjuntosdedatosconcaracter'ısticas.
+por ejemplo, una casa con las variables x1, x2 y x3, que van
+a continuacio'n se muestran algunos eventos a travez de los
+a ser el numero de cuartos, metros cuadrado y cantidad de
+an˜os los cuales fueron mostrados en una imagen en clases.
+robos. con esto podemos tener una tabla que me va a dar la
+1950s
+muestra y me etiqueta.
+- se presenta el nombre de ia
+- se introduce el concepto de la red neuronal artificial.
+- seinventaelmodelodelperceptro'nysecreequevaaser
+el mejor. sin embargo, este no poda resolver problemas
+sencillos. resolv'ıa solo problemas lineales.
+1960s
+- se introducen modelos de machine learning.
+- el robot unimate trabaja en una l'ınea de montaje de
+automo'viles.
+- el robot shakey tiene movimiento natural y habilidades
+para resolver problemas. fig.1. ejemplodeaprendizajesupervisado.
+la muestra o conjunto de datos tiene caracter'ısticas y mi
+etiqueta que me asocia el conjunto de caracter'ısticas a un
+valor.entonces,mimodeloesdetiposupervisadoporquehago
+una aproximacio'n. podemos verlo como f(x) aproximado a y.
+si el y esta' muy lejos, penalizo mi modelo para que en ese
+puntosemejoreelentrenamiento.estosmodelosquetratande
+aproximar un valor, se llaman modelos de regresio'n. tambie'n
+hay modelos de clasificacio'n.
+b. no supervisado
+en estas a diferencia de las supervisadas, no tenemos
+etiquetas. en otras palabras, no tengo quien me supervise el
+aprendizaje. como por ejemplo, los algoritmos de clustering.
+este algoritmo lo que hace es que agrupa datos segu'n las caracter'ısticas que comparte, que generalmente usan algoritmos
+de distancia.
+references
+[1] apuntes de la clase de inteligencia artificial, profesor steven andrey
+pachecoportuguez,institutotecnolo'gicodecostarica,2025.

@@ -1,0 +1,116 @@
+resumen sobre autoencoders, segmentación y
+rags: conceptos y arquitecturas
+andrés sánchez rojas
+escuela de ingeniería en computación
+instituto tecnológico de costa rica
+16/10/2025
+resumen-estossonlosapuntesdelasegundaclasedesemana patrones relevantes y reconstruir las entradas con alta fidelidad.
+11 del curso de ia. los autoencoders son modelos de aprendizaje estaversatilidadlosconvierteenherramientasvaliosastantoen
+no supervisado que aprenden a reconstruir sus entradas a través
+aplicaciones de seguridad como en procesamiento de imágenes
+deunarepresentacióncomprimida(espaciolatente).enestedocuy señales.
+mento se resumen conceptos clave: arquitectura encoder/decoder,
+variational autoencoders (vae) y la reparametrización, funciones
+de pérdida típicas, y aplicaciones como detección de anomalías
+ii-b. encoder y decoder
+y denoising. también se introduce la segmentación de imagen
+y la arquitectura u-net, y se discuten conceptos relacionados
+el encoder es un conjunto de bloques convolucionales que
+con rags (retrieval augmented generation), agentes basados en
+extraen la información más relevante de la entrada y descartan
+llm,tokenizaciónyembeddings.elobjetivoesofrecerunavisión
+compacta y legible para un lector que busca una introducción loquenoaporta,comprimiendolosdatosatravésdeun"cuello
+técnica y aplicada. de botella" para eliminar ruido y características innecesarias;
+index terms-autoencoders, variational autoencoders, u-net, la salida de ese proceso es el vector o espacio latente, una
+segmentación de imagen, rag, tokenización, embeddings
+representacióndebajadimensionalidadqueconservalosrasgos
+útilesparadiferenciarpatrones.eldecodereslapartequetoma
+i. introducción
+el espacio latente y reconstruye la señal o imagen original,
+este documento sintetiza los principios y aplicaciones
+expandiendo la información comprimida para producir una
+prácticas de los autoencoders, describiendo su entrenamiento
+salida lo más fiel posible a la entrada; su objetivo es invertir
+sin etiquetas por reconstrucción, sus usos en reducción de dila codificación del encoder y permitir tareas como denoising,
+mensionalidad, compresión, detección de anomalías, denoising
+upscaling o detección de anomalías mediante la comparación
+y superresolución, y la extensión hacia variantes relevantes
+entre entrada y reconstrucción.
+comolosvariationalautoencoders;ademáspresentalaconexión
+con tareas de visión por computador (p. ej., segmentación y
+ii-c. aplicaciones
+arquitecturas tipo u-net) y la extensión a representaciones
+para texto mediante tokenización y embeddings, así como su
+entre las aplicaciones prácticas destacan:
+papel en sistemas más amplios como rags y agentes basados
+en llm. el texto ofrece una guía práctica con definiciones, detección de anomalías y fraude .
+fórmulas y recomendaciones operativas para implementar eliminación de ruido (denoising).
+experimentos en imágenes y texto. aumento de resolución (upscaling).
+reconocimiento facial y compresión de imágenes.
+ii. autoencoders
+ii-a. definición y propósito
+iii. variationalautoencoder
+losautoencoderssonunaarquitecturanovedosaenelámbito
+del aprendizaje automático que se caracteriza por comparar son una variante probabilística de los autoencoders que
+sus salidas con las mismas entradas, lo que permite entrenarlos generan una representación latente continua modelada como
+sin necesidad de etiquetas, clasificándolos como modelos no una distribución. en lugar de devolver un único vector latente
+supervisados. su principal utilidad radica en la reducción de determinista, el encoder estima parámetros de una distribución:
+dimensionalidad,ofreciendorepresentacionesmáspotentesque la media µ(x) y la log-varianza logσ2(x).
+técnicas clásicas como el análisis de componentes principales
+(pca).estacapacidaddecompresiónyreconstrucciónloshace
+iii-a. reparametrización
+especialmente útiles en tareas como la detección de anomalías,
+la identificación de transacciones fraudulentas, la eliminación la reparametrización permite que la aleatoriedad se aísle
+de ruido en datos, el aumento de resolución (upscaling) y el re- en una variable independiente, de forma que los gradientes
+conocimientofacial.enesencia,losautoencodersaprendenuna puedan fluir hacia los parámetros que predicen la media y la
+codificación eficiente de los datos, lo que les permite capturar varianza.
+iii-b. funciones de pérdida vi. tokenizaciónyembeddings
+la pérdida de un variational autoencoder combina dos vi-a. tokenización
+términos: la tokenización convierte texto en secuencias de identifica1. reconstruction loss: mide la discrepancia entre la dores. estrategias comunes de tokenización son: por palabra,
+entrada y la reconstrucción producida por el decoder. por subword, por caracter, por bytes. cada estrategia tiene
+2. kl divergence: compara qué tanto se parecen dos trade-offs en cobertura, eficiencia y manejo de formas raras.
+distribuciones.
+vi-b. embeddings
+la pérdida total habitual es la suma: reconstruction loss + kl
+los embeddings son vectores densos que representan tokens
+divergence.
+osecuenciasenunespaciodondelaproximidadindicasimilitud
+semántica. al agregar embeddings de tokens (por ejemplo
+iii-c. espacio latente y generación
+mediante promedio o modelos que producen representaciones
+un beneficio importante de los variational autoencoders es de secuencia) se obtienen vectores de frases/consultas útiles
+que el espacio latente resultante es continuo: puntos cercanos para búsquedas semánticas y recuperación en rags, y como
+en el espacio latente generan observaciones similares, lo entrada para razonamiento en agentes.
+que permite interpolación y generación de nuevas muestras
+vii. conclusiones
+mediante muestreo.
+los puntos vistos en esta clase y resumidos en este docuiv. segmentacióndeimagen mento ofrecen una síntesis compacta de conceptos relevantes
+en autoencoders, variational autoencoders, segmentación de
+lasegmentaciónconsisteenlocalizaryetiquetarpíxelesque imágenes con arquitecturas como u-net, y rags y agentes
+pertenecenaobjetosdeinterésdentrodeunaimagen.devuelve basados en llms. estos avances han permitido la expansión
+un mapa donde cada píxel tiene una etiqueta, siendo útil en del uso de la inteligencia artificial en ambientes en los que
+aplicaciones que requieren alta resolución espacial como el antesnosehubieraconsideradoútil.sinembargo,debemosser
+análisis médico o el conteo de células. responsablesaldecidirquétareasrealmenterequierenunagente
+o pueden usar un sistema más ligero de machine learning.
+iv-a. arquitectura u-net
+u-net es una arquitectura en forma de ü"similar a un
+autoencoder pero con skip connections entre las capas de
+encoder y decoder. estas conexiones permiten conservar información durante el upsampling, mejorando significativamente la
+precisión de los mapas de segmentación. u-net ha demostrado
+ser especialmente útil en tareas médicas como la identificación
+de células cancerígenas.
+v. ragsyagentes
+v-a. rag: retrieval augmented generation
+los rags combinan recuperaciónde documentos relevantes
+con generación de lenguaje. el flujo general es:
+1. convertir la consulta y fragmentos de texto en embeddings.
+2. buscar textos relevantes en una base de conocimiento
+mediante medidas de similitud en el espacio de embeddings.
+3. pasar los fragmentos recuperados como contexto a
+un modelo de lenguaje para generar respuestas más
+fundamentadas.
+v-b. agentes basados en llm
+los agentes usan un llm como núcleo de decisión para
+orquestarpasos(consultarfuentes,ejecutarapis,leermemoria).
+un agente integra recuperación, gestión del contexto y conectores a herramientas externas para resolver tareas complejas
+de forma autónoma.
