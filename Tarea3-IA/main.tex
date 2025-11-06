@@ -1,0 +1,319 @@
+% !TeX program = pdflatex
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+
+% ---- Paquetes ----
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amssymb}
+\usepackage{booktabs}
+\usepackage{siunitx}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage{hyperref}
+\usepackage{multirow}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{float}
+\sisetup{detect-weight=true,detect-family=true}
+
+% Rutas comunes para figuras
+\graphicspath{{figs/}{figures/}{images/}{img/}{./}}
+
+% --- Compactación de floats/captions ---
+\captionsetup{font=footnotesize}
+\setlength{\textfloatsep}{6pt plus 1pt minus 2pt}
+\setlength{\floatsep}{6pt plus 1pt minus 2pt}
+\setlength{\intextsep}{6pt plus 1pt minus 2pt}
+\setlength{\abovecaptionskip}{4pt}
+\setlength{\belowcaptionskip}{0pt}
+
+% --- Política de colocación de floats ---
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\bottomfraction}{0.8}
+\renewcommand{\textfraction}{0.07}
+\renewcommand{\floatpagefraction}{0.8}
+\renewcommand{\dbltopfraction}{0.9}
+\renewcommand{\dblfloatpagefraction}{0.8}
+\setcounter{topnumber}{5}
+\setcounter{bottomnumber}{5}
+\setcounter{totalnumber}{10}
+
+% --- Utilidades de placeholders de figuras ---
+\newcommand{\placeholderbox}[2][5cm]{%
+  \fbox{\begin{minipage}[c][#1][c]{0.9\linewidth}\centering \textbf{Placeholder:} #2\end{minipage}}}
+
+% label, caption, filename
+\newcommand{\placefigure}[3]{%
+\begin{figure}[!t]\centering
+\IfFileExists{#3}{\includegraphics[width=\linewidth]{#3}}{\placeholderbox{#3}}
+\caption{#2}\label{#1}\end{figure}}
+
+% width, filename, subcaption, label
+\newcommand{\placesubfig}[4]{%
+\begin{subfigure}{#1}
+\centering
+\IfFileExists{#2}{\includegraphics[width=\linewidth]{#2}}{\placeholderbox{#2}}
+\caption{#3}\label{#4}
+\end{subfigure}}
+
+% ---- Título y autores ----
+\title{Implementación de Regresión Logística - PyTorch\vspace{-0.35em}}
+
+\author{\IEEEauthorblockN{1\textsuperscript{st} Priscilla Jim\'enez Salgado}
+\IEEEauthorblockA{Estudiante, Escuela de Ingenier\'ia en Computaci\'on\\
+Tecnol\'ogico de Costa Rica (TEC)\\
+Email: 2021022576@estudiantec.cr}
+\and
+\IEEEauthorblockN{2\textsuperscript{nd} Fabi\'an Araya Ortega}
+\IEEEauthorblockA{Estudiante, Escuela de Ingenier\'ia en Computaci\'on\\
+Tecnol\'ogico de Costa Rica (TEC)\\
+Email: fabian.araya@estudiantec.cr}
+\and
+\IEEEauthorblockN{3\textsuperscript{rd} David Acu\~na L\'opez}
+\IEEEauthorblockA{Estudiante, Escuela de Ingenier\'ia en Computaci\'on\\
+Tecnol\'ogico de Costa Rica (TEC)\\
+Email: rodolfoide69@estudiantec.cr}
+\IEEEauthorrefmark{1}}
+
+\begin{document}
+\raggedbottom
+\maketitle
+
+\begin{abstract}
+El siguiente trabajo presenta un análisis exploratorio de datos (EDA) y la preparación del dataset Wine Quality (Vinho Verde, vino tinto) para su uso en un modelo de regresión logística. Se examinan propiedades fisicoquímicas y sensoriales, identificando \emph{outliers} y correlaciones entre variables. A partir del análisis, se aplican transformaciones logarítmicas en variables con colas largas, se seleccionan seis predictores relevantes y se redefine la calidad como variable binaria balanceada. Asimismo, se realizan divisiones estratificadas de los datos en entrenamiento, validación y prueba, y se aplica un escalado estándar. Los hallazgos enfatizan la relevancia de \texttt{alcohol}, \texttt{volatile acidity}, \texttt{sulphates} y \texttt{citric acid} como determinantes de la calidad, estableciendo una base sólida para el modelado predictivo.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Regresión logística, Análisis exploratorio de datos (EDA), Wine Quality Dataset, Clasificación binaria, Preprocesamiento de datos, Outliers, Machine Learning
+\end{IEEEkeywords}
+
+\section{Introducci\'on}
+Se desarrolló un flujo reproducible para preparar el conjunto de datos previo al modelado: lectura y verificación de estructura, limpieza de duplicados, análisis exploratorio de datos (distribuciones, \emph{outliers}, correlaciones) y particionado estratificado con estandarización. El objetivo es dejar un dataset depurado, balanceado y escalado que permita una primera aproximación con regresión logística y sirva de línea base para futuros modelos.
+
+\section{Conjunto de Datos y Limpieza}
+El dataset contiene \num{1599} filas y \num{12} columnas: once variables fisicoquímicas continuas y la variable \texttt{quality} (entera). Todas las columnas tienen 1599 valores no nulos y tipos consistentes (\texttt{float64} para predictores y \texttt{int64} para \texttt{quality}). Se identificaron \textbf{240 duplicados exactos}; para evitar sesgo en estimación de parámetros se optó por \emph{eliminarlos} con \texttt{drop\_duplicates()}.
+
+Como se muestra en la Figura \ref{fig:info}, el dataset presenta una estructura consistente con 1599 instancias y 12 características, sin valores faltantes.
+
+% *** IMAGEN REQUERIDA: preview_info.png - Estructura del dataset mostrando info() de pandas ***
+\placefigure{fig:info}{Estructura del dataset: filas/columnas, tipos y no-nulos.}{preview_info.png}
+
+\subsection{Resumen estructural}
+\begin{table}[H]\centering\caption{Características generales del conjunto de datos}
+\label{tab:estructura}
+\begin{tabular}{lS}
+\toprule
+\textbf{Caracter\'istica} & {\textbf{Valor}}\\
+\midrule
+Filas & 1599\\
+Columnas & 12\\
+Tipos & \texttt{float} y \texttt{int} \\
+Faltantes & 0 en todas las columnas \\
+Duplicados exactos & 240\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{An\'alisis Exploratorio de Datos (EDA)}
+\subsection{Estad\'isticas y distribuciones}
+No hay faltantes. Las distribuciones muestran colas derechas y valores extremos plausibles en \texttt{residual sugar}, \texttt{chlorides}, \texttt{total sulfur dioxide} y \texttt{sulphates}. Se propone \textbf{transformación logarítmica} (o winsorización ligera) para estabilizar varianza sin perder información.
+
+La Tabla \ref{fig:desc} presenta las estadísticas descriptivas que revelan la distribución de las variables fisicoquímicas.
+
+% *** IMAGEN REQUERIDA: describe_table.png - Tabla de estadísticas descriptivas (df.describe()) ***
+\placefigure{fig:desc}{Tabla resumen con medias, desviaciones y percentiles por variable.}{describe_table.png}
+
+Los boxplots en la Figura \ref{fig:box} muestran la presencia de outliers en variables clave como residual sugar, chlorides, total sulfur dioxide y sulphates.
+
+% *** IMAGEN REQUERIDA: eda_boxplots.png - Boxplots de variables con outliers ***
+\placefigure{fig:box}{Boxplots de variables con colas largas y \emph{outliers} plausibles.}{eda_boxplots.png}
+
+\subsection{Correlaciones y coherencia fisicoqu\'imica}
+Se observan patrones esperados: relación negativa \texttt{alcohol}–\texttt{density} y positiva \texttt{residual sugar}–\texttt{density}. Con \texttt{quality} destaca señal positiva de \texttt{alcohol}, \texttt{sulphates} y \texttt{citric acid}; negativa de \texttt{volatile acidity}, \texttt{density} y \texttt{chlorides}. Para reducir colinealidad se prioriza \texttt{total sulfur dioxide} sobre \texttt{free sulfur dioxide}.
+
+La Figura \ref{fig:heatmaps} presenta las matrices de correlación de Pearson y Spearman, revelando las relaciones entre variables fisicoquímicas y su impacto en la calidad del vino.
+
+% *** IMAGENES REQUERIDAS: heatmap_pearson.png y heatmap_spearman.png - Matrices de correlación ***
+\begin{figure}[!t]\centering
+\placesubfig{0.48\linewidth}{heatmap_pearson.png}{Matriz de correlaci\'on de Pearson}{sub:pear}
+\hfill
+\placesubfig{0.48\linewidth}{heatmap_spearman.png}{Matriz de correlaci\'on de Spearman}{sub:spear}
+\caption{Mapas de calor de correlaciones y posibles colinealidades.}
+\label{fig:heatmaps}
+\end{figure}
+
+Los scatterplots en la Figura \ref{fig:scatters} ilustran las relaciones bivariadas entre variables fisicoquímicas y la calidad del vino, confirmando las correlaciones identificadas en el análisis anterior.
+
+% *** IMAGEN REQUERIDA: scatters_grid.png - Scatterplots de relaciones bivariadas ***
+\placefigure{fig:scatters}{Relaciones bivariadas clave entre variables fisicoquímicas y calidad.}{scatters_grid.png}
+
+\subsection{Candidatos a predictores}
+Del EDA surgen como candidatas principales \texttt{alcohol}, \texttt{volatile acidity}, \texttt{sulphates} y \texttt{citric acid}. Con transformaciones logarítmicas se incorporan además \texttt{total\_sulfur\_dioxide\_log} y \texttt{chlorides\_log} para un máximo de seis \emph{features} informativas y con menor colinealidad.
+
+\begin{table}[!t]\centering
+\caption{Selección final de \emph{features} y justificación}
+\label{tab:featimp}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.1}
+\footnotesize
+\begin{tabular}{@{}>{\raggedright\ttfamily}p{0.36\linewidth} >{\raggedright\arraybackslash}p{0.58\linewidth}@{}}
+\toprule
+\textbf{Feature} & \textbf{Motivación breve}\\
+\midrule
+alcohol & Señal positiva con calidad; coherencia fisicoquímica con densidad.\\
+volatile\_acidity & Señal negativa (aroma avinado) consistente en EDA.\\
+sulphates\_log & Asociación positiva; la transformación log reduce cola derecha.\\
+citric\_acid & Mejora perfil sensorial; correlación moderada.\\
+total\_sulfur\_dioxide\_log & Sustituye a \texttt{free SO$_2$}; menor colinealidad.\\
+chlorides\_log & Salinidad alta penaliza calidad; el log mitiga outliers.\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Divisi\'on del Conjunto de Datos}
+\subsection{Variable objetivo binaria}
+Se define \texttt{quality\_label} = 0 (MALA) si \texttt{quality}\,$\leq$\,5 y 1 (BUENA) si \texttt{quality}\,$\geq$\,6. La distribución resultante es: clase 1 (BUENA) = 719, clase 0 (MALA) = 640. El balance es moderado.
+
+La Figura \ref{fig:classdist} muestra la distribución balanceada de las clases en la variable objetivo binaria, con aproximadamente 53\% de vinos de buena calidad y 47\% de mala calidad.
+
+% *** IMAGEN REQUERIDA: class_distribution.png - Distribución de clases binarias ***
+\placefigure{fig:classdist}{Distribuci\'on de clases en la variable objetivo binaria.}{class_distribution.png}
+
+\subsection{Transformaciones y estandarizaci\'on}
+Se crean columnas con sufijo \texttt{\_log} para variables con colas largas: \texttt{residual\_sugar\_log}, \texttt{chlorides\_log}, \texttt{total\_sulfur\_dioxide\_log}, \texttt{sulphates\_log}. Las \emph{features} finales (máximo seis) son:
+\begin{itemize}
+\item \texttt{alcohol}, \texttt{volatile\_acidity}, \texttt{sulphates\_log},
+\texttt{citric\_acid}, \texttt{total\_sulfur\_dioxide\_log}, \texttt{chlorides\_log}.
+\end{itemize}
+El escalado estándar se ajusta solo con \emph{Train} y se aplica a \emph{Val/Test} para evitar fuga de información.
+
+\subsection{Split estratificado}
+Se emplea \emph{stratified sampling} para mantener proporciones de clase en todos los subconjuntos. Tamaños: \textbf{Train: 951}, \textbf{Validation: 204}, \textbf{Test: 204}. Las proporciones por clase en cada subconjunto son $\approx$ 0.53 (BUENA) / 0.47 (MALA).
+
+\section{Implementaci\'on de regresi\'on log\'istica}
+\subsection{Arquitectura del Modelo}
+Se implementó un modelo de regresión logística utilizando PyTorch, definido como una red neuronal de una sola capa lineal seguida de una función de activación softmax. La arquitectura del modelo se define mediante la clase \texttt{LogisticRegression}, que hereda de \texttt{nn.Module} y contiene una capa lineal con 6 entradas (correspondientes a las características seleccionadas) y 2 salidas (para clasificación binaria).
+
+La función de pérdida utilizada es \texttt{CrossEntropyLoss}, que combina la función log-softmax con la pérdida de entropía cruzada negativa, siendo apropiada para problemas de clasificación multiclase. El optimizador seleccionado es Adam \cite{Kingma2014}, que adapta la tasa de aprendizaje para cada parámetro individualmente, proporcionando convergencia más rápida y estable comparado con el descenso de gradiente estándar.
+
+\subsection{Configuraci\'on de hiperpar\'ametros}
+Se evaluaron 10 configuraciones diferentes de hiperparámetros para determinar el impacto de la tasa de aprendizaje (\texttt{learning rate}), el tamaño del lote (\texttt{batch size}) y el número de épocas en el rendimiento del modelo. Las configuraciones incluyen:
+
+\begin{itemize}
+\item \textbf{Tasas de aprendizaje}: 0.0001, 0.001, 0.005, 0.01
+\item \textbf{Tamaños de lote}: 16, 32, 64, 128
+\item \textbf{Número de épocas}: 50, 75, 100
+\end{itemize}
+
+Esta diversidad de configuraciones permite analizar la sensibilidad del modelo a diferentes parámetros y identificar la combinación óptima para el dataset de vino.
+
+\subsection{Proceso de entrenamiento}
+El proceso de entrenamiento se implementó con las siguientes características:
+
+\begin{enumerate}
+\item \textbf{División de datos}: Los datos se dividieron en conjuntos de entrenamiento (70\%), validación (15\%) y prueba (15\%) utilizando muestreo estratificado para mantener la proporción de clases.
+\item \textbf{Escalado}: Se aplicó normalización estándar (media=0, desviación estándar=1) a todas las características utilizando \texttt{StandardScaler} de scikit-learn.
+\item \textbf{Conversión a tensores}: Los datos se convirtieron a tensores de PyTorch para compatibilidad con el framework.
+\item \textbf{DataLoaders}: Se crearon DataLoaders con el tamaño de lote especificado para cada configuración.
+\end{enumerate}
+
+El entrenamiento se monitoreó mediante el seguimiento de la pérdida en entrenamiento y validación en cada época, permitiendo la detección temprana de sobreajuste (\emph{overfitting}) o subajuste (\emph{underfitting}).
+
+La Figura \ref{fig:training_curves} presenta las curvas de entrenamiento y validación para las 10 configuraciones de hiperparámetros evaluadas, mostrando la convergencia del modelo en cada caso.
+
+% *** IMAGEN REQUERIDA: training_validation_curves.png - Gráfico de 2x5 subplots con curvas de entrenamiento y validación ***
+\placefigure{fig:training_curves}{Curvas de entrenamiento y validación para las 10 configuraciones de hiperparámetros.}{training_validation_curves.png}
+
+\section{Evaluaci\'on del modelo y resultados}
+\subsection{M\'etricas de evaluaci\'on}
+Se evaluó el rendimiento del modelo utilizando las siguientes métricas estándar:
+
+\begin{itemize}
+\item \textbf{Accuracy}: Proporción de predicciones correctas sobre el total
+\item \textbf{Precision}: Proporción de verdaderos positivos sobre todos los positivos predichos
+\item \textbf{Recall}: Proporción de verdaderos positivos sobre todos los positivos reales
+\item \textbf{F1-Score}: Media armónica entre precision y recall
+\item \textbf{AUC}: Área bajo la curva ROC, medida de la capacidad discriminativa del modelo
+\end{itemize}
+
+\subsection{An\'alisis de overfitting}
+Se analizó la presencia de sobreajuste comparando las pérdidas de entrenamiento y validación. Un modelo presenta sobreajuste cuando la pérdida de validación es significativamente mayor que la pérdida de entrenamiento, indicando que el modelo memoriza los datos de entrenamiento pero no generaliza bien a datos nuevos.
+
+La Figura \ref{fig:overfitting_analysis} muestra el análisis de overfitting, comparando las pérdidas de entrenamiento y validación para identificar configuraciones que pueden estar memorizando los datos de entrenamiento.
+
+% *** IMAGEN REQUERIDA: overfitting_analysis.png - Análisis de overfitting con diferencias de pérdida ***
+\placefigure{fig:overfitting_analysis}{Análisis de overfitting mostrando la diferencia entre pérdidas de entrenamiento y validación.}{overfitting_analysis.png}
+
+\subsection{Resultados comparativos}
+Se realizó un análisis comparativo de los resultados obtenidos para las 10 configuraciones evaluadas. Los resultados muestran que la configuración con tasa de aprendizaje 0.001, tamaño de lote 32 y 50 épocas obtuvo el mejor rendimiento general.
+
+\subsection{An\'alisis de resultados}
+Los resultados experimentales revelan varios hallazgos importantes:
+
+\begin{enumerate}
+\item \textbf{Impacto de la tasa de aprendizaje}: Las tasas de aprendizaje muy bajas (0.0001) resultan en convergencia lenta y rendimiento subóptimo, mientras que tasas moderadas (0.001-0.01) proporcionan mejor rendimiento.
+
+\item \textbf{Influencia del tamaño de lote}: Los tamaños de lote pequeños (16) y medianos (32) muestran rendimiento similar, mientras que tamaños grandes (128) pueden degradar el rendimiento debido a estimaciones menos precisas del gradiente.
+
+\item \textbf{Efecto del número de épocas}: Aumentar el número de épocas de 50 a 100 no mejora significativamente el rendimiento, sugiriendo que el modelo converge rápidamente.
+
+\item \textbf{Estabilidad del modelo}: La mayoría de configuraciones muestran rendimiento similar a 0.74, indicando robustez del modelo a diferentes hiperparámetros.
+
+\end{enumerate}
+
+La Figura \ref{fig:metrics_comparison} proporciona una comparación visual de las métricas de rendimiento para las 10 configuraciones evaluadas, facilitando la identificación de la mejor configuración.
+
+\subsection{Resultados finales en \textit{test}}
+
+\input{latex_snippet_pytorch.tex}
+
+El modelo final (configuración ganadora) obtuvo en \textit{test}:
+Accuracy=\num{0.740}, Precision=\num{0.742}, Recall=\num{0.740}, F1=\num{0.740}, ROC~AUC=\num{0.822}.
+La matriz de confusión (Fig.~\ref{fig:cm-final-pytorch}) muestra los principales errores. 
+Si el costo de falsos negativos (perder BUENOS) es alto, puede ajustarse el umbral por encima/debajo de 0.5 para modificar el compromiso precisión--recobrado. 
+La curva ROC (Fig.~\ref{fig:roc-final-pytorch}) evidencia buena separabilidad. 
+Como trabajo futuro se sugiere calibración de probabilidades, curva Precision--Recall y comparación con ensambles.
+
+
+
+% *** IMAGEN REQUERIDA: metrics_comparison.png - Gráfico de barras comparando métricas (2x3 subplots) ***
+\placefigure{fig:metrics_comparison}{Comparación visual de métricas para las 10 configuraciones evaluadas.}{metrics_comparison.png}
+
+\section{Conclusiones}
+Los resultados demuestran la efectividad de la regresión logística implementada con PyTorch para la clasificación de calidad de vino. El modelo logra un accuracy del 74.02\% en la mejor configuración, con un AUC de 0.8222, indicando buena capacidad discriminativa. La implementación con PyTorch proporciona flexibilidad para experimentación con diferentes arquitecturas y optimizadores, mientras que el análisis exploratorio de datos y la selección cuidadosa de características contribuyen significativamente al rendimiento del modelo.
+
+\section{Bibliograf\'ia}
+
+\renewcommand{\refname}{}
+\vspace{-1em}%
+\begin{thebibliography}{00}
+
+\bibitem{Cortez2009}
+P. Cortez, A. Cerdeira, F. Almeida, T. Matos, and J. Reis, ``Modeling wine preferences by data mining from physicochemical properties,'' \emph{Decision Support Systems}, vol. 47, no. 4, pp. 547--553, 2009.
+
+\bibitem{Fernandez2014}
+M. Fernández-Delgado, E. Cernadas, S. Barro, and D. Amorim, ``Do we need hundreds of classifiers to solve real world classification problems?'' \emph{Journal of Machine Learning Research}, vol. 15, no. 1, pp. 3133--3181, 2014.
+
+\bibitem{Chen2019}
+T. Chen and C. Guestrin, ``XGBoost: A scalable tree boosting system,'' in \emph{Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining}, 2016, pp. 785--794.
+
+\bibitem{Kingma2014}
+D. P. Kingma and J. Ba, ``Adam: A method for stochastic optimization,'' \emph{arXiv preprint arXiv:1412.6980}, 2014.
+
+\bibitem{Hastie2009}
+T. Hastie, R. Tibshirani, and J. Friedman, \emph{The Elements of Statistical Learning: Data Mining, Inference, and Prediction}. Springer, 2009.
+
+\bibitem{James2013}
+G. James, D. Witten, T. Hastie, and R. Tibshirani, \emph{An Introduction to Statistical Learning: with Applications in R}. Springer, 2013.
+
+\bibitem{Pedregosa2011}
+F. Pedregosa et al., ``Scikit-learn: Machine learning in Python,'' \emph{Journal of Machine Learning Research}, vol. 12, pp. 2825--2830, 2011.
+
+\bibitem{Paszke2019}
+A. Paszke et al., ``PyTorch: An imperative style, high-performance deep learning library,'' in \emph{Advances in Neural Information Processing Systems}, 2019, pp. 8024--8035.
+
+\end{thebibliography}
+
+\end{document}
