@@ -59,7 +59,7 @@
 \end{subfigure}}
 
 % ---- Título y autores ----
-\title{Implementación de Regresión Logística - PyTorch\vspace{-0.35em}}
+\title{Implementación de Sistema RAG con Agentes para Consulta de Apuntes de Inteligencia Artificial\vspace{-0.35em}}
 
 \author{\IEEEauthorblockN{1\textsuperscript{st} Priscilla Jim\'enez Salgado}
 \IEEEauthorblockA{Estudiante, Escuela de Ingenier\'ia en Computaci\'on\\
@@ -82,207 +82,245 @@ Email: rodolfoide69@estudiantec.cr}
 \maketitle
 
 \begin{abstract}
-El siguiente trabajo presenta un análisis exploratorio de datos (EDA) y la preparación del dataset Wine Quality (Vinho Verde, vino tinto) para su uso en un modelo de regresión logística. Se examinan propiedades fisicoquímicas y sensoriales, identificando \emph{outliers} y correlaciones entre variables. A partir del análisis, se aplican transformaciones logarítmicas en variables con colas largas, se seleccionan seis predictores relevantes y se redefine la calidad como variable binaria balanceada. Asimismo, se realizan divisiones estratificadas de los datos en entrenamiento, validación y prueba, y se aplica un escalado estándar. Los hallazgos enfatizan la relevancia de \texttt{alcohol}, \texttt{volatile acidity}, \texttt{sulphates} y \texttt{citric acid} como determinantes de la calidad, estableciendo una base sólida para el modelado predictivo.
+Este trabajo presenta la implementación de un sistema de Recuperación Aumentada por Generación (RAG) para consulta de apuntes del curso de Inteligencia Artificial. El sistema procesa \num{46} documentos PDF, aplica técnicas de normalización y segmentación de texto, genera embeddings semánticos y construye bases vectoriales para búsqueda semántica. Se implementan dos estrategias de segmentación: chunks fijos con solapamiento y segmentación por encabezados, generando \num{227} y \num{349} fragmentos respectivamente. Se utilizan embeddings del modelo \texttt{sentence-transformers/all-MiniLM-L6-v2} (dimensión 384) y se almacenan en bases FAISS. Los resultados muestran que la segmentación por encabezados produce fragmentos más coherentes semánticamente, mientras que los chunks fijos ofrecen mayor control sobre la longitud. El sistema permite búsqueda semántica eficiente con herramientas RAG que retornan fragmentos relevantes, documentos de origen y autores, estableciendo una base sólida para un agente conversacional.
 \end{abstract}
 
 \begin{IEEEkeywords}
-Regresión logística, Análisis exploratorio de datos (EDA), Wine Quality Dataset, Clasificación binaria, Preprocesamiento de datos, Outliers, Machine Learning
+RAG, Retrieval Augmented Generation, Embeddings, Búsqueda semántica, FAISS, Segmentación de texto, Procesamiento de lenguaje natural, Agentes conversacionales
 \end{IEEEkeywords}
 
 \section{Introducci\'on}
-Se desarrolló un flujo reproducible para preparar el conjunto de datos previo al modelado: lectura y verificación de estructura, limpieza de duplicados, análisis exploratorio de datos (distribuciones, \emph{outliers}, correlaciones) y particionado estratificado con estandarización. El objetivo es dejar un dataset depurado, balanceado y escalado que permita una primera aproximación con regresión logística y sirva de línea base para futuros modelos.
+Se desarrolló un sistema completo de Recuperación Aumentada por Generación (RAG) para consulta de apuntes del curso de Inteligencia Artificial. El sistema consta de tres componentes principales: (1) preprocesamiento y segmentación de documentos PDF, (2) generación de embeddings y construcción de bases vectoriales, y (3) herramientas de búsqueda semántica. El objetivo es crear una base de conocimiento estructurada que permita a un agente conversacional responder preguntas sobre el contenido del curso, consultando primero los apuntes y citando las fuentes apropiadas.
 
-\section{Conjunto de Datos y Limpieza}
-El dataset contiene \num{1599} filas y \num{12} columnas: once variables fisicoquímicas continuas y la variable \texttt{quality} (entera). Todas las columnas tienen 1599 valores no nulos y tipos consistentes (\texttt{float64} para predictores y \texttt{int64} para \texttt{quality}). Se identificaron \textbf{240 duplicados exactos}; para evitar sesgo en estimación de parámetros se optó por \emph{eliminarlos} con \texttt{drop\_duplicates()}.
+\section{Conjunto de Datos y Preprocesamiento}
+\subsection{Descripción del Conjunto de Datos}
+El conjunto de datos contiene \num{46} documentos PDF correspondientes a apuntes del curso de Inteligencia Artificial. Cada documento incluye metadata con las siguientes columnas: \texttt{id\_doc}, \texttt{nombre\_archivo}, \texttt{autor}, \texttt{fecha} y \texttt{tema}. Todos los documentos fueron procesados exitosamente, generando textos normalizados y dos tipos de segmentación.
 
-Como se muestra en la Figura \ref{fig:info}, el dataset presenta una estructura consistente con 1599 instancias y 12 características, sin valores faltantes.
-
-% *** IMAGEN REQUERIDA: preview_info.png - Estructura del dataset mostrando info() de pandas ***
-\placefigure{fig:info}{Estructura del dataset: filas/columnas, tipos y no-nulos.}{preview_info.png}
-
-\subsection{Resumen estructural}
-\begin{table}[H]\centering\caption{Características generales del conjunto de datos}
+\begin{table}[H]\centering\caption{Características del conjunto de datos}
 \label{tab:estructura}
 \begin{tabular}{lS}
 \toprule
 \textbf{Caracter\'istica} & {\textbf{Valor}}\\
 \midrule
-Filas & 1599\\
-Columnas & 12\\
-Tipos & \texttt{float} y \texttt{int} \\
-Faltantes & 0 en todas las columnas \\
-Duplicados exactos & 240\\
+Documentos PDF & 46\\
+Columnas de metadata & 5 (\texttt{id\_doc}, \texttt{nombre\_archivo}, \texttt{autor}, \texttt{fecha}, \texttt{tema}) \\
+Fragmentos Segmentación A & 227\\
+Fragmentos Segmentación B & 349\\
+Faltantes & 0 \\
+Errores de procesamiento & 0\\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\section{An\'alisis Exploratorio de Datos (EDA)}
-\subsection{Estad\'isticas y distribuciones}
-No hay faltantes. Las distribuciones muestran colas derechas y valores extremos plausibles en \texttt{residual sugar}, \texttt{chlorides}, \texttt{total sulfur dioxide} y \texttt{sulphates}. Se propone \textbf{transformación logarítmica} (o winsorización ligera) para estabilizar varianza sin perder información.
+\subsection{Normalización de Texto}
+Se aplicó un pipeline de normalización consistente en seis etapas para garantizar consistencia y calidad del texto extraído:
 
-La Tabla \ref{fig:desc} presenta las estadísticas descriptivas que revelan la distribución de las variables fisicoquímicas.
+\begin{enumerate}
+\item \textbf{Unicode NFC}: Normalización de caracteres Unicode para mantener tildes y caracteres especiales correctos.
+\item \textbf{Limpieza de caracteres de control}: Eliminación de caracteres de control, excepto saltos de línea (\texttt{\textbackslash n}) y tabulaciones (\texttt{\textbackslash t}).
+\item \textbf{Estandarización de comillas y guiones}: Conversión de comillas tipográficas (`` '' `` '') y guiones (—, –, −) a caracteres ASCII estándar (", ', -).
+\item \textbf{Unión de palabras cortadas}: Detección y unión de palabras cortadas por guion al final de línea (e.g., ``infor-\textbackslash nmación'' → ``información'').
+\item \textbf{Colapso de espacios}: Reducción de espacios múltiples y saltos de línea excesivos a formatos estándar.
+\item \textbf{Conversión a minúsculas}: Normalización a minúsculas para permitir comparación consistente entre segmentaciones.
+\end{enumerate}
 
-% *** IMAGEN REQUERIDA: describe_table.png - Tabla de estadísticas descriptivas (df.describe()) ***
-\placefigure{fig:desc}{Tabla resumen con medias, desviaciones y percentiles por variable.}{describe_table.png}
+Esta normalización asegura que el texto esté en un formato limpio y consistente, facilitando la segmentación y la generación de embeddings.
 
-Los boxplots en la Figura \ref{fig:box} muestran la presencia de outliers en variables clave como residual sugar, chlorides, total sulfur dioxide y sulphates.
+\subsection{Segmentación de Texto}
+Se implementaron dos estrategias de segmentación para comparar su efectividad en la recuperación de información:
 
-% *** IMAGEN REQUERIDA: eda_boxplots.png - Boxplots de variables con outliers ***
-\placefigure{fig:box}{Boxplots de variables con colas largas y \emph{outliers} plausibles.}{eda_boxplots.png}
+\subsubsection{Segmentación A: Chunks Fijos con Solapamiento}
+Esta estrategia divide el texto en fragmentos de tamaño fijo de aproximadamente \num{400} palabras con un solapamiento de \num{80} palabras entre fragmentos consecutivos.
 
-\subsection{Correlaciones y coherencia fisicoqu\'imica}
-Se observan patrones esperados: relación negativa \texttt{alcohol}–\texttt{density} y positiva \texttt{residual sugar}–\texttt{density}. Con \texttt{quality} destaca señal positiva de \texttt{alcohol}, \texttt{sulphates} y \texttt{citric acid}; negativa de \texttt{volatile acidity}, \texttt{density} y \texttt{chlorides}. Para reducir colinealidad se prioriza \texttt{total sulfur dioxide} sobre \texttt{free sulfur dioxide}.
+\textbf{Ventajas:}
+\begin{itemize}
+\item Control preciso sobre la longitud de los fragmentos
+\item Útil para evaluación reproducible y comparación de métricas
+\item Distribución uniforme de contenido
+\end{itemize}
 
-La Figura \ref{fig:heatmaps} presenta las matrices de correlación de Pearson y Spearman, revelando las relaciones entre variables fisicoquímicas y su impacto en la calidad del vino.
+\textbf{Desventajas:}
+\begin{itemize}
+\item Puede cortar ideas o conceptos a la mitad
+\item No respeta la estructura semántica del documento
+\end{itemize}
 
-% *** IMAGENES REQUERIDAS: heatmap_pearson.png y heatmap_spearman.png - Matrices de correlación ***
-\begin{figure}[!t]\centering
-\placesubfig{0.48\linewidth}{heatmap_pearson.png}{Matriz de correlaci\'on de Pearson}{sub:pear}
-\hfill
-\placesubfig{0.48\linewidth}{heatmap_spearman.png}{Matriz de correlaci\'on de Spearman}{sub:spear}
-\caption{Mapas de calor de correlaciones y posibles colinealidades.}
-\label{fig:heatmaps}
-\end{figure}
+Esta segmentación generó \num{227} fragmentos en total.
 
-Los scatterplots en la Figura \ref{fig:scatters} ilustran las relaciones bivariadas entre variables fisicoquímicas y la calidad del vino, confirmando las correlaciones identificadas en el análisis anterior.
+\subsubsection{Segmentación B: Por Encabezados y Secciones}
+Esta estrategia identifica encabezados y secciones del documento usando patrones como:
+\begin{itemize}
+\item Palabras clave: Abstract, Resumen, Introducción, Conclusión, Referencias, Agradecimientos
+\item Numeración: numerales (1., 2., 3., ...), romanos (I., II., III., ...)
+\item Títulos en MAYÚSCULAS
+\end{itemize}
 
-% *** IMAGEN REQUERIDA: scatters_grid.png - Scatterplots de relaciones bivariadas ***
-\placefigure{fig:scatters}{Relaciones bivariadas clave entre variables fisicoquímicas y calidad.}{scatters_grid.png}
+Las secciones se fusionan si son menores a \num{120} palabras para asegurar contexto mínimo.
 
-\subsection{Candidatos a predictores}
-Del EDA surgen como candidatas principales \texttt{alcohol}, \texttt{volatile acidity}, \texttt{sulphates} y \texttt{citric acid}. Con transformaciones logarítmicas se incorporan además \texttt{total\_sulfur\_dioxide\_log} y \texttt{chlorides\_log} para un máximo de seis \emph{features} informativas y con menor colinealidad.
+\textbf{Ventajas:}
+\begin{itemize}
+\item Mantiene unidades semánticas coherentes
+\item Respeta la estructura del documento
+\item Potencialmente mejor para grounding en respuestas
+\end{itemize}
 
-\begin{table}[!t]\centering
-\caption{Selección final de \emph{features} y justificación}
-\label{tab:featimp}
-\setlength{\tabcolsep}{4pt}
-\renewcommand{\arraystretch}{1.1}
-\footnotesize
-\begin{tabular}{@{}>{\raggedright\ttfamily}p{0.36\linewidth} >{\raggedright\arraybackslash}p{0.58\linewidth}@{}}
+\textbf{Desventajas:}
+\begin{itemize}
+\item Depende de patrones editoriales consistentes
+\item Tamaño de fragmentos variable
+\end{itemize}
+
+Esta segmentación generó \num{349} fragmentos en total, un 54\% más que la segmentación A, lo que sugiere que los documentos tienen una estructura bien definida con múltiples secciones.
+
+\subsection{Salidas del Preprocesamiento}
+El proceso de preprocesamiento genera los siguientes archivos:
+
+\begin{itemize}
+\item \texttt{base\_documentos.jsonl} y \texttt{base\_documentos.parquet}: Textos completos normalizados por documento con metadata completa.
+\item \texttt{seg\_a.jsonl}: Fragmentos de la segmentación A con campos \texttt{id\_doc}, \texttt{chunk\_id}, \texttt{segmentacion}, \texttt{idx}, \texttt{texto}, \texttt{autor}, \texttt{fecha}, \texttt{tema}.
+\item \texttt{seg\_b.jsonl}: Fragmentos de la segmentación B con la misma estructura.
+\item \texttt{txt\_por\_doc/}: Archivos de texto individuales por documento para inspección rápida.
+\end{itemize}
+
+\section{Generación de Embeddings y Base Vectorial}
+\subsection{Modelo de Embeddings}
+Se utilizó el modelo \texttt{sentence-transformers/all-MiniLM-L6-v2} para generar embeddings semánticos. Este modelo fue seleccionado por las siguientes razones:
+
+\begin{itemize}
+\item \textbf{Gratuito y local}: No requiere API keys ni conexión a servicios externos
+\item \textbf{Optimizado para búsqueda}: Diseñado específicamente para tareas de recuperación de información
+\item \textbf{Dimensión eficiente}: 384 dimensiones, balanceando calidad y eficiencia computacional
+\item \textbf{Rendimiento}: Buen desempeño en tareas de similitud semántica
+\end{itemize}
+
+El modelo se configuró con normalización de embeddings activada (\texttt{normalize\_embeddings=True}) para mejorar la calidad de la búsqueda mediante similitud de coseno.
+
+\subsection{Tokenización y Verificación}
+Se implementó verificación de tokens usando \texttt{tiktoken} para asegurar que los fragmentos no excedan los límites recomendados. Un fragmento de ejemplo con \num{3170} caracteres corresponde a aproximadamente \num{822} tokens, muy por debajo del límite recomendado de \num{8000} tokens para embeddings.
+
+\subsection{Almacenamiento en Base Vectorial}
+Se utilizó FAISS (Facebook AI Similarity Search) para almacenar y buscar eficientemente en los embeddings. Se crearon dos bases vectoriales independientes:
+
+\begin{itemize}
+\item \texttt{vectorstore\_a}: Almacena embeddings de la segmentación A (\num{227} documentos)
+\item \texttt{vectorstore\_b}: Almacena embeddings de la segmentación B (\num{349} documentos)
+\end{itemize}
+
+FAISS utiliza índices optimizados para búsqueda por similitud de coseno, permitiendo búsquedas rápidas incluso con grandes volúmenes de datos. Los índices se guardan en disco para evitar regenerarlos en cada ejecución.
+
+\subsection{Herramientas RAG}
+Se implementaron herramientas RAG usando LangChain que permiten:
+\begin{enumerate}
+\item Búsqueda semántica en la base vectorial
+\item Retorno de fragmentos relevantes con scores de similitud
+\item Información de metadatos: documento de origen, chunk ID, autor
+\end{enumerate}
+
+Cada herramienta RAG (\texttt{rag\_search\_A} y \texttt{rag\_search\_B}) consulta su respectiva base vectorial y retorna los top-k resultados (por defecto k=5) formateados con:
+\begin{itemize}
+\item Score de similitud (distancia coseno)
+\item Fragmento de texto (primeros 500 caracteres)
+\item ID del documento y chunk
+\item Autor del documento
+\end{itemize}
+
+\section{An\'alisis de Resultados}
+\subsection{Comparación de Segmentaciones}
+La comparación entre ambas segmentaciones revela diferencias significativas:
+
+\begin{table}[H]\centering\caption{Comparación de segmentaciones}
+\label{tab:segmentaciones}
+\begin{tabular}{lS[table-format=3.0]S[table-format=3.0]}
 \toprule
-\textbf{Feature} & \textbf{Motivación breve}\\
+\textbf{Métrica} & {\textbf{Segmentación A}} & {\textbf{Segmentación B}}\\
 \midrule
-alcohol & Señal positiva con calidad; coherencia fisicoquímica con densidad.\\
-volatile\_acidity & Señal negativa (aroma avinado) consistente en EDA.\\
-sulphates\_log & Asociación positiva; la transformación log reduce cola derecha.\\
-citric\_acid & Mejora perfil sensorial; correlación moderada.\\
-total\_sulfur\_dioxide\_log & Sustituye a \texttt{free SO$_2$}; menor colinealidad.\\
-chlorides\_log & Salinidad alta penaliza calidad; el log mitiga outliers.\\
+Número de fragmentos & 227 & 349 \\
+Tamaño promedio (palabras) & $\approx$ 400 & Variable \\
+Coherencia semántica & Media & Alta \\
+Uniformidad de tamaño & Alta & Media \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\section{Divisi\'on del Conjunto de Datos}
-\subsection{Variable objetivo binaria}
-Se define \texttt{quality\_label} = 0 (MALA) si \texttt{quality}\,$\leq$\,5 y 1 (BUENA) si \texttt{quality}\,$\geq$\,6. La distribución resultante es: clase 1 (BUENA) = 719, clase 0 (MALA) = 640. El balance es moderado.
+\subsection{Resultados de Búsqueda Semántica}
+Se realizaron pruebas de búsqueda semántica con la consulta: ``inteligencia artificial y aprendizaje automático''. Los resultados muestran:
 
-La Figura \ref{fig:classdist} muestra la distribución balanceada de las clases en la variable objetivo binaria, con aproximadamente 53\% de vinos de buena calidad y 47\% de mala calidad.
-
-% *** IMAGEN REQUERIDA: class_distribution.png - Distribución de clases binarias ***
-\placefigure{fig:classdist}{Distribuci\'on de clases en la variable objetivo binaria.}{class_distribution.png}
-
-\subsection{Transformaciones y estandarizaci\'on}
-Se crean columnas con sufijo \texttt{\_log} para variables con colas largas: \texttt{residual\_sugar\_log}, \texttt{chlorides\_log}, \texttt{total\_sulfur\_dioxide\_log}, \texttt{sulphates\_log}. Las \emph{features} finales (máximo seis) son:
-\begin{itemize}
-\item \texttt{alcohol}, \texttt{volatile\_acidity}, \texttt{sulphates\_log},
-\texttt{citric\_acid}, \texttt{total\_sulfur\_dioxide\_log}, \texttt{chlorides\_log}.
-\end{itemize}
-El escalado estándar se ajusta solo con \emph{Train} y se aplica a \emph{Val/Test} para evitar fuga de información.
-
-\subsection{Split estratificado}
-Se emplea \emph{stratified sampling} para mantener proporciones de clase en todos los subconjuntos. Tamaños: \textbf{Train: 951}, \textbf{Validation: 204}, \textbf{Test: 204}. Las proporciones por clase en cada subconjunto son $\approx$ 0.53 (BUENA) / 0.47 (MALA).
-
-\section{Implementaci\'on de regresi\'on log\'istica}
-\subsection{Arquitectura del Modelo}
-Se implementó un modelo de regresión logística utilizando PyTorch, definido como una red neuronal de una sola capa lineal seguida de una función de activación softmax. La arquitectura del modelo se define mediante la clase \texttt{LogisticRegression}, que hereda de \texttt{nn.Module} y contiene una capa lineal con 6 entradas (correspondientes a las características seleccionadas) y 2 salidas (para clasificación binaria).
-
-La función de pérdida utilizada es \texttt{CrossEntropyLoss}, que combina la función log-softmax con la pérdida de entropía cruzada negativa, siendo apropiada para problemas de clasificación multiclase. El optimizador seleccionado es Adam \cite{Kingma2014}, que adapta la tasa de aprendizaje para cada parámetro individualmente, proporcionando convergencia más rápida y estable comparado con el descenso de gradiente estándar.
-
-\subsection{Configuraci\'on de hiperpar\'ametros}
-Se evaluaron 10 configuraciones diferentes de hiperparámetros para determinar el impacto de la tasa de aprendizaje (\texttt{learning rate}), el tamaño del lote (\texttt{batch size}) y el número de épocas en el rendimiento del modelo. Las configuraciones incluyen:
-
-\begin{itemize}
-\item \textbf{Tasas de aprendizaje}: 0.0001, 0.001, 0.005, 0.01
-\item \textbf{Tamaños de lote}: 16, 32, 64, 128
-\item \textbf{Número de épocas}: 50, 75, 100
-\end{itemize}
-
-Esta diversidad de configuraciones permite analizar la sensibilidad del modelo a diferentes parámetros y identificar la combinación óptima para el dataset de vino.
-
-\subsection{Proceso de entrenamiento}
-El proceso de entrenamiento se implementó con las siguientes características:
-
+\subsubsection{Segmentación A (Top 3)}
 \begin{enumerate}
-\item \textbf{División de datos}: Los datos se dividieron en conjuntos de entrenamiento (70\%), validación (15\%) y prueba (15\%) utilizando muestreo estratificado para mantener la proporción de clases.
-\item \textbf{Escalado}: Se aplicó normalización estándar (media=0, desviación estándar=1) a todas las características utilizando \texttt{StandardScaler} de scikit-learn.
-\item \textbf{Conversión a tensores}: Los datos se convirtieron a tensores de PyTorch para compatibilidad con el framework.
-\item \textbf{DataLoaders}: Se crearon DataLoaders con el tamaño de lote especificado para cada configuración.
+\item Score: 0.7227 | Autor: Andrey Ureña Bermúdez
+\item Score: 0.7863 | Autor: Luis Alfredo González Sánchez
+\item Score: 0.8033 | Autor: Rodolfo David Acuña López
 \end{enumerate}
 
-El entrenamiento se monitoreó mediante el seguimiento de la pérdida en entrenamiento y validación en cada época, permitiendo la detección temprana de sobreajuste (\emph{overfitting}) o subajuste (\emph{underfitting}).
-
-La Figura \ref{fig:training_curves} presenta las curvas de entrenamiento y validación para las 10 configuraciones de hiperparámetros evaluadas, mostrando la convergencia del modelo en cada caso.
-
-% *** IMAGEN REQUERIDA: training_validation_curves.png - Gráfico de 2x5 subplots con curvas de entrenamiento y validación ***
-\placefigure{fig:training_curves}{Curvas de entrenamiento y validación para las 10 configuraciones de hiperparámetros.}{training_validation_curves.png}
-
-\section{Evaluaci\'on del modelo y resultados}
-\subsection{M\'etricas de evaluaci\'on}
-Se evaluó el rendimiento del modelo utilizando las siguientes métricas estándar:
-
-\begin{itemize}
-\item \textbf{Accuracy}: Proporción de predicciones correctas sobre el total
-\item \textbf{Precision}: Proporción de verdaderos positivos sobre todos los positivos predichos
-\item \textbf{Recall}: Proporción de verdaderos positivos sobre todos los positivos reales
-\item \textbf{F1-Score}: Media armónica entre precision y recall
-\item \textbf{AUC}: Área bajo la curva ROC, medida de la capacidad discriminativa del modelo
-\end{itemize}
-
-\subsection{An\'alisis de overfitting}
-Se analizó la presencia de sobreajuste comparando las pérdidas de entrenamiento y validación. Un modelo presenta sobreajuste cuando la pérdida de validación es significativamente mayor que la pérdida de entrenamiento, indicando que el modelo memoriza los datos de entrenamiento pero no generaliza bien a datos nuevos.
-
-La Figura \ref{fig:overfitting_analysis} muestra el análisis de overfitting, comparando las pérdidas de entrenamiento y validación para identificar configuraciones que pueden estar memorizando los datos de entrenamiento.
-
-% *** IMAGEN REQUERIDA: overfitting_analysis.png - Análisis de overfitting con diferencias de pérdida ***
-\placefigure{fig:overfitting_analysis}{Análisis de overfitting mostrando la diferencia entre pérdidas de entrenamiento y validación.}{overfitting_analysis.png}
-
-\subsection{Resultados comparativos}
-Se realizó un análisis comparativo de los resultados obtenidos para las 10 configuraciones evaluadas. Los resultados muestran que la configuración con tasa de aprendizaje 0.001, tamaño de lote 32 y 50 épocas obtuvo el mejor rendimiento general.
-
-\subsection{An\'alisis de resultados}
-Los resultados experimentales revelan varios hallazgos importantes:
-
+\subsubsection{Segmentación B (Top 3)}
 \begin{enumerate}
-\item \textbf{Impacto de la tasa de aprendizaje}: Las tasas de aprendizaje muy bajas (0.0001) resultan en convergencia lenta y rendimiento subóptimo, mientras que tasas moderadas (0.001-0.01) proporcionan mejor rendimiento.
-
-\item \textbf{Influencia del tamaño de lote}: Los tamaños de lote pequeños (16) y medianos (32) muestran rendimiento similar, mientras que tamaños grandes (128) pueden degradar el rendimiento debido a estimaciones menos precisas del gradiente.
-
-\item \textbf{Efecto del número de épocas}: Aumentar el número de épocas de 50 a 100 no mejora significativamente el rendimiento, sugiriendo que el modelo converge rápidamente.
-
-\item \textbf{Estabilidad del modelo}: La mayoría de configuraciones muestran rendimiento similar a 0.74, indicando robustez del modelo a diferentes hiperparámetros.
-
+\item Score: 0.6992 | Autor: Andrey Ureña Bermúdez
+\item Score: 0.7228 | Autor: Rodolfo David Acuña López
+\item Score: 0.7557 | Autor: Priscilla Jiménez Salgado
 \end{enumerate}
 
-La Figura \ref{fig:metrics_comparison} proporciona una comparación visual de las métricas de rendimiento para las 10 configuraciones evaluadas, facilitando la identificación de la mejor configuración.
+Los scores de similitud oscilan entre 0.69 y 0.80, indicando que ambas segmentaciones encuentran contenido relevante. La segmentación A muestra scores ligeramente más altos (promedio 0.77) que la B (promedio 0.73), lo que podría deberse a que los fragmentos de tamaño fijo capturan mejor términos específicos de la consulta.
 
-\subsection{Resultados finales en \textit{test}}
+\subsection{Análisis de Calidad de Embeddings}
+La generación de embeddings se verificó exitosamente:
+\begin{itemize}
+\item Dimensión: 384 valores por embedding
+\item Normalización: Embeddings normalizados (norma L2 = 1)
+\item Rango de valores: Distribución típica de embeddings normalizados (-1 a 1)
+\end{itemize}
 
-\input{latex_snippet_pytorch.tex}
+Un ejemplo de embedding generado muestra valores típicos: [-0.020, 0.109, -0.009, -0.027, -0.064, ...], confirmando que la normalización funciona correctamente.
 
-El modelo final (configuración ganadora) obtuvo en \textit{test}:
-Accuracy=\num{0.740}, Precision=\num{0.742}, Recall=\num{0.740}, F1=\num{0.740}, ROC~AUC=\num{0.822}.
-La matriz de confusión (Fig.~\ref{fig:cm-final-pytorch}) muestra los principales errores. 
-Si el costo de falsos negativos (perder BUENOS) es alto, puede ajustarse el umbral por encima/debajo de 0.5 para modificar el compromiso precisión--recobrado. 
-La curva ROC (Fig.~\ref{fig:roc-final-pytorch}) evidencia buena separabilidad. 
-Como trabajo futuro se sugiere calibración de probabilidades, curva Precision--Recall y comparación con ensambles.
+\subsection{Herramientas Implementadas}
+Se implementaron tres herramientas principales:
 
+\begin{enumerate}
+\item \texttt{rag\_search\_A}: Búsqueda en apuntes usando segmentación A (chunks fijos). Útil para búsquedas de fragmentos específicos.
+\item \texttt{rag\_search\_B}: Búsqueda en apuntes usando segmentación B (encabezados). Mejor para temas completos y contextos amplios.
+\item \texttt{web\_search}: Búsqueda web (solo cuando se solicite explícitamente, según las restricciones del sistema).
+\end{enumerate}
 
+Las herramientas RAG retornan información estructurada que incluye:
+\begin{itemize}
+\item Fragmentos de texto relevantes
+\item Documentos de origen (ID del documento)
+\item Chunk IDs para trazabilidad
+\item Autores para citación apropiada
+\end{itemize}
 
-% *** IMAGEN REQUERIDA: metrics_comparison.png - Gráfico de barras comparando métricas (2x3 subplots) ***
-\placefigure{fig:metrics_comparison}{Comparación visual de métricas para las 10 configuraciones evaluadas.}{metrics_comparison.png}
+\section{Discusi\'on}
+\subsection{Ventajas del Sistema Implementado}
+El sistema presenta varias ventajas:
+\begin{itemize}
+\item \textbf{Procesamiento completo}: Todos los documentos PDF fueron procesados exitosamente sin errores
+\item \textbf{Dualidad de segmentaciones}: Permite comparar estrategias y elegir la más adecuada según el caso de uso
+\item \textbf{Embeddings eficientes}: Modelo local y gratuito con buen rendimiento
+\item \textbf{Búsqueda rápida}: FAISS permite búsquedas semánticas en tiempo real
+\item \textbf{Trazabilidad}: Cada fragmento mantiene metadata completa para citación
+\end{itemize}
+
+\subsection{Limitaciones y Trabajo Futuro}
+Las principales limitaciones identificadas son:
+\begin{itemize}
+\item \textbf{Segmentación A}: Puede cortar conceptos a la mitad debido al tamaño fijo
+\item \textbf{Segmentación B}: Depende de patrones editoriales consistentes en los PDFs
+\item \textbf{Embeddings}: Modelo con 384 dimensiones puede ser limitado para tareas muy complejas
+\item \textbf{Idioma}: El modelo está optimizado principalmente para inglés, aunque funciona bien con español
+\end{itemize}
+
+Como trabajo futuro se sugiere:
+\begin{itemize}
+\item Evaluación cuantitativa con métricas como Recall@k y Precision@k
+\item Comparación con modelos de embeddings más grandes (e.g., \texttt{text-embedding-3-small} de OpenAI)
+\item Implementación de re-ranking para mejorar la precisión
+\item Análisis de tiempo de respuesta para optimización
+\item Evaluación manual de la calidad de las respuestas generadas
+\end{itemize}
 
 \section{Conclusiones}
-Los resultados demuestran la efectividad de la regresión logística implementada con PyTorch para la clasificación de calidad de vino. El modelo logra un accuracy del 74.02\% en la mejor configuración, con un AUC de 0.8222, indicando buena capacidad discriminativa. La implementación con PyTorch proporciona flexibilidad para experimentación con diferentes arquitecturas y optimizadores, mientras que el análisis exploratorio de datos y la selección cuidadosa de características contribuyen significativamente al rendimiento del modelo.
+Se implementó exitosamente un sistema RAG completo para consulta de apuntes del curso de Inteligencia Artificial. El sistema procesa \num{46} documentos PDF, aplica normalización exhaustiva y genera dos tipos de segmentación, produciendo \num{227} y \num{349} fragmentos respectivamente. Se utilizan embeddings del modelo \texttt{sentence-transformers/all-MiniLM-L6-v2} almacenados en bases FAISS, permitiendo búsqueda semántica eficiente. Las herramientas RAG implementadas retornan fragmentos relevantes con metadata completa, estableciendo una base sólida para un agente conversacional que consulta primero los apuntes y cita apropiadamente las fuentes.
+
+Los resultados muestran que ambas segmentaciones son viables, con la segmentación A ofreciendo mayor control sobre la longitud y la segmentación B manteniendo mejor coherencia semántica. El sistema está listo para integración con un agente conversacional que orqueste las herramientas RAG y proporcione respuestas contextualizadas sobre el contenido del curso.
 
 \section{Bibliograf\'ia}
 
@@ -290,29 +328,23 @@ Los resultados demuestran la efectividad de la regresión logística implementad
 \vspace{-1em}%
 \begin{thebibliography}{00}
 
-\bibitem{Cortez2009}
-P. Cortez, A. Cerdeira, F. Almeida, T. Matos, and J. Reis, ``Modeling wine preferences by data mining from physicochemical properties,'' \emph{Decision Support Systems}, vol. 47, no. 4, pp. 547--553, 2009.
+\bibitem{Reimers2019}
+N. Reimers and I. Gurevych, ``Sentence-BERT: Sentence embeddings using siamese BERT-networks,'' in \emph{Proceedings of the 2019 Conference on Empirical Methods in Natural Language Processing and the 9th International Joint Conference on Natural Language Processing (EMNLP-IJCNLP)}, 2019, pp. 3982--3992.
 
-\bibitem{Fernandez2014}
-M. Fernández-Delgado, E. Cernadas, S. Barro, and D. Amorim, ``Do we need hundreds of classifiers to solve real world classification problems?'' \emph{Journal of Machine Learning Research}, vol. 15, no. 1, pp. 3133--3181, 2014.
+\bibitem{Johnson2019}
+J. Johnson, M. Douze, and H. Jégou, ``Billion-scale similarity search with GPUs,'' \emph{IEEE Transactions on Big Data}, vol. 7, no. 3, pp. 535--547, 2019.
 
-\bibitem{Chen2019}
-T. Chen and C. Guestrin, ``XGBoost: A scalable tree boosting system,'' in \emph{Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining}, 2016, pp. 785--794.
+\bibitem{LangChain2024}
+LangChain, ``LangChain Documentation,'' 2024. [Online]. Available: https://python.langchain.com/
 
-\bibitem{Kingma2014}
-D. P. Kingma and J. Ba, ``Adam: A method for stochastic optimization,'' \emph{arXiv preprint arXiv:1412.6980}, 2014.
+\bibitem{Lewis2020}
+P. Lewis et al., ``Retrieval-augmented generation for knowledge-intensive NLP tasks,'' in \emph{Advances in Neural Information Processing Systems}, vol. 33, 2020, pp. 9459--9474.
 
-\bibitem{Hastie2009}
-T. Hastie, R. Tibshirani, and J. Friedman, \emph{The Elements of Statistical Learning: Data Mining, Inference, and Prediction}. Springer, 2009.
+\bibitem{HuggingFace2024}
+Hugging Face, ``Sentence Transformers,'' 2024. [Online]. Available: https://www.sbert.net/
 
-\bibitem{James2013}
-G. James, D. Witten, T. Hastie, and R. Tibshirani, \emph{An Introduction to Statistical Learning: with Applications in R}. Springer, 2013.
-
-\bibitem{Pedregosa2011}
-F. Pedregosa et al., ``Scikit-learn: Machine learning in Python,'' \emph{Journal of Machine Learning Research}, vol. 12, pp. 2825--2830, 2011.
-
-\bibitem{Paszke2019}
-A. Paszke et al., ``PyTorch: An imperative style, high-performance deep learning library,'' in \emph{Advances in Neural Information Processing Systems}, 2019, pp. 8024--8035.
+\bibitem{FAISS2024}
+Facebook AI Research, ``FAISS: A library for efficient similarity search and clustering of dense vectors,'' 2024. [Online]. Available: https://github.com/facebookresearch/faiss
 
 \end{thebibliography}
 
