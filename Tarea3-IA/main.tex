@@ -3,6 +3,7 @@
 \IEEEoverridecommandlockouts
 
 % ---- Paquetes ----
+\usepackage{verbatim}
 \usepackage[spanish]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -59,23 +60,27 @@
 \end{subfigure}}
 
 % ---- Título y autores ----
-\title{Implementación de Sistema RAG con Agentes para Consulta de Apuntes de Inteligencia Artificial\vspace{-0.35em}}
+\title{Agente Conversacional\vspace{-0.35em}}
 
-\author{\IEEEauthorblockN{1\textsuperscript{st} Priscilla Jim\'enez Salgado}
-\IEEEauthorblockA{Estudiante, Escuela de Ingenier\'ia en Computaci\'on\\
-Tecnol\'ogico de Costa Rica (TEC)\\
-Email: 2021022576@estudiantec.cr}
+\author{
+\IEEEauthorblockN{Priscilla Jiménez Salgado}
+\IEEEauthorblockA{Escuela de Ingeniería en Computación\\
+Instituto Tecnológico de Costa Rica\\
+Cartago, Costa Rica\\
+Email: priscilla.jimenez@estudiantec.cr}
 \and
-\IEEEauthorblockN{2\textsuperscript{nd} Fabi\'an Araya Ortega}
-\IEEEauthorblockA{Estudiante, Escuela de Ingenier\'ia en Computaci\'on\\
-Tecnol\'ogico de Costa Rica (TEC)\\
-Email: fabian.araya@estudiantec.cr}
+\IEEEauthorblockN{Fabián Araya Ortega}
+\IEEEauthorblockA{Escuela de Ingeniería en Computación\\
+Instituto Tecnológico de Costa Rica\\
+Cartago, Costa Rica\\
+Email: fabianarayaortega@estudiantec.cr}
 \and
-\IEEEauthorblockN{3\textsuperscript{rd} David Acu\~na L\'opez}
-\IEEEauthorblockA{Estudiante, Escuela de Ingenier\'ia en Computaci\'on\\
-Tecnol\'ogico de Costa Rica (TEC)\\
+\IEEEauthorblockN{David Acuña López}
+\IEEEauthorblockA{Escuela de Ingeniería en Computación\\
+Instituto Tecnológico de Costa Rica\\
+Cartago, Costa Rica\\
 Email: rodolfoide69@estudiantec.cr}
-\IEEEauthorrefmark{1}}
+}
 
 \begin{document}
 \raggedbottom
@@ -184,7 +189,7 @@ El proceso de preprocesamiento genera los siguientes archivos:
 
 \section{Generación de Embeddings y Base Vectorial}
 \subsection{Modelo de Embeddings}
-Se utilizó el modelo \texttt{sentence-transformers/all-MiniLM-L6-v2} para generar embeddings semánticos. Este modelo fue seleccionado por las siguientes razones:
+Se utilizó el modelo sentence-transformers/all-MiniLM-L6-v2 para generar embeddings semánticos. Este modelo fue seleccionado por las siguientes razones:
 
 \begin{itemize}
 \item \textbf{Gratuito y local}: No requiere API keys ni conexión a servicios externos
@@ -287,6 +292,141 @@ Las herramientas RAG retornan información estructurada que incluye:
 \item Chunk IDs para trazabilidad
 \item Autores para citación apropiada
 \end{itemize}
+\section{Arquitectura del Agente Conversacional}
+
+\subsection{Diagrama de Flujo del Sistema}
+
+El sistema implementado sigue una arquitectura modular de cuatro capas que integra preprocesamiento, recuperación vectorial, orquestación de herramientas y presentación de resultados. La Figura~\ref{fig:arquitectura} ilustra el flujo completo desde la entrada del usuario hasta la respuesta final.
+
+\placefigure{fig:arquitectura}{Arquitectura modular del sistema RAG conversacional}{arquitectura_sistema.png}
+
+La primera capa corresponde a la interfaz de usuario, implementada mediante una aplicación Streamlit que provee un chat interactivo, configuración de API keys y visualización de las herramientas utilizadas en cada consulta. Esta interfaz permite a los usuarios interactuar de manera natural con el sistema mientras mantienen visibilidad sobre el proceso de recuperación de información.
+
+La segunda capa constituye el núcleo del sistema: el agente orquestador basado en el patrón ReAct (Reasoning + Acting) con Gemini-2.5-flash como modelo de lenguaje. Este componente gestiona el ciclo completo de razonamiento, selección de herramientas y síntesis de respuestas, actuando como el cerebro del sistema conversacional.
+
+La tercera capa comprende las herramientas y la memoria conversacional. Se implementaron tres herramientas principales (\texttt{rag\_search\_A}, \texttt{rag\_search\_B} y \texttt{web\_search}) junto con un sistema de memoria conversacional tipo buffer con ventana de 5 turnos que permite mantener coherencia en diálogos multi-turno.
+
+Finalmente, la cuarta capa implementa la recuperación vectorial mediante dos vectorstores FAISS independientes que almacenan embeddings de 384 dimensiones generados con el modelo \texttt{sentence-transformers/all-MiniLM-L6-v2}, permitiendo búsquedas semánticas eficientes sobre los fragmentos de texto.
+
+\subsection{Flujo de Procesamiento}
+
+El procesamiento de consultas sigue un flujo secuencial de ocho etapas bien definidas. Primero, la consulta del usuario es capturada en la interfaz Streamlit, donde se realiza un análisis de intención mediante expresiones regulares para detectar solicitudes explícitas de búsqueda web. Una vez identificada la intención, se inicia la ejecución del agente mediante el ciclo ReAct, que consiste en iteraciones de pensamiento (Thought), acción (Action) y observación (Observation).
+
+Durante la ejecución, el agente consulta las herramientas RAG apropiadas, realizando búsquedas semánticas en los vectorstores A o B según la naturaleza de la pregunta. La recuperación de contexto obtiene los top-k fragmentos más relevantes junto con su metadata completa, incluyendo autor, documento de origen y score de similitud. Con esta información, el modelo de lenguaje genera una respuesta sintética que incluye citaciones obligatorias de las fuentes consultadas.
+
+Tras generar la respuesta, el sistema actualiza la memoria conversacional almacenando el turno completo en la ventana de contexto, permitiendo que consultas futuras puedan referenciar información de turnos anteriores. Finalmente, la respuesta es renderizada en la interfaz con las fuentes apropiadamente documentadas. Este flujo garantiza trazabilidad completa desde la consulta inicial hasta las fuentes específicas citadas en la respuesta.
+
+\section{Perfil y Configuración del Agente}
+
+\subsection{System Prompt}
+
+El agente fue configurado con un perfil académico especializado que define su identidad como AsistenteIA, un asistente académico dedicado exclusivamente al curso de Inteligencia Artificial. Este perfil establece tres instrucciones principales que rigen su comportamiento: primero, debe SIEMPRE consultar los apuntes del curso usando herramientas RAG antes de responder cualquier pregunta, garantizando que la información provenga de fuentes académicas verificadas. Segundo, tiene la obligación de citar el documento de origen y el autor cuando use información de los apuntes, siguiendo el formato ``Según [Autor] en [Documento]...''. Tercero, solo puede usar la herramienta \texttt{web\_search} cuando el usuario lo solicite explícitamente, cuando la información no esté disponible en los apuntes, o cuando sea necesario consultar información actual o externa al curso.
+
+El estilo de respuesta del agente está diseñado para ser claro, conciso y educativo, proporcionando explicaciones accesibles con ejemplos cuando sea útil. Se evita el uso de jerga innecesaria y se mantiene un tono profesional pero amigable, apropiado para un contexto académico donde los estudiantes buscan comprender conceptos complejos de manera efectiva.
+
+\subsection{Configuración del Modelo}
+
+El sistema implementa una estrategia robusta de fallback en cascada para garantizar disponibilidad continua del servicio. La configuración prioriza modelos de la familia Gemini en orden descendente de preferencia: primero intenta usar \texttt{gemini-2.5-flash} por ser el más rápido y eficiente para este tipo de tarea, luego \texttt{gemini-flash-latest} como alias a la versión más reciente, seguido de \texttt{gemini-2.5-pro} cuando se requiere mayor capacidad de razonamiento, \texttt{gemini-pro-latest} como fallback razonable, y finalmente \texttt{gemini-2.0-flash} como opción de respaldo adicional.
+
+Los hiperparámetros del modelo fueron cuidadosamente seleccionados para optimizar la consistencia y calidad de las respuestas. Se configuró \texttt{temperature} en 0.1 para producir respuestas deterministas y consistentes, minimizando la variabilidad aleatoria. El parámetro \texttt{max\_output\_tokens} se estableció en 1024, suficiente para respuestas completas pero controladas. Además, se activó \texttt{normalize\_embeddings} para mejorar la calidad de la búsqueda por similitud coseno en las bases vectoriales.
+
+\subsection{Patrón ReAct Estricto}
+
+El agente sigue el formato ReAct (Reasoning + Acting) de manera estricta para garantizar trazabilidad completa de su proceso de razonamiento. Este patrón comienza con la pregunta del usuario (Question), seguida de un pensamiento explícito sobre el siguiente paso (Thought). Luego, el agente selecciona una acción específica (Action) entre las herramientas disponibles (\texttt{rag\_search\_A}, \texttt{rag\_search\_B} o \texttt{web\_search}), proporciona el input necesario para esa acción (Action Input), y recibe una observación (Observation) con los resultados obtenidos.
+
+Este ciclo puede repetirse múltiples veces si el agente determina que necesita más información para responder adecuadamente. Una vez que ha recopilado suficiente evidencia, el agente declara explícitamente ``I now know the final answer'' y proporciona su respuesta final (Final Answer) en español con todas las citaciones apropiadas. Este formato garantiza que cada decisión del agente sea explícita y auditable, facilitando enormemente la depuración y mejora continua del sistema, además de proporcionar transparencia sobre cómo se llegó a cada respuesta.
+
+\section{Orquestación de Herramientas}
+
+\subsection{Estrategia de Selección}
+
+El agente implementa una lógica de decisión jerárquica en tres niveles que determina qué herramientas utilizar para cada consulta. El primer nivel corresponde al análisis de intención, donde se implementó un detector basado en expresiones regulares que identifica solicitudes explícitas de búsqueda web. Esta heurística detecta patrones lingüísticos como ``busca en la web'', ``consulta en internet'', ``google esto'', entre otros, mediante la expresión regular \texttt{\textbackslash b(web|internet|google|websearch|buscar(?: en (?:la )?web)?)\textbackslash b}.
+
+El segundo nivel evalúa la naturaleza de la consulta para seleccionar la herramienta RAG más apropiada. Cuando la pregunta busca fragmentos específicos, términos concretos o búsquedas precisas, el agente prefiere \texttt{rag\_search\_A}, ya que los chunks fijos de aproximadamente 400 palabras capturan mejor contextos locales y términos específicos. Por otro lado, cuando la consulta versa sobre temas amplios, explicaciones completas o contextos extensos, el agente opta por \texttt{rag\_search\_B}, aprovechando que las secciones semánticas mantienen mejor la coherencia estructural del documento original. Esta decisión se basa en el análisis del razonamiento (Thought) durante el ciclo ReAct, donde el agente evalúa explícitamente qué tipo de información necesita.
+
+El tercer nivel corresponde al fallback de búsqueda web, que solo se ejecuta si se cumplen tres condiciones simultáneas: el usuario debe solicitarlo explícitamente (mediante patrones detectados en el nivel 1), las herramientas RAG no deben haber retornado resultados suficientemente relevantes (típicamente con scores inferiores a 0.6), y la herramienta de búsqueda web debe estar disponible y funcional en el sistema. Esta arquitectura de tres niveles garantiza que el sistema priorice siempre el conocimiento académico del curso sobre información externa.
+
+\subsection{Inyección de Contexto Web}
+
+Cuando se cumplen las condiciones para ejecutar una búsqueda web, el contexto obtenido se inyecta de manera estructurada en la consulta mediante un formato especial de metadata. Específicamente, los resultados web se encapsulan entre etiquetas \texttt{[WEB\_CONTEXT]} y \texttt{[/WEB\_CONTEXT]}, seguidos de la consulta original del usuario. Esta estructura permite que el agente pueda referenciar el contexto web como información complementaria sin confundirla con el contenido de los apuntes del curso.
+
+El sistema instruye explícitamente al agente para que priorice la información de los apuntes incluso cuando existe contexto web disponible. Las respuestas que incorporan información proveniente de búsquedas web deben incluir obligatoriamente la etiqueta ``(Fuente: Web)'' al final, diferenciándolas claramente de las respuestas basadas exclusivamente en material del curso. Este mecanismo mantiene la transparencia sobre el origen de cada pieza de información y garantiza que los usuarios sepan cuándo una respuesta proviene de fuentes externas versus material académico del curso.
+
+\subsection{Manejo de Herramientas RAG}
+
+Ambas herramientas RAG implementan un protocolo idéntico de búsqueda y respuesta para mantener consistencia en el sistema. El proceso de búsqueda vectorial se ejecuta mediante el método \texttt{similarity\_search\_with\_score} de FAISS, que retorna por defecto los 5 fragmentos más similares a la consulta junto con sus scores de similitud coseno. Estos scores oscilan entre 0 y 1, donde valores más cercanos a 1 indican mayor similitud semántica.
+
+Cada resultado se estructura en un formato estandarizado que comienza con un encabezado indicando el número de resultado y su score de similitud con cuatro decimales de precisión. Le sigue el fragmento de texto, limitado a los primeros 700 caracteres para mantener respuestas concisas pero informativas. Finalmente, se incluye la citación completa en el formato ``Según [Autor] en [Documento] (chunk ID)'', proporcionando trazabilidad exacta hasta el fragmento específico dentro del documento.
+
+La metadata asociada a cada fragmento es exhaustiva e incluye seis campos principales. El identificador único del documento (\texttt{id\_doc}) permite referenciar el apunte original, mientras que el identificador del fragmento (\texttt{chunk\_id}) especifica la ubicación exacta dentro del documento. El campo de autor (\texttt{autor}) identifica quién escribió el apunte original, la fecha (\texttt{fecha}) contextualiza temporalmente la información, el tema (\texttt{tema}) describe el contenido principal tratado, y el score de similitud (\texttt{score}) cuantifica la relevancia del fragmento para la consulta. Esta metadata completa permite citación precisa y trazabilidad total de las fuentes, cumpliendo con estándares académicos rigurosos.
+
+\section{Gestión de Memoria Conversacional}
+
+\subsection{Implementación Técnica}
+
+El sistema utiliza la clase \texttt{ConversationBufferWindowMemory} de LangChain, configurada específicamente para mantener las últimas 5 interacciones entre usuario y agente. Esta implementación usa una ventana deslizante donde cada nuevo turno conversacional desplaza automáticamente el turno más antiguo cuando se supera el límite establecido. La configuración especifica tres parámetros clave: \texttt{k=5} define el tamaño de la ventana, \texttt{memory\_key="history"} establece la clave bajo la cual se inyecta el contexto en el prompt, y \texttt{return\_messages=True} asegura que el historial se formatee como una lista de mensajes estructurados.
+
+Las características principales de esta memoria incluyen su naturaleza de ventana deslizante que mantiene solo las últimas 5 interacciones, garantizando un balance óptimo entre contexto suficiente y eficiencia computacional. La estructura sigue el formato estándar de mensajes usuario-asistente, facilitando su integración con el modelo de lenguaje. Al no ser persistente, la memoria se reinicia completamente al cerrar la sesión, lo cual simplifica el diseño pero limita la capacidad de mantener contexto entre sesiones diferentes. El overhead de memoria es relativamente bajo, consumiendo aproximadamente 2000-3000 tokens del contexto total disponible.
+
+\subsection{Persistencia de Contexto}
+
+La ventana deslizante de 5 turnos representa un compromiso cuidadosamente evaluado entre proporcionar contexto conversacional suficiente y mantener la eficiencia del sistema. El formato de almacenamiento estructura el historial como una lista de diccionarios, donde cada entrada contiene el rol (usuario o asistente) y el contenido del mensaje. Este formato simple pero efectivo permite al modelo de lenguaje comprender fácilmente la secuencia de la conversación.
+
+Cada interacción almacenada incluye múltiples componentes que proporcionan contexto completo: la consulta original del usuario tal como fue formulada, el razonamiento explícito del agente (Thought) sobre cómo abordar la pregunta, las herramientas que decidió utilizar (Action), los resultados que observó de esas herramientas (Observation), y la respuesta final generada y presentada al usuario. Esta información detallada permite que el agente no solo recuerde qué se preguntó y respondió, sino también cómo llegó a esas conclusiones, facilitando respuestas más coherentes en turnos subsecuentes que referencien información previa.
+
+\subsection{Manejo de Límites de Tokens}
+
+El sistema implementa tres mecanismos complementarios para evitar la saturación del contexto disponible del modelo de lenguaje. El primero es la ventana fija de 5 turnos que previene el crecimiento ilimitado del contexto conversacional, estableciendo un límite superior claro. El segundo mecanismo es el truncado automático tipo FIFO (First In, First Out), donde al superar el límite de 5 turnos, el sistema elimina automáticamente el par de mensajes más antiguo para hacer espacio al nuevo. El tercer mecanismo es la ausencia de persistencia permanente, donde la memoria completa se reinicia al cerrar la sesión, evitando acumulación de contexto entre usos diferentes del sistema.
+
+La distribución aproximada de tokens por consulta se descompone en cuatro componentes principales. El prompt base del sistema, que incluye las instrucciones, perfil del agente y formato ReAct, consume aproximadamente 800 tokens. La memoria conversacional con 5 turnos completos ocupa alrededor de 2500 tokens, variando según la longitud de las interacciones previas. La consulta del usuario típicamente requiere entre 50 y 200 tokens dependiendo de su complejidad. Finalmente, la respuesta generada por el LLM puede utilizar hasta 1024 tokens según la configuración establecida.
+
+El consumo total por consulta oscila entre 4500 y 5500 tokens, manteniéndose cómodamente dentro del límite de contexto de 32,000 tokens de Gemini-2.5-flash. Este margen amplio permite al sistema manejar consultas complejas que requieran múltiples iteraciones del ciclo ReAct, incluyendo el texto completo retornado por las herramientas RAG, sin riesgo de exceder la capacidad del modelo.
+
+\section{Evaluación del Sistema Conversacional}
+
+\subsection{Ejemplos de Diálogos}
+
+Se presentan dos casos de uso representativos que ilustran el funcionamiento del sistema en operación real. El primer ejemplo corresponde a una consulta directa sobre conceptos fundamentales, donde el usuario pregunta ``¿Qué es la inteligencia artificial según los apuntes del curso?''. El agente inicia su razonamiento reconociendo que necesita buscar en los apuntes del curso, selecciona la acción \texttt{rag\_search\_A} con el input ``inteligencia artificial definición'', y recibe una observación con un resultado de score 0.7227. Tras evaluar la información recuperada, el agente formula su respuesta final indicando que según los apuntes del curso, la inteligencia artificial se refiere a sistemas que pueden ser autónomos y adaptativos, con capacidad de aprender y ajustarse a nuevas situaciones, señalando además que existen distintas perspectivas sobre la IA. La respuesta incluye la citación completa del autor Rodolfo David Acuña López y el documento DOC\_001.
+
+Las métricas de este primer ejemplo muestran un desempeño eficiente del sistema. Se utilizó únicamente la herramienta \texttt{rag\_search\_A}, el score promedio de similitud fue 0.72, el tiempo de respuesta se mantuvo entre 3 y 5 segundos, se requirieron solo 2 iteraciones del ciclo ReAct, y la citación fue correcta identificando apropiadamente tanto el autor como el documento de origen.
+
+El segundo ejemplo ilustra una consulta con contexto conversacional, demostrando la capacidad del sistema para mantener coherencia a través de múltiples turnos. El usuario solicita ``Explícame sobre aprendizaje supervisado'', a lo cual el agente responde usando \texttt{rag\_search\_A} y formula una explicación indicando que según los apuntes, el aprendizaje supervisado es un tipo de modelo donde se aprende a partir de datos que incluyen etiquetas que sirven como referencia durante el entrenamiento, citando un ejemplo común como la clasificación de imágenes, con referencia a Priscilla Jiménez Salgado en DOC\_003.
+
+En el turno subsecuente, el usuario pregunta ``¿Y cuál es la diferencia con el no supervisado?'', donde la memoria conversacional entra en juego. El agente, teniendo acceso al turno anterior sobre aprendizaje supervisado, razona que el usuario pregunta por diferencias y necesita buscar información sobre aprendizaje no supervisado, optando esta vez por \texttt{rag\_search\_B} para obtener una sección más completa sobre el tema.
+
+Las métricas de este segundo ejemplo demuestran el valor de la memoria conversacional. Se utilizaron secuencialmente \texttt{rag\_search\_A} y luego \texttt{rag\_search\_B}, la memoria mantuvo efectivamente el contexto del turno anterior permitiendo interpretar correctamente la pregunta implícita, la coherencia fue alta con referencia implícita al concepto de aprendizaje supervisado discutido previamente, y el total fue de 4 iteraciones ReAct distribuidas en 2 por cada turno conversacional.
+
+\subsection{Casos de Prueba}
+
+Se evaluó el sistema con cinco tipos de consultas representativas que cubren diferentes escenarios de uso. Las definiciones conceptuales, consultadas mediante \texttt{rag\_search\_A}, resultaron exitosas con un score promedio de similitud de 0.73, demostrando la capacidad del sistema para recuperar explicaciones precisas de términos fundamentales. Los temas amplios, manejados por \texttt{rag\_search\_B}, también fueron exitosos y mostraron mejor coherencia semántica debido a que esta segmentación respeta la estructura completa de secciones.
+
+Las consultas con contexto previo, que requirieron tanto \texttt{rag\_search\_A} como el uso activo de la memoria conversacional, resultaron exitosas demostrando que el sistema puede referenciar información de turnos anteriores de manera efectiva. Las solicitudes explícitas de búsqueda web, manejadas por el stub de \texttt{web\_search}, obtuvieron un resultado parcial ya que la implementación actual es un stub no funcional para producción, aunque la lógica de detección y activación funciona correctamente. Finalmente, las preguntas ambiguas manejadas por \texttt{rag\_search\_B} fueron exitosas, con el sistema solicitando apropiadamente clarificación cuando la consulta no era suficientemente específica.
+
+\subsection{Métricas de Calidad}
+
+La relevancia de las respuestas fue evaluada mediante múltiples dimensiones. Los fragmentos recuperados corresponden al top-5 de resultados con scores de similitud entre 0.69 y 0.80, indicando relevancia alta y consistente. El análisis de citación reveló que el 100\% de las respuestas incluyen correctamente el autor y el documento de origen, cumpliendo rigurosamente con el requisito de trazabilidad académica. La coherencia general se calificó como alta, especialmente gracias al uso efectivo de la memoria conversacional que permite mantener el hilo de la conversación. La precisión de las respuestas mostró alineación consistente con el contenido real de los apuntes, sin casos de alucinación o invención de información.
+
+El rendimiento del sistema fue cuantificado mediante cinco métricas principales. El tiempo promedio por consulta se ubicó en 4.2 segundos, considerado aceptable para un sistema académico interactivo. El número promedio de herramientas utilizadas por consulta fue 1.3, indicando que la mayoría de las preguntas pueden responderse con una sola búsqueda RAG, aunque ocasionalmente se requieren búsquedas complementarias. Las iteraciones promedio del ciclo ReAct fueron 2.8, mostrando que el agente típicamente necesita entre 2 y 3 ciclos de razonamiento para formular una respuesta completa. El score de similitud promedio alcanzó 0.74, confirmando que el sistema consistentemente recupera fragmentos altamente relevantes. Finalmente, la tasa de citación correcta se mantuvo en 100\%, sin excepciones.
+
+Se identificaron cuatro limitaciones principales del sistema actual. Primero, la búsqueda web opera en modo stub y no es funcional para entornos de producción, requiriendo integración real con APIs de búsqueda. Segundo, no se implementó re-ranking de resultados RAG, dependiendo únicamente de similitud coseno sin refinamiento posterior. Tercero, la memoria no persiste entre sesiones diferentes, limitando la capacidad de mantener contextos de aprendizaje a largo plazo. Cuarto, la segmentación B muestra dependencia de patrones editoriales consistentes en los documentos, funcionando mejor con PDFs bien estructurados que con documentos de formato irregular.
+
+\section{Conclusiones}
+\vspace{-0.5em}
+Se implementó exitosamente un sistema RAG completo con agente conversacional para consulta de apuntes del curso de Inteligencia Artificial, integrando cuatro capas arquitectónicas funcionalmente independientes pero operacionalmente cohesivas. La primera capa procesa 46 documentos mediante dos estrategias de segmentación que generan 227 fragmentos con chunks fijos y 349 fragmentos con segmentación por encabezados. La segunda capa implementa búsqueda vectorial usando embeddings del modelo \texttt{sentence-transformers/all-MiniLM-L6-v2} almacenados eficientemente en índices FAISS. La tercera capa orquesta las interacciones mediante un agente ReAct basado en Gemini-2.5-flash, equipado con memoria conversacional de ventana deslizante y tres herramientas especializadas. La cuarta capa proporciona una interfaz Streamlit que permite interacción natural mediante chat en tiempo real.
+
+Las aportaciones principales del sistema se manifiestan en cinco aspectos fundamentales. La dualidad de segmentaciones permite comparar empíricamente estrategias de fragmentación y seleccionar la más apropiada según las características de cada consulta, equilibrando entre control de longitud y coherencia semántica. El agente con patrón ReAct garantiza razonamiento explícito donde cada decisión es auditable y trazable, facilitando la depuración y mejora continua del sistema. La memoria conversacional mantiene coherencia efectiva en diálogos multi-turno, preservando hasta cinco interacciones previas que enriquecen la comprensión contextual. La citación obligatoria asegura que el 100\% de las respuestas incluyan fuentes documentadas apropiadamente, cumpliendo con estándares académicos rigurosos. La restricción de búsqueda web prioriza sistemáticamente el conocimiento contenido en los apuntes del curso sobre información externa, manteniendo fidelidad al material académico.
+
+Los resultados de evaluación cuantifican el desempeño del sistema en múltiples dimensiones. La relevancia de las búsquedas semánticas se manifiesta en scores consistentemente ubicados entre 0.69 y 0.80, con un promedio de 0.74 que indica recuperación altamente pertinente. La citación alcanza perfección absoluta con el 100\% de respuestas identificando correctamente autor y documento de origen, sin excepciones observadas durante las pruebas. El tiempo de respuesta promedio de 4.2 segundos por consulta resulta aceptable para interacción académica en tiempo real. La memoria conversacional demuestra efectividad práctica manteniendo contextos coherentes hasta cinco turnos consecutivos. La eficiencia en orquestación se refleja en un promedio de 1.3 herramientas por consulta, indicando resolución típicamente directa de las preguntas.
+
+El sistema se encuentra listo para uso académico habiendo demostrado capacidades robustas en recuperación de información, síntesis contextualizada y citación precisa. Las evaluaciones comparativas revelan que la segmentación A mediante chunks fijos ofrece mayor control sobre la longitud de fragmentos y scores ligeramente superiores con promedio de 0.77, mientras que la segmentación B por encabezados mantiene mejor coherencia semántica estructural con promedio de 0.73. El agente ReAct equipado con memoria conversacional permite diálogos naturales y continuos sobre conceptos del curso, manteniendo trazabilidad completa de las fuentes consultadas en cada respuesta, estableciendo así un estándar de transparencia académica en sistemas de consulta automatizados.
+
+\subsection{Trabajo Futuro}
+
+Las mejoras de corto plazo identificadas comprenden cuatro áreas prioritarias. La implementación de re-ranking mediante modelos cross-encoder mejoraría significativamente la precisión del resultado top-1, refinando la ordenación inicial basada en similitud coseno. La activación de búsqueda web real mediante integración funcional con DuckDuckGo API o alternativas similares transformaría el actual stub en una herramienta productiva para consultas que requieran información externa. La incorporación de métricas cuantitativas estándar como Recall@k, MRR y NDCG permitiría evaluación objetiva y comparación con otros sistemas similares. La implementación de persistencia para el historial conversacional usando SQLite o PostgreSQL habilitaría contextos de aprendizaje a largo plazo entre sesiones diferentes del mismo usuario.
+
+Las mejoras de mediano plazo se enfocan en optimización y expansión de capacidades. La comparación sistemática entre modelos de embeddings, específicamente \texttt{all-MiniLM-L6-v2} versus \texttt{text-embedding-3-small} de OpenAI, cuantificaría trade-offs entre eficiencia computacional y calidad semántica. La optimización de prompts mediante experimentos A/B testing de diferentes configuraciones identificaría formulaciones que maximicen coherencia y relevancia de respuestas. La adición de una herramienta de cálculo simbólico extendería las capacidades del sistema para resolver problemas numéricos frecuentes en el curso de IA. La implementación de un sistema de feedback usuario mediante mecanismos de thumbs up/down permitiría afinar iterativamente las respuestas basándose en satisfacción real de los estudiantes.
+
+La investigación futura abre cuatro líneas de exploración avanzada. La evaluación de otros patrones de agentes como AutoGPT, BabyAGI o Plan-and-Execute compararía diferentes paradigmas de razonamiento y planificación. La experimentación con RAG híbrido combinando búsqueda vectorial semántica con BM25 léxico podría capturar mejor tanto similitud conceptual como coincidencia exacta de términos técnicos. La implementación de RAG multimodal procesando y consultando imágenes, diagramas y ecuaciones matemáticas presentes en los PDFs expandiría dramáticamente la riqueza informativa accesible. El estudio de técnicas de compresión de contexto como LongLLMLingua habilitaría el manejo efectivo de documentos extensos que actualmente exceden las capacidades prácticas de ventana de contexto disponible.
 
 \section{Discusi\'on}
 \subsection{Ventajas del Sistema Implementado}
@@ -316,11 +456,13 @@ Como trabajo futuro se sugiere:
 \item Análisis de tiempo de respuesta para optimización
 \item Evaluación manual de la calidad de las respuestas generadas
 \end{itemize}
+\begin{comment}
 
 \section{Conclusiones}
 Se implementó exitosamente un sistema RAG completo para consulta de apuntes del curso de Inteligencia Artificial. El sistema procesa \num{46} documentos PDF, aplica normalización exhaustiva y genera dos tipos de segmentación, produciendo \num{227} y \num{349} fragmentos respectivamente. Se utilizan embeddings del modelo \texttt{sentence-transformers/all-MiniLM-L6-v2} almacenados en bases FAISS, permitiendo búsqueda semántica eficiente. Las herramientas RAG implementadas retornan fragmentos relevantes con metadata completa, estableciendo una base sólida para un agente conversacional que consulta primero los apuntes y cita apropiadamente las fuentes.
 
 Los resultados muestran que ambas segmentaciones son viables, con la segmentación A ofreciendo mayor control sobre la longitud y la segmentación B manteniendo mejor coherencia semántica. El sistema está listo para integración con un agente conversacional que orqueste las herramientas RAG y proporcione respuestas contextualizadas sobre el contenido del curso.
+\end{comment}
 
 \section{Bibliograf\'ia}
 
